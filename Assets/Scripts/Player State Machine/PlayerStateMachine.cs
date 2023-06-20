@@ -27,6 +27,10 @@ public class PlayerStateMachine : MonoBehaviour
     PlayerBaseState _currentState;
     PlayerStateFactory _states;
 
+    //Gun Variables
+    [SerializeField] Gun[] _guns = new Gun[] { };
+    Gun _activeGun;
+
     //getters and setters
     public CharacterController CharacterController { get { return _characterController; } }
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
@@ -39,6 +43,7 @@ public class PlayerStateMachine : MonoBehaviour
     public float AppliedMovementZ { get { return _appliedMovement.z; } set { _appliedMovement.z = value; } }
     public float RunMultiplier { get { return _runMultiplier; } }
     public Vector2 CurrentMovementInput { get { return _currentMovementInput; } }
+    public Gun ActiveGun { get { return _activeGun; } set { _activeGun = value; } }
 
     private void Awake()
     {
@@ -56,7 +61,12 @@ public class PlayerStateMachine : MonoBehaviour
         _playerInput.CharacterControls.Move.started += OnMovementInput;
         _playerInput.CharacterControls.Move.canceled += OnMovementInput;
         _playerInput.CharacterControls.Move.performed += OnMovementInput;
+        _playerInput.CharacterControls.EquipPistol.performed += OnEquipPistol;
+        _playerInput.CharacterControls.EquipShotgun.performed += OnEquipShotgun;
+        _playerInput.CharacterControls.EquipRifle.performed += OnEquipRifle;
     }
+
+    #region Input Action Methods
 
     void OnMovementInput(InputAction.CallbackContext context)
     {
@@ -65,6 +75,41 @@ public class PlayerStateMachine : MonoBehaviour
         _currentMovement.z = _currentMovementInput.y;
         _isMovementPressed = _currentMovementInput.x != 0 || _currentMovementInput.y != 0;
     }
+
+    void OnEquipPistol(InputAction.CallbackContext context)
+    {
+        ToggleGun(0);
+    }
+
+    void OnEquipShotgun(InputAction.CallbackContext context)
+    {
+        ToggleGun(1);
+    }
+
+    void OnEquipRifle(InputAction.CallbackContext context)
+    {
+        ToggleGun(2);
+    }
+
+    private void ToggleGun(int num)
+    {
+        if (ActiveGun == null || ActiveGun != _guns[num])
+        {
+            if (ActiveGun != null)
+            {
+                ActiveGun.gameObject.SetActive(false);
+            }
+            ActiveGun = _guns[num];
+            ActiveGun.gameObject.SetActive(true);
+        }
+        else if (ActiveGun != null)
+        {
+            ActiveGun.gameObject.SetActive(false);
+            ActiveGun = null;
+        }
+    }
+
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -97,6 +142,12 @@ public class PlayerStateMachine : MonoBehaviour
         }
     }
 
+    #region Gun
+
+
+
+    #endregion
+
     private void OnEnable()
     {
         _playerInput?.CharacterControls.Enable();
@@ -106,4 +157,11 @@ public class PlayerStateMachine : MonoBehaviour
     {
         _playerInput?.CharacterControls.Disable();
     }
+}
+
+public enum GunType
+{
+    Pistol,
+    Shotgun,
+    Rifle
 }
