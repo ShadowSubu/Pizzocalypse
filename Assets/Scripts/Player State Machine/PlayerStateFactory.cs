@@ -2,6 +2,7 @@ using System.Collections.Generic;
 
 enum PlayerStates
 {
+    none,
     idle,
     run,
     gunEquip,
@@ -16,12 +17,17 @@ public class PlayerStateFactory
     public PlayerStateFactory(PlayerStateMachine currentContext)
     {
         _context = currentContext;
+        _states[PlayerStates.none] = new PlayerNoneState(_context, this);
         _states[PlayerStates.idle] = new PlayerIdleState(_context, this);
         _states[PlayerStates.run] = new PlayerRunState(_context, this);
         _states[PlayerStates.gunEquip] = new PlayerGunEquipState(_context, this);
         _states[PlayerStates.gunFire] = new PlayerGunFireState(_context, this);
     }
 
+    public PlayerBaseState None()
+    {
+        return _states[PlayerStates.none];
+    }
     public PlayerBaseState Idle()
     {
         return _states[PlayerStates.idle];

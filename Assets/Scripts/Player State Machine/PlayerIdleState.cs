@@ -33,22 +33,18 @@ public class PlayerIdleState : PlayerBaseState
         {
             SwitchState(Factory.Run());
         }
-        if (Ctx.IsGunSelected)
-        {
-            if (Ctx.ActiveGun != null)
-            {
-                SetSubState(Factory.GunEquip());
-            }
-            else
-            {
-                _currentSubState.ExitState();
-                SetSubState(null);
-            }
-        }
     }
 
     public override void InitializeSubState()
     {
+        if (!Ctx.IsGunToggled)
+        {
+            SetSubState(Factory.None());
+        }
+        else
+        {
+
+        }
     }
 
 }

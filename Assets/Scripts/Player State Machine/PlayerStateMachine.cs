@@ -30,7 +30,8 @@ public class PlayerStateMachine : MonoBehaviour
     //Gun Variables
     [SerializeField] Gun[] _guns = new Gun[] { };
     Gun _activeGun;
-    bool _isGunSelected;
+    bool _isGunToggled;
+    bool _requireNewGunToggle;
 
     //getters and setters
     public CharacterController CharacterController { get { return _characterController; } }
@@ -45,7 +46,8 @@ public class PlayerStateMachine : MonoBehaviour
     public float RunMultiplier { get { return _runMultiplier; } }
     public Vector2 CurrentMovementInput { get { return _currentMovementInput; } }
     public Gun ActiveGun { get { return _activeGun; } set { _activeGun = value; } }
-    public bool IsGunSelected { get { return _isGunSelected; } set { _isGunSelected = value; } }
+    public bool IsGunToggled { get { return _isGunToggled; } set { _isGunToggled = value; } }
+    public bool RequireNewGunToggle { get { return _requireNewGunToggle; } set { _requireNewGunToggle = value; } }
 
     private void Awake()
     {
@@ -83,28 +85,40 @@ public class PlayerStateMachine : MonoBehaviour
 
     void OnEquipPistol(InputAction.CallbackContext context)
     {
-        _isGunSelected = context.ReadValueAsButton();
-        if (IsGunSelected)
+        _isGunToggled = context.ReadValueAsButton();
+        if (IsGunToggled)
         {
             ToggleGun(0);
+        }
+        else
+        {
+            RequireNewGunToggle = false;
         }
     }
 
     void OnEquipShotgun(InputAction.CallbackContext context)
     {
-        _isGunSelected = context.ReadValueAsButton();
-        if (IsGunSelected)
+        _isGunToggled = context.ReadValueAsButton();
+        if (IsGunToggled)
         {
             ToggleGun(1);
+        }
+        else
+        {
+            RequireNewGunToggle = false;
         }
     }
 
     void OnEquipRifle(InputAction.CallbackContext context)
     {
-        _isGunSelected = context.ReadValueAsButton();
-        if (IsGunSelected)
+        _isGunToggled = context.ReadValueAsButton();
+        if (IsGunToggled)
         {
             ToggleGun(2);
+        }
+        else
+        {
+            RequireNewGunToggle = false;
         }
     }
 

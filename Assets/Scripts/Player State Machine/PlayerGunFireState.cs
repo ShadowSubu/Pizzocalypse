@@ -14,12 +14,12 @@ public class PlayerGunFireState : PlayerBaseState
 
     public override void UpdateState()
     {
-        Debug.Log("Enter State from GunFire");
+        Debug.Log("Update State from GunFire");
     }
 
     public override void ExitState()
     {
-        Debug.Log("Enter State from GunFire");
+        Debug.Log("Exit State from GunFire");
     }
 
     public override void CheckSwitchState()

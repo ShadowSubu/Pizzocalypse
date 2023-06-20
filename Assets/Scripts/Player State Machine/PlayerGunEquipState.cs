@@ -15,22 +15,23 @@ public class PlayerGunEquipState : PlayerBaseState
 
     public override void UpdateState()
     {
-        Debug.Log("Enter State from GunEquip");
-        if (Ctx.IsGunSelected)
-        {
-            ExitState();
-            InitializeSubState();
-        }
+        Debug.Log("Update State from GunEquip");
+        CheckSwitchState();
     }
 
     public override void ExitState()
     {
-        Debug.Log("Enter State from GunEquip");
+        Debug.Log("Exit State from GunEquip");
+        Ctx.RequireNewGunToggle = true;
         Ctx.Animator.SetLayerWeight(1, 0f);
     }
 
     public override void CheckSwitchState()
     {
+        if (Ctx.IsGunToggled && !Ctx.RequireNewGunToggle && Ctx.ActiveGun == null)
+        {
+            SwitchState(Factory.None());
+        }
     }
 
     public override void InitializeSubState()

@@ -6,7 +6,7 @@ public abstract class PlayerBaseState
     private PlayerStateMachine _ctx;
     private PlayerStateFactory _factory;
     private PlayerBaseState _currentSuperState;
-    protected PlayerBaseState _currentSubState;
+    private PlayerBaseState _currentSubState;
 
     protected bool IsRootState { set { _isRootState = value; } }
     protected PlayerStateMachine Ctx { get { return _ctx; } }
