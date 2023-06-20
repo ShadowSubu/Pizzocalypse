@@ -13,6 +13,7 @@ public class PlayerIdleState : PlayerBaseState
     public override void EnterState()
     {
         Debug.Log("Enter State from Idle");
+        InitializeSubState();
         Ctx.AppliedMovementX = 0f;
         Ctx.AppliedMovementZ = 0f;
     }
@@ -31,6 +32,18 @@ public class PlayerIdleState : PlayerBaseState
         if (Ctx.IsMovementPressed)
         {
             SwitchState(Factory.Run());
+        }
+        if (Ctx.IsGunSelected)
+        {
+            if (Ctx.ActiveGun != null)
+            {
+                SetSubState(Factory.GunEquip());
+            }
+            else
+            {
+                _currentSubState.ExitState();
+                SetSubState(null);
+            }
         }
     }
 

@@ -10,16 +10,23 @@ public class PlayerGunEquipState : PlayerBaseState
     public override void EnterState()
     {
         Debug.Log("Enter State from GunEquip");
+        Ctx.Animator.SetLayerWeight(1, 1f);
     }
 
     public override void UpdateState()
     {
         Debug.Log("Enter State from GunEquip");
+        if (Ctx.IsGunSelected)
+        {
+            ExitState();
+            InitializeSubState();
+        }
     }
 
     public override void ExitState()
     {
         Debug.Log("Enter State from GunEquip");
+        Ctx.Animator.SetLayerWeight(1, 0f);
     }
 
     public override void CheckSwitchState()
@@ -28,5 +35,6 @@ public class PlayerGunEquipState : PlayerBaseState
 
     public override void InitializeSubState()
     {
+        
     }
 }

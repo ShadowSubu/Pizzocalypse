@@ -30,6 +30,7 @@ public class PlayerStateMachine : MonoBehaviour
     //Gun Variables
     [SerializeField] Gun[] _guns = new Gun[] { };
     Gun _activeGun;
+    bool _isGunSelected;
 
     //getters and setters
     public CharacterController CharacterController { get { return _characterController; } }
@@ -44,6 +45,7 @@ public class PlayerStateMachine : MonoBehaviour
     public float RunMultiplier { get { return _runMultiplier; } }
     public Vector2 CurrentMovementInput { get { return _currentMovementInput; } }
     public Gun ActiveGun { get { return _activeGun; } set { _activeGun = value; } }
+    public bool IsGunSelected { get { return _isGunSelected; } set { _isGunSelected = value; } }
 
     private void Awake()
     {
@@ -61,9 +63,12 @@ public class PlayerStateMachine : MonoBehaviour
         _playerInput.CharacterControls.Move.started += OnMovementInput;
         _playerInput.CharacterControls.Move.canceled += OnMovementInput;
         _playerInput.CharacterControls.Move.performed += OnMovementInput;
-        _playerInput.CharacterControls.EquipPistol.performed += OnEquipPistol;
-        _playerInput.CharacterControls.EquipShotgun.performed += OnEquipShotgun;
-        _playerInput.CharacterControls.EquipRifle.performed += OnEquipRifle;
+        _playerInput.CharacterControls.EquipPistol.started += OnEquipPistol;
+        _playerInput.CharacterControls.EquipPistol.canceled += OnEquipPistol;
+        _playerInput.CharacterControls.EquipShotgun.started += OnEquipShotgun;
+        _playerInput.CharacterControls.EquipShotgun.canceled += OnEquipShotgun;
+        _playerInput.CharacterControls.EquipRifle.started += OnEquipRifle;
+        _playerInput.CharacterControls.EquipRifle.canceled += OnEquipRifle;
     }
 
     #region Input Action Methods
@@ -78,34 +83,28 @@ public class PlayerStateMachine : MonoBehaviour
 
     void OnEquipPistol(InputAction.CallbackContext context)
     {
-        ToggleGun(0);
+        _isGunSelected = context.ReadValueAsButton();
+        if (IsGunSelected)
+        {
+            ToggleGun(0);
+        }
     }
 
     void OnEquipShotgun(InputAction.CallbackContext context)
     {
-        ToggleGun(1);
+        _isGunSelected = context.ReadValueAsButton();
+        if (IsGunSelected)
+        {
+            ToggleGun(1);
+        }
     }
 
     void OnEquipRifle(InputAction.CallbackContext context)
     {
-        ToggleGun(2);
-    }
-
-    private void ToggleGun(int num)
-    {
-        if (ActiveGun == null || ActiveGun != _guns[num])
+        _isGunSelected = context.ReadValueAsButton();
+        if (IsGunSelected)
         {
-            if (ActiveGun != null)
-            {
-                ActiveGun.gameObject.SetActive(false);
-            }
-            ActiveGun = _guns[num];
-            ActiveGun.gameObject.SetActive(true);
-        }
-        else if (ActiveGun != null)
-        {
-            ActiveGun.gameObject.SetActive(false);
-            ActiveGun = null;
+            ToggleGun(2);
         }
     }
 
@@ -144,7 +143,23 @@ public class PlayerStateMachine : MonoBehaviour
 
     #region Gun
 
-
+    private void ToggleGun(int num)
+    {
+        if (ActiveGun == null || ActiveGun != _guns[num])
+        {
+            if (ActiveGun != null)
+            {
+                ActiveGun.gameObject.SetActive(false);
+            }
+            ActiveGun = _guns[num];
+            ActiveGun.gameObject.SetActive(true);
+        }
+        else if (ActiveGun != null)
+        {
+            ActiveGun.gameObject.SetActive(false);
+            ActiveGun = null;
+        }
+    }
 
     #endregion
 
