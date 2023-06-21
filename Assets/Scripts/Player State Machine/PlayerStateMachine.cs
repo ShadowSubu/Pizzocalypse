@@ -27,6 +27,12 @@ public class PlayerStateMachine : MonoBehaviour
     PlayerBaseState _currentState;
     PlayerStateFactory _states;
 
+    //Gun Variables
+    [SerializeField] Gun[] _guns = new Gun[] { };
+    Gun _activeGun;
+    bool _isGunToggled;
+    bool _requireNewGunToggle;
+
     //getters and setters
     public CharacterController CharacterController { get { return _characterController; } }
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
@@ -39,6 +45,9 @@ public class PlayerStateMachine : MonoBehaviour
     public float AppliedMovementZ { get { return _appliedMovement.z; } set { _appliedMovement.z = value; } }
     public float RunMultiplier { get { return _runMultiplier; } }
     public Vector2 CurrentMovementInput { get { return _currentMovementInput; } }
+    public Gun ActiveGun { get { return _activeGun; } set { _activeGun = value; } }
+    public bool IsGunToggled { get { return _isGunToggled; } set { _isGunToggled = value; } }
+    public bool RequireNewGunToggle { get { return _requireNewGunToggle; } set { _requireNewGunToggle = value; } }
 
     private void Awake()
     {
@@ -56,7 +65,15 @@ public class PlayerStateMachine : MonoBehaviour
         _playerInput.CharacterControls.Move.started += OnMovementInput;
         _playerInput.CharacterControls.Move.canceled += OnMovementInput;
         _playerInput.CharacterControls.Move.performed += OnMovementInput;
+        _playerInput.CharacterControls.EquipPistol.started += OnEquipPistol;
+        _playerInput.CharacterControls.EquipPistol.canceled += OnEquipPistol;
+        _playerInput.CharacterControls.EquipShotgun.started += OnEquipShotgun;
+        _playerInput.CharacterControls.EquipShotgun.canceled += OnEquipShotgun;
+        _playerInput.CharacterControls.EquipRifle.started += OnEquipRifle;
+        _playerInput.CharacterControls.EquipRifle.canceled += OnEquipRifle;
     }
+
+    #region Input Action Methods
 
     void OnMovementInput(InputAction.CallbackContext context)
     {
@@ -65,6 +82,47 @@ public class PlayerStateMachine : MonoBehaviour
         _currentMovement.z = _currentMovementInput.y;
         _isMovementPressed = _currentMovementInput.x != 0 || _currentMovementInput.y != 0;
     }
+
+    void OnEquipPistol(InputAction.CallbackContext context)
+    {
+        _isGunToggled = context.ReadValueAsButton();
+        if (IsGunToggled)
+        {
+            ToggleGun(0);
+        }
+        else
+        {
+            RequireNewGunToggle = false;
+        }
+    }
+
+    void OnEquipShotgun(InputAction.CallbackContext context)
+    {
+        _isGunToggled = context.ReadValueAsButton();
+        if (IsGunToggled)
+        {
+            ToggleGun(1);
+        }
+        else
+        {
+            RequireNewGunToggle = false;
+        }
+    }
+
+    void OnEquipRifle(InputAction.CallbackContext context)
+    {
+        _isGunToggled = context.ReadValueAsButton();
+        if (IsGunToggled)
+        {
+            ToggleGun(2);
+        }
+        else
+        {
+            RequireNewGunToggle = false;
+        }
+    }
+
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -97,6 +155,28 @@ public class PlayerStateMachine : MonoBehaviour
         }
     }
 
+    #region Gun
+
+    private void ToggleGun(int num)
+    {
+        if (ActiveGun == null || ActiveGun != _guns[num])
+        {
+            if (ActiveGun != null)
+            {
+                ActiveGun.gameObject.SetActive(false);
+            }
+            ActiveGun = _guns[num];
+            ActiveGun.gameObject.SetActive(true);
+        }
+        else if (ActiveGun != null)
+        {
+            ActiveGun.gameObject.SetActive(false);
+            ActiveGun = null;
+        }
+    }
+
+    #endregion
+
     private void OnEnable()
     {
         _playerInput?.CharacterControls.Enable();
@@ -106,4 +186,11 @@ public class PlayerStateMachine : MonoBehaviour
     {
         _playerInput?.CharacterControls.Disable();
     }
+}
+
+public enum GunType
+{
+    Pistol,
+    Shotgun,
+    Rifle
 }

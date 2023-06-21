@@ -35,6 +35,42 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": ""NormalizeVector2"",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""EquipPistol"",
+                    ""type"": ""Button"",
+                    ""id"": ""6be62226-c9bf-4620-ac34-7361b8d03687"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EquipShotgun"",
+                    ""type"": ""Button"",
+                    ""id"": ""42f83389-6192-4440-b392-c37b5aa6828d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EquipRifle"",
+                    ""type"": ""Button"",
+                    ""id"": ""c5e279fa-2487-4051-9ac6-9fa7c3a7df9a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""d2140225-8d4f-466d-9d68-283812e5c674"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -92,6 +128,50 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8cbc4615-2f7c-4d6c-833e-bd99814b00aa"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EquipPistol"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6b0a82d7-f069-4540-b639-32775666fdec"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EquipShotgun"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3d03b29a-b424-48b6-9788-0ff4a1ca4c61"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EquipRifle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9d9acfbc-9e18-495b-8455-5f7d7a516a2d"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -101,6 +181,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         // CharacterControls
         m_CharacterControls = asset.FindActionMap("CharacterControls", throwIfNotFound: true);
         m_CharacterControls_Move = m_CharacterControls.FindAction("Move", throwIfNotFound: true);
+        m_CharacterControls_EquipPistol = m_CharacterControls.FindAction("EquipPistol", throwIfNotFound: true);
+        m_CharacterControls_EquipShotgun = m_CharacterControls.FindAction("EquipShotgun", throwIfNotFound: true);
+        m_CharacterControls_EquipRifle = m_CharacterControls.FindAction("EquipRifle", throwIfNotFound: true);
+        m_CharacterControls_Shoot = m_CharacterControls.FindAction("Shoot", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -163,11 +247,19 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_CharacterControls;
     private List<ICharacterControlsActions> m_CharacterControlsActionsCallbackInterfaces = new List<ICharacterControlsActions>();
     private readonly InputAction m_CharacterControls_Move;
+    private readonly InputAction m_CharacterControls_EquipPistol;
+    private readonly InputAction m_CharacterControls_EquipShotgun;
+    private readonly InputAction m_CharacterControls_EquipRifle;
+    private readonly InputAction m_CharacterControls_Shoot;
     public struct CharacterControlsActions
     {
         private @PlayerInput m_Wrapper;
         public CharacterControlsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_CharacterControls_Move;
+        public InputAction @EquipPistol => m_Wrapper.m_CharacterControls_EquipPistol;
+        public InputAction @EquipShotgun => m_Wrapper.m_CharacterControls_EquipShotgun;
+        public InputAction @EquipRifle => m_Wrapper.m_CharacterControls_EquipRifle;
+        public InputAction @Shoot => m_Wrapper.m_CharacterControls_Shoot;
         public InputActionMap Get() { return m_Wrapper.m_CharacterControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -180,6 +272,18 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @EquipPistol.started += instance.OnEquipPistol;
+            @EquipPistol.performed += instance.OnEquipPistol;
+            @EquipPistol.canceled += instance.OnEquipPistol;
+            @EquipShotgun.started += instance.OnEquipShotgun;
+            @EquipShotgun.performed += instance.OnEquipShotgun;
+            @EquipShotgun.canceled += instance.OnEquipShotgun;
+            @EquipRifle.started += instance.OnEquipRifle;
+            @EquipRifle.performed += instance.OnEquipRifle;
+            @EquipRifle.canceled += instance.OnEquipRifle;
+            @Shoot.started += instance.OnShoot;
+            @Shoot.performed += instance.OnShoot;
+            @Shoot.canceled += instance.OnShoot;
         }
 
         private void UnregisterCallbacks(ICharacterControlsActions instance)
@@ -187,6 +291,18 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @EquipPistol.started -= instance.OnEquipPistol;
+            @EquipPistol.performed -= instance.OnEquipPistol;
+            @EquipPistol.canceled -= instance.OnEquipPistol;
+            @EquipShotgun.started -= instance.OnEquipShotgun;
+            @EquipShotgun.performed -= instance.OnEquipShotgun;
+            @EquipShotgun.canceled -= instance.OnEquipShotgun;
+            @EquipRifle.started -= instance.OnEquipRifle;
+            @EquipRifle.performed -= instance.OnEquipRifle;
+            @EquipRifle.canceled -= instance.OnEquipRifle;
+            @Shoot.started -= instance.OnShoot;
+            @Shoot.performed -= instance.OnShoot;
+            @Shoot.canceled -= instance.OnShoot;
         }
 
         public void RemoveCallbacks(ICharacterControlsActions instance)
@@ -207,5 +323,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     public interface ICharacterControlsActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnEquipPistol(InputAction.CallbackContext context);
+        void OnEquipShotgun(InputAction.CallbackContext context);
+        void OnEquipRifle(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
     }
 }

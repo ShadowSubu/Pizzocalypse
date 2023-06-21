@@ -13,6 +13,7 @@ public class PlayerRunState : PlayerBaseState
     public override void EnterState()
     {
         Debug.Log("Enter State from Run");
+        InitializeSubState();
         Ctx.Animator.SetBool(Ctx.IsRunningHash, true);
     }
     public override void UpdateState()
@@ -42,6 +43,14 @@ public class PlayerRunState : PlayerBaseState
 
     public override void InitializeSubState()
     {
+        if (!Ctx.IsGunToggled)
+        {
+            SetSubState(Factory.None());
+        }
+        else
+        {
+
+        }
     }
 
 }
