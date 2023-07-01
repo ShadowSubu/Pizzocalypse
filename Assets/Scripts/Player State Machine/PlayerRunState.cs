@@ -26,6 +26,7 @@ public class PlayerRunState : PlayerBaseState
     {
         Ctx.AppliedMovementX = Ctx.CurrentMovementInput.x * Ctx.RunMultiplier;
         Ctx.AppliedMovementZ = Ctx.CurrentMovementInput.y * Ctx.RunMultiplier;
+        Debug.Log("movement:" + Ctx.CurrentMovementInput);
     }
 
     public override void ExitState()
