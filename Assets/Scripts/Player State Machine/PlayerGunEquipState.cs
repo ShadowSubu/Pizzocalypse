@@ -5,9 +5,7 @@ using UnityEngine;
 
 public class PlayerGunEquipState : PlayerBaseState
 {
-    //Animation Lerp
-    float lerpDuration = 0.3f;
-    float valueToLerp;
+    
 
     public PlayerGunEquipState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
     : base(currentContext, playerStateFactory){}
@@ -15,7 +13,6 @@ public class PlayerGunEquipState : PlayerBaseState
     public override void EnterState()
     {
         Debug.Log("Enter State from GunEquip");
-        EquipAnimation(0,1);
     }
 
     public override void UpdateState()
@@ -28,7 +25,6 @@ public class PlayerGunEquipState : PlayerBaseState
     {
         Debug.Log("Exit State from GunEquip");
         Ctx.RequireNewGunToggle = true;
-        EquipAnimation(1,0);
     }
 
     public override void CheckSwitchState()
@@ -36,6 +32,11 @@ public class PlayerGunEquipState : PlayerBaseState
         if (Ctx.IsGunToggled && !Ctx.RequireNewGunToggle && Ctx.ActiveGun == null)
         {
             SwitchState(Factory.None());
+            Ctx.EquipAnimation(1, 0);
+        }
+        if (Ctx.ActiveGun != null && Ctx.IsShooting)
+        {
+            SwitchState(Factory.GunFire());
         }
     }
 
@@ -44,16 +45,5 @@ public class PlayerGunEquipState : PlayerBaseState
         
     }
 
-    private async void EquipAnimation(float startValue, float endValue)
-    {
-        float timeElapsed = 0;
-        while (timeElapsed < lerpDuration)
-        {
-            valueToLerp = Mathf.Lerp(startValue, endValue, timeElapsed/lerpDuration);
-            timeElapsed += Time.deltaTime;
-            Debug.Log("Lerp: " + startValue);
-            Ctx.Animator.SetLayerWeight(1, valueToLerp);
-            await Task.Yield();
-        }
-    }
+    
 }
