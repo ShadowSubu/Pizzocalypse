@@ -14,6 +14,7 @@ public class PlayerGunFireState : PlayerBaseState
         Debug.Log("Enter State from GunFire");
         StartShootingDuration();
         AnimateGun();
+        ShootBullet();
     }
 
     public override void UpdateState()
@@ -73,5 +74,14 @@ public class PlayerGunFireState : PlayerBaseState
         Ctx.Animator.SetBool(Ctx.IsPistolFireHash, false);
         Ctx.Animator.SetBool(Ctx.IsShotgunFireHash, false);
         Ctx.Animator.SetBool(Ctx.IsRifleFireHash, false);
+    }
+
+    void ShootBullet()
+    {
+        if (Ctx.ActiveGun != null && Ctx.ActiveGun.ShootingPoint != null)
+        {
+            Bullet bullet = Object.Instantiate(Ctx.BulletPrefab, Ctx.ActiveGun.ShootingPoint.position, Ctx.transform.rotation);
+            
+        }
     }
 }

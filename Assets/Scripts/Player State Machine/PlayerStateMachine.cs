@@ -38,6 +38,9 @@ public class PlayerStateMachine : MonoBehaviour
     bool _requireNewGunToggle;
     bool _isShooting;
 
+    //Prefabs
+    [SerializeField] Bullet _bulletPrefab;
+
     //Animation Lerp
     float lerpDuration = 0.3f;
     float valueToLerp;
@@ -61,6 +64,7 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsGunToggled { get { return _isGunToggled; } set { _isGunToggled = value; } }
     public bool RequireNewGunToggle { get { return _requireNewGunToggle; } set { _requireNewGunToggle = value; } }
     public bool IsShooting { get { return _isShooting; } set { _isShooting = value; } }
+    public Bullet BulletPrefab { get { return _bulletPrefab; } }
 
     private void Awake()
     {

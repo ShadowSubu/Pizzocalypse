@@ -26,7 +26,7 @@ public class PlayerRunState : PlayerBaseState
     {
         Ctx.AppliedMovementX = Ctx.CurrentMovementInput.x * Ctx.RunMultiplier;
         Ctx.AppliedMovementZ = Ctx.CurrentMovementInput.y * Ctx.RunMultiplier;
-        Debug.Log("movement:" + Ctx.CurrentMovementInput);
+        //Debug.Log("movement:" + Ctx.CurrentMovementInput);
     }
 
     public override void ExitState()
@@ -44,13 +44,13 @@ public class PlayerRunState : PlayerBaseState
 
     public override void InitializeSubState()
     {
-        if (!Ctx.IsGunToggled)
+        if (!Ctx.IsGunToggled && Ctx.ActiveGun == null)
         {
             SetSubState(Factory.None());
         }
-        else
+        else if (Ctx.ActiveGun != null)
         {
-
+            SetSubState(Factory.GunEquip());
         }
     }
 
