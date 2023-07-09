@@ -29,6 +29,7 @@ public class PlayerNoneState : PlayerBaseState
         if (Ctx.IsGunToggled && !Ctx.RequireNewGunToggle)
         {
             SwitchState(Factory.GunEquip());
+            Ctx.EquipAnimation(0, 1);
         }
     }
 

@@ -37,13 +37,13 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void InitializeSubState()
     {
-        if (!Ctx.IsGunToggled)
+        if (!Ctx.IsGunToggled && Ctx.ActiveGun == null)
         {
             SetSubState(Factory.None());
         }
-        else
+        else if (Ctx.ActiveGun != null)
         {
-
+            SetSubState(Factory.GunEquip());
         }
     }
 

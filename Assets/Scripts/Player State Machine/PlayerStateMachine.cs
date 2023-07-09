@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,6 +12,9 @@ public class PlayerStateMachine : MonoBehaviour
 
     // variables to store optimized setter/getter IDs
     int _isRunningHash;
+    int _isPistolFireHash;
+    int _isShotgunFireHash;
+    int _isRifleFireHash;
 
     //values to store player input values
     Vector2 _currentMovementInput;
@@ -32,12 +36,23 @@ public class PlayerStateMachine : MonoBehaviour
     Gun _activeGun;
     bool _isGunToggled;
     bool _requireNewGunToggle;
+    bool _isShooting;
+
+    //Prefabs
+    [SerializeField] Bullet _bulletPrefab;
+
+    //Animation Lerp
+    float lerpDuration = 0.3f;
+    float valueToLerp;
 
     //getters and setters
     public CharacterController CharacterController { get { return _characterController; } }
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public Animator Animator { get { return _animator; } }
     public int IsRunningHash { get { return _isRunningHash; } }
+    public int IsPistolFireHash { get { return _isPistolFireHash; } }
+    public int IsShotgunFireHash { get { return _isShotgunFireHash; } }
+    public int IsRifleFireHash { get { return _isRifleFireHash; } }
     public float CurrentMovementY { get { return _currentMovement.y; } set { _currentMovement.y = value; } }
     public float AppliedMovementY { get { return _appliedMovement.y; } set { _appliedMovement.y = value; } }
     public bool IsMovementPressed { get { return _isMovementPressed; } }
@@ -48,6 +63,8 @@ public class PlayerStateMachine : MonoBehaviour
     public Gun ActiveGun { get { return _activeGun; } set { _activeGun = value; } }
     public bool IsGunToggled { get { return _isGunToggled; } set { _isGunToggled = value; } }
     public bool RequireNewGunToggle { get { return _requireNewGunToggle; } set { _requireNewGunToggle = value; } }
+    public bool IsShooting { get { return _isShooting; } set { _isShooting = value; } }
+    public Bullet BulletPrefab { get { return _bulletPrefab; } }
 
     private void Awake()
     {
@@ -61,6 +78,9 @@ public class PlayerStateMachine : MonoBehaviour
         _currentState.EnterState();
 
         _isRunningHash = Animator.StringToHash("IsRunning");
+        _isPistolFireHash = Animator.StringToHash("IsPistolFire");
+        _isShotgunFireHash = Animator.StringToHash("IsShotgunFire");
+        _isRifleFireHash = Animator.StringToHash("IsRifleFire");
 
         _playerInput.CharacterControls.Move.started += OnMovementInput;
         _playerInput.CharacterControls.Move.canceled += OnMovementInput;
@@ -71,6 +91,7 @@ public class PlayerStateMachine : MonoBehaviour
         _playerInput.CharacterControls.EquipShotgun.canceled += OnEquipShotgun;
         _playerInput.CharacterControls.EquipRifle.started += OnEquipRifle;
         _playerInput.CharacterControls.EquipRifle.canceled += OnEquipRifle;
+        _playerInput.CharacterControls.Shoot.performed += OnShoot;
     }
 
     #region Input Action Methods
@@ -122,6 +143,11 @@ public class PlayerStateMachine : MonoBehaviour
         }
     }
 
+    void OnShoot(InputAction.CallbackContext context)
+    {
+        _isShooting = context.ReadValueAsButton();
+    }
+
     #endregion
 
     // Start is called before the first frame update
@@ -155,6 +181,7 @@ public class PlayerStateMachine : MonoBehaviour
         }
     }
 
+
     #region Gun
 
     private void ToggleGun(int num)
@@ -172,6 +199,19 @@ public class PlayerStateMachine : MonoBehaviour
         {
             ActiveGun.gameObject.SetActive(false);
             ActiveGun = null;
+        }
+    }
+
+    public async void EquipAnimation(float startValue, float endValue)
+    {
+        float timeElapsed = 0;
+        while (timeElapsed < lerpDuration)
+        {
+            valueToLerp = Mathf.Lerp(startValue, endValue, timeElapsed / lerpDuration);
+            timeElapsed += Time.deltaTime;
+            //Debug.Log("Lerp: " + startValue);
+            Animator.SetLayerWeight(1, valueToLerp);
+            await Task.Yield();
         }
     }
 
