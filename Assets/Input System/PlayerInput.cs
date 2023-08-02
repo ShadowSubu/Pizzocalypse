@@ -71,6 +71,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Rotate"",
+                    ""type"": ""Value"",
+                    ""id"": ""adef3aea-ae9e-4f3c-8b15-bfad10878aea"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -131,6 +140,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""a50cbc14-bff3-4d54-9490-8b5dae2e9778"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""8cbc4615-2f7c-4d6c-833e-bd99814b00aa"",
                     ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
@@ -172,6 +192,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ffd8f7d8-da95-4769-9034-79821fe882f7"",
+                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""000e340a-7699-492f-aa93-56e0d2520e57"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -185,6 +227,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_CharacterControls_EquipShotgun = m_CharacterControls.FindAction("EquipShotgun", throwIfNotFound: true);
         m_CharacterControls_EquipRifle = m_CharacterControls.FindAction("EquipRifle", throwIfNotFound: true);
         m_CharacterControls_Shoot = m_CharacterControls.FindAction("Shoot", throwIfNotFound: true);
+        m_CharacterControls_Rotate = m_CharacterControls.FindAction("Rotate", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -251,6 +294,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_CharacterControls_EquipShotgun;
     private readonly InputAction m_CharacterControls_EquipRifle;
     private readonly InputAction m_CharacterControls_Shoot;
+    private readonly InputAction m_CharacterControls_Rotate;
     public struct CharacterControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -260,6 +304,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @EquipShotgun => m_Wrapper.m_CharacterControls_EquipShotgun;
         public InputAction @EquipRifle => m_Wrapper.m_CharacterControls_EquipRifle;
         public InputAction @Shoot => m_Wrapper.m_CharacterControls_Shoot;
+        public InputAction @Rotate => m_Wrapper.m_CharacterControls_Rotate;
         public InputActionMap Get() { return m_Wrapper.m_CharacterControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -284,6 +329,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Shoot.started += instance.OnShoot;
             @Shoot.performed += instance.OnShoot;
             @Shoot.canceled += instance.OnShoot;
+            @Rotate.started += instance.OnRotate;
+            @Rotate.performed += instance.OnRotate;
+            @Rotate.canceled += instance.OnRotate;
         }
 
         private void UnregisterCallbacks(ICharacterControlsActions instance)
@@ -303,6 +351,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Shoot.started -= instance.OnShoot;
             @Shoot.performed -= instance.OnShoot;
             @Shoot.canceled -= instance.OnShoot;
+            @Rotate.started -= instance.OnRotate;
+            @Rotate.performed -= instance.OnRotate;
+            @Rotate.canceled -= instance.OnRotate;
         }
 
         public void RemoveCallbacks(ICharacterControlsActions instance)
@@ -327,5 +378,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnEquipShotgun(InputAction.CallbackContext context);
         void OnEquipRifle(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnRotate(InputAction.CallbackContext context);
     }
 }
