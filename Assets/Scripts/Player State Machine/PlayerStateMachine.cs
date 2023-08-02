@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,6 +22,9 @@ public class PlayerStateMachine : MonoBehaviour
     Vector3 _currentMovement;
     Vector3 _appliedMovement;
     bool _isMovementPressed;
+    RaycastHit hit;
+    Ray ray;
+    float turnLerpDuration = 0.1f;
 
     //constants
     float _runMultiplier = 5f;
@@ -37,6 +41,7 @@ public class PlayerStateMachine : MonoBehaviour
     bool _isGunToggled;
     bool _requireNewGunToggle;
     bool _isShooting;
+    bool _isRotating;
 
     //Prefabs
     [SerializeField] Bullet _bulletPrefab;
@@ -64,6 +69,7 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsGunToggled { get { return _isGunToggled; } set { _isGunToggled = value; } }
     public bool RequireNewGunToggle { get { return _requireNewGunToggle; } set { _requireNewGunToggle = value; } }
     public bool IsShooting { get { return _isShooting; } set { _isShooting = value; } }
+    public bool IsRotating { get { return _isRotating; } set { _isRotating = value; } }
     public Bullet BulletPrefab { get { return _bulletPrefab; } }
 
     private void Awake()
@@ -99,6 +105,7 @@ public class PlayerStateMachine : MonoBehaviour
     void OnMovementInput(InputAction.CallbackContext context)
     {
         _currentMovementInput = context.ReadValue<Vector2>();
+        Debug.Log("Current Movement: " + _currentMovementInput);
         _currentMovement.x = _currentMovementInput.x;
         _currentMovement.z = _currentMovementInput.y;
         _isMovementPressed = _currentMovementInput.x != 0 || _currentMovementInput.y != 0;
@@ -143,8 +150,11 @@ public class PlayerStateMachine : MonoBehaviour
         }
     }
 
-    void OnShoot(InputAction.CallbackContext context)
+    async void OnShoot(InputAction.CallbackContext context)
     {
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        _isRotating = true;
+        await RotateToShootDirection();
         _isShooting = context.ReadValueAsButton();
     }
 
@@ -166,21 +176,41 @@ public class PlayerStateMachine : MonoBehaviour
 
     void HandleRotation()
     {
-        Vector3 positionToLookAt;
-
-        positionToLookAt.x = _currentMovement.x;
-        positionToLookAt.y = 0.0f;
-        positionToLookAt.z = _currentMovement.z;
-
-        Quaternion currentRotation = transform.rotation;
-
-        if (_isMovementPressed)
+        if (!_isRotating)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
-            transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, _rotationFactorPerFrame * Time.deltaTime);
+            Vector3 positionToLookAt;
+
+            positionToLookAt.x = _currentMovement.x;
+            positionToLookAt.y = 0.0f;
+            positionToLookAt.z = _currentMovement.z;
+
+            Quaternion currentRotation = transform.rotation;
+
+            if (_isMovementPressed)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
+                transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, _rotationFactorPerFrame * Time.deltaTime);
+            }
         }
     }
 
+    async Task RotateToShootDirection()
+    {
+        if (Physics.Raycast(ray, out hit))
+        {
+            Vector3 mousePos = new Vector3(hit.point.x, 0, hit.point.z);
+            Vector3 lookDirection = mousePos - transform.position;
+            float angle = Mathf.Atan2(lookDirection.z, lookDirection.x) * Mathf.Rad2Deg - 90f;
+            //Debug.Log("Angle:" + angle);
+            float timeElapsed = 0;
+            while (timeElapsed < turnLerpDuration)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, -angle, 0), timeElapsed/ turnLerpDuration);
+                timeElapsed += Time.deltaTime;
+                await Task.Yield();
+            }
+        }
+    }
 
     #region Gun
 
