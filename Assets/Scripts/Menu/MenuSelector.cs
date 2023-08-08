@@ -11,14 +11,21 @@ public class MenuSelector : MonoBehaviour
     [SerializeField] bool isGunSelectorMode;
     [SerializeField] Gun[] _guns = new Gun[] { };
     [SerializeField] LevelSlice[] levelSlices = new LevelSlice[] { };
+    [SerializeField] Gun selectedGun;
+    [SerializeField] LevelSlice selectedLevel;
     [SerializeField] Button gunSelectionButton;
     [SerializeField] Button levelSelectionButton;
 
     public bool IsGunSelectorMode { get { return isGunSelectorMode; } }
+
+    private void Awake()
+    {
+        if (AudioManager.Instance) AudioManager.Instance.Play(""); //PLAY BGM FOR MENU
+    }
     private void Start()
     {
         isGunSelectorMode = true;
-        _guns[0].gameObject.SetActive(true);
+        SelectWeapon(0);
         gunSelectionButton.onClick.AddListener(EnableGunSelection);
         levelSelectionButton.onClick.AddListener(EnabelLevelSelection);
         AssignThisToSlices();
@@ -29,18 +36,15 @@ public class MenuSelector : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                DisableGuns();
-                _guns[0].gameObject.SetActive(true);
+                SelectWeapon(0);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                DisableGuns();
-                _guns[1].gameObject.SetActive(true);
+                SelectWeapon(1);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                DisableGuns();
-                _guns[2].gameObject.SetActive(true);
+                SelectWeapon(2);
             }
         }
     }
@@ -58,6 +62,7 @@ public class MenuSelector : MonoBehaviour
         levelSelectorCamera.gameObject.SetActive(false); 
         gunSelectorCamera.gameObject.SetActive(true);
         isGunSelectorMode = true;
+        if (AudioManager.Instance) AudioManager.Instance.Play(""); //PLAY AUDIO
     }
 
     private void EnabelLevelSelection()
@@ -65,6 +70,7 @@ public class MenuSelector : MonoBehaviour
         gunSelectorCamera.gameObject.SetActive(false);
         levelSelectorCamera.gameObject.SetActive(true);
         isGunSelectorMode = false;
+        if (AudioManager.Instance) AudioManager.Instance.Play(""); //PLAY AUDIO
     }
 
     private void AssignThisToSlices()
@@ -78,5 +84,23 @@ public class MenuSelector : MonoBehaviour
     public void SelectLevel(int num, LevelSlice level)
     {
         level.Highlight(levelSlices);
+        selectedLevel = level;
+        if (AudioManager.Instance) AudioManager.Instance.Play(""); //PLAY AUDIO
+    }
+
+   public void SelectWeapon(int gunNumber)
+    {
+        DisableGuns();
+        _guns[gunNumber].gameObject.SetActive(true);
+        selectedGun = _guns[gunNumber];
+        if (AudioManager.Instance) AudioManager.Instance.Play(""); //PLAY AUDIO
+    }
+
+    public void LoadLevel()
+    {
+        if (selectedLevel != null)
+        {
+            //LOAD LEVEL HERE
+        }
     }
 }

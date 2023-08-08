@@ -27,8 +27,8 @@ public class PlayerStateMachine : MonoBehaviour
     float turnLerpDuration = 0.1f;
 
     //constants
-    float _runMultiplier = 5f;
-    float _rotationFactorPerFrame = 15.0f;
+    [SerializeField] float _runMultiplier = 5f;
+    [SerializeField] float _rotationFactorPerFrame = 15.0f;
     int _zero = 0;
 
     //State variables
@@ -77,6 +77,7 @@ public class PlayerStateMachine : MonoBehaviour
         _playerInput = new PlayerInput();
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
+        GameManager.OnGameStateChanged += GameManager_OnGameStateChanged;
 
         // setup States
         _states = new PlayerStateFactory(this);
@@ -164,6 +165,20 @@ public class PlayerStateMachine : MonoBehaviour
     void Start()
     {
         _characterController.Move(_appliedMovement * Time.deltaTime);
+        
+    }
+
+    private async void GameManager_OnGameStateChanged(GameState state)
+    {
+        if(state == GameState.Deliver)
+        {
+            _playerInput?.CharacterControls.Disable();
+        }
+        if (state == GameState.StartGame)
+        {
+            await Task.Delay(2000);
+            _playerInput?.CharacterControls.Enable();
+        }
     }
 
     // Update is called once per frame
@@ -247,15 +262,28 @@ public class PlayerStateMachine : MonoBehaviour
 
     #endregion
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Delivery Point"))
+        {
+            if (GameManager.instance)
+            {
+                GameManager.instance.UpdateGameState(GameState.Deliver);
+            }
+        }
+    }
+
     private void OnEnable()
     {
-        _playerInput?.CharacterControls.Enable();
+        
     }
 
     private void OnDisable()
     {
         _playerInput?.CharacterControls.Disable();
+        GameManager.OnGameStateChanged -= GameManager_OnGameStateChanged;
     }
+
 }
 
 public enum GunType

@@ -919,8 +919,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 270171973}
-  m_LocalRotation: {x: 0.7071068, y: 0.000000029802326, z: -0.000000029802326, w: 0.70710677}
-  m_LocalPosition: {x: 0.0075650485, y: 1.6710489, z: 1.0023481}
+  m_LocalRotation: {x: -0.000000022351742, y: 0, z: 0.000000014901161, w: 1}
+  m_LocalPosition: {x: -0.017701143, y: 0.49838784, z: -0.83145434}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1046,6 +1046,8 @@ MonoBehaviour:
   - {fileID: 1936196815}
   - {fileID: 2009033111}
   - {fileID: 2037031215}
+  selectedGun: {fileID: 0}
+  selectedLevel: {fileID: 0}
   gunSelectionButton: {fileID: 1788448225}
   levelSelectionButton: {fileID: 617675489}
 --- !u!4 &383113263
@@ -2828,6 +2830,99 @@ Transform:
   m_Father: {fileID: 125708502}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1414283314
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 665038584763731658, guid: e6fe0df63417e044d96fc9e27b40b20e,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 665038584763731658, guid: e6fe0df63417e044d96fc9e27b40b20e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.045107156
+      objectReference: {fileID: 0}
+    - target: {fileID: 665038584763731658, guid: e6fe0df63417e044d96fc9e27b40b20e,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.96779895
+      objectReference: {fileID: 0}
+    - target: {fileID: 665038584763731658, guid: e6fe0df63417e044d96fc9e27b40b20e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.054917604
+      objectReference: {fileID: 0}
+    - target: {fileID: 665038584763731658, guid: e6fe0df63417e044d96fc9e27b40b20e,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 665038584763731658, guid: e6fe0df63417e044d96fc9e27b40b20e,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 665038584763731658, guid: e6fe0df63417e044d96fc9e27b40b20e,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 665038584763731658, guid: e6fe0df63417e044d96fc9e27b40b20e,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 665038584763731658, guid: e6fe0df63417e044d96fc9e27b40b20e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 665038584763731658, guid: e6fe0df63417e044d96fc9e27b40b20e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 665038584763731658, guid: e6fe0df63417e044d96fc9e27b40b20e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1566587349221557788, guid: e6fe0df63417e044d96fc9e27b40b20e,
+        type: 3}
+      propertyPath: sounds.Array.data[0].name
+      value: BGM
+      objectReference: {fileID: 0}
+    - target: {fileID: 1566587349221557788, guid: e6fe0df63417e044d96fc9e27b40b20e,
+        type: 3}
+      propertyPath: sounds.Array.data[1].name
+      value: UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 1566587349221557788, guid: e6fe0df63417e044d96fc9e27b40b20e,
+        type: 3}
+      propertyPath: sounds.Array.data[2].name
+      value: Game
+      objectReference: {fileID: 0}
+    - target: {fileID: 1566587349221557788, guid: e6fe0df63417e044d96fc9e27b40b20e,
+        type: 3}
+      propertyPath: sounds.Array.data[0].soundsCollection.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8643293508273087766, guid: e6fe0df63417e044d96fc9e27b40b20e,
+        type: 3}
+      propertyPath: m_Name
+      value: Audio Manager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e6fe0df63417e044d96fc9e27b40b20e, type: 3}
 --- !u!1 &1507952356
 GameObject:
   m_ObjectHideFlags: 0
