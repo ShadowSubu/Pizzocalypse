@@ -15,12 +15,13 @@ public class MenuSelector : MonoBehaviour
     [SerializeField] LevelSlice selectedLevel;
     [SerializeField] Button gunSelectionButton;
     [SerializeField] Button levelSelectionButton;
+    [SerializeField] Button playButton;
 
     public bool IsGunSelectorMode { get { return isGunSelectorMode; } }
 
     private void Awake()
     {
-        if (AudioManager.Instance) AudioManager.Instance.Play(""); //PLAY BGM FOR MENU
+        
     }
     private void Start()
     {
@@ -28,7 +29,12 @@ public class MenuSelector : MonoBehaviour
         SelectWeapon(0);
         gunSelectionButton.onClick.AddListener(EnableGunSelection);
         levelSelectionButton.onClick.AddListener(EnabelLevelSelection);
+        playButton.onClick.AddListener(Play);
         AssignThisToSlices();
+
+        playButton.interactable = false;
+
+        if (AudioManager.Instance) AudioManager.Instance.Play("Rough_-_Tune"); //PLAY BGM FOR MENU
     }
     private void Update()
     {
@@ -62,7 +68,7 @@ public class MenuSelector : MonoBehaviour
         levelSelectorCamera.gameObject.SetActive(false); 
         gunSelectorCamera.gameObject.SetActive(true);
         isGunSelectorMode = true;
-        if (AudioManager.Instance) AudioManager.Instance.Play(""); //PLAY AUDIO
+        if (AudioManager.Instance) AudioManager.Instance.Play("Pizzocalypse-Button Click 1"); //PLAY AUDIO
     }
 
     private void EnabelLevelSelection()
@@ -70,7 +76,19 @@ public class MenuSelector : MonoBehaviour
         gunSelectorCamera.gameObject.SetActive(false);
         levelSelectorCamera.gameObject.SetActive(true);
         isGunSelectorMode = false;
-        if (AudioManager.Instance) AudioManager.Instance.Play(""); //PLAY AUDIO
+        if (AudioManager.Instance) AudioManager.Instance.Play("Pizzocalypse-Button Click 1"); //PLAY AUDIO
+    }
+
+    private void Play()
+    {
+        if (AudioManager.Instance) AudioManager.Instance.Play("Pizzocalypse-Button Click 3"); //PLAY AUDIO
+        if (selectedLevel)
+        {
+            if (SceneLoader.Instance && selectedLevel.isUnlocked)
+            {
+                SceneLoader.Instance.LoadScene(selectedLevel.levelName);
+            }
+        }
     }
 
     private void AssignThisToSlices()
@@ -85,7 +103,15 @@ public class MenuSelector : MonoBehaviour
     {
         level.Highlight(levelSlices);
         selectedLevel = level;
-        if (AudioManager.Instance) AudioManager.Instance.Play(""); //PLAY AUDIO
+        if (level.isUnlocked)
+        {
+            playButton.interactable = true;
+        }
+        else
+        {
+            playButton.interactable = false;
+        }
+        if (AudioManager.Instance) AudioManager.Instance.Play("Pizzocalypse-Button Click 1"); //PLAY AUDIO
     }
 
    public void SelectWeapon(int gunNumber)
@@ -93,7 +119,7 @@ public class MenuSelector : MonoBehaviour
         DisableGuns();
         _guns[gunNumber].gameObject.SetActive(true);
         selectedGun = _guns[gunNumber];
-        if (AudioManager.Instance) AudioManager.Instance.Play(""); //PLAY AUDIO
+        if (AudioManager.Instance) AudioManager.Instance.Play("Pizzocalypse-Button Click 1"); //PLAY AUDIO
     }
 
     public void LoadLevel()

@@ -6,6 +6,8 @@ public class LevelSlice : MonoBehaviour
 {
     int sliceNumber;
     public MenuSelector menuSelector;
+    [SerializeField] public string levelName;
+    public bool isUnlocked = false;
 
     private void OnMouseDown()
     {

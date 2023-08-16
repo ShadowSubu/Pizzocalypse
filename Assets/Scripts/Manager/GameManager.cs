@@ -55,8 +55,8 @@ public class GameManager : MonoBehaviour
     {
         if (AudioManager.Instance)
         {
-            AudioManager.Instance.Play(""); //PLAY BGM
-            AudioManager.Instance.Play(""); //PLAY AUDIO
+            
+            AudioManager.Instance.Play("Pizzocalypse-Spawn"); //PLAY AUDIO
         }
         // SPAWN PLAYER
         if (playerCharacter)
@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
 
     void HandleStartGame()
     {
-
+        if (AudioManager.Instance) AudioManager.Instance.Play("Rock_The_Party"); //PLAY BGM
     }
 
     void HandleDeliver()

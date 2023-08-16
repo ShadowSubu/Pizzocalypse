@@ -10,6 +10,8 @@ using UnityEngine.SceneManagement;
 
 public class GameplayUIManager : MonoBehaviour
 {
+    DialogueManager dialogueManager;
+
     [Header("Dialogue Panel")]
     [SerializeField] RectTransform dialoguePanel;
     [SerializeField] Button nextDialogueButton;
@@ -36,6 +38,7 @@ public class GameplayUIManager : MonoBehaviour
 
     private void Start()
     {
+        dialogueManager = GetComponent<DialogueManager>();
     }
 
     void AssignButtons()
@@ -118,6 +121,19 @@ public class GameplayUIManager : MonoBehaviour
     async void OpenDialoguePanel(DialogueStatus status)
     {
         dialogueStatus = status;
+        switch (status)
+        {
+            case DialogueStatus.opening:
+                dialogueManager.playerDialogue.OpenDialogue();
+                break;
+            case DialogueStatus.midGame:
+                break;
+            case DialogueStatus.closing:
+                dialogueManager.npcDialogue.OpenDialogue();
+                break;
+            default:
+                break;
+        }
         dialoguePanel.gameObject.SetActive(true);
         await dialoguePanel.GetComponent<CanvasGroup>().DOFade(1f, 1f).AsyncWaitForCompletion();
         nextDialogueButton.interactable = true;
@@ -147,6 +163,7 @@ public class GameplayUIManager : MonoBehaviour
             default:
                 break;
         }
+        dialogueManager.CloseDialogues();
     }
     #endregion
 

@@ -13,6 +13,7 @@ public class PlayerGunEquipState : PlayerBaseState
     public override void EnterState()
     {
         Debug.Log("Enter State from GunEquip");
+        AudioManager.Instance.Play("Pizzocalypse-Equip");
     }
 
     public override void UpdateState()
