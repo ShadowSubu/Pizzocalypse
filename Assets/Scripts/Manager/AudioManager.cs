@@ -2,6 +2,10 @@ using UnityEngine.Audio;
 using UnityEngine;
 using UnityEditor.SceneManagement;
 using System;
+using System.Collections.Generic;
+using Unity.Mathematics;
+using Random = UnityEngine.Random;
+using System.Collections.ObjectModel;
 
 public class AudioManager : MonoBehaviour
 {
@@ -22,6 +26,7 @@ public class AudioManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         AddAudioSources();
+        SetupPlayerWalk();  
     }
 
     void AddAudioSources()
@@ -36,6 +41,8 @@ public class AudioManager : MonoBehaviour
                 s.source.volume = s.volume;
                 s.source.pitch = s.pitch;
                 s.source.loop = s.loop;
+
+                s.name = s.clip.name;
             }
         }
     }
@@ -76,10 +83,53 @@ public class AudioManager : MonoBehaviour
     public Sound FindSoundInArray(string name)
     {
         Sound s = new Sound();
-        foreach (SoundCollection collection in sounds)
+        for (int i = 0; i < sounds.Length; i++)
         {
-            return Array.Find(collection.soundsCollection, sound => sound.name == name);
+            Debug.Log("Collection: " + sounds[i].name);
+            s = Array.Find(sounds[i].soundsCollection, sound => sound.name == name);
+            if (s != null)
+            {
+                return s;
+            }
         }
         return null;
     }
+
+    #region Custom Sound Methods
+
+    AudioSource[] playerWalkSounds;
+    float walkTimer = 0f;
+    private void SetupPlayerWalk()
+    {
+        for (int i = 0; i < sounds.Length; i++)
+        {
+            if (sounds[i].name == "Player Walk")
+            {
+                playerWalkSounds = new AudioSource[sounds[i].soundsCollection.Length];
+                for (int j = 0; j < sounds[i].soundsCollection.Length; j++)
+                {
+                    playerWalkSounds[j] = sounds[i].soundsCollection[j].source;
+                }
+            }
+        }
+    }
+
+    AudioSource GetRandomWalkSfx()
+    {
+        return playerWalkSounds[Random.Range(0, playerWalkSounds.Length)];
+    }
+
+    public void PlayWalkSFX()
+    {
+        walkTimer += Time.deltaTime;
+        if (walkTimer >= 0.3f)
+        {
+            walkTimer = 0f;
+            AudioSource source =  GetRandomWalkSfx();
+            Debug.Log("Walk Audio: " + source.clip.name);
+            source.Play();
+        }
+    }
+
+    #endregion
 }

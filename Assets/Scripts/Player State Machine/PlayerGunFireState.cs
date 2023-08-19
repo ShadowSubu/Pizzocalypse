@@ -101,6 +101,7 @@ public class PlayerGunFireState : PlayerBaseState
     void PistolShoot()
     {
         Bullet bullet = Object.Instantiate(Ctx.BulletPrefab, Ctx.ActiveGun.ShootingPoint.position, Ctx.transform.rotation);
+        AudioManager.Instance.Play("Pizzocalypse-Pistol");
     }
 
     void ShotgunShooting()
@@ -113,6 +114,7 @@ public class PlayerGunFireState : PlayerBaseState
         for (int i = 0; i < 3; i++)
         {
             Bullet bullet = Object.Instantiate(Ctx.BulletPrefab, Ctx.ActiveGun.ShootingPoint.position, Ctx.transform.rotation);
+            AudioManager.Instance.Play("Pizzocalypse-Rifle");
             await Task.Delay(100);
         }
     }
