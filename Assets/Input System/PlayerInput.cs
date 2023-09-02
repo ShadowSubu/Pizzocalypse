@@ -80,6 +80,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""79aa6873-3184-45ea-8efc-75d7e2558bf0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -214,6 +223,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ae39bb7e-8877-43af-b882-a4c603595040"",
+                    ""path"": ""<Keyboard>/#(R)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -228,6 +248,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_CharacterControls_EquipRifle = m_CharacterControls.FindAction("EquipRifle", throwIfNotFound: true);
         m_CharacterControls_Shoot = m_CharacterControls.FindAction("Shoot", throwIfNotFound: true);
         m_CharacterControls_Rotate = m_CharacterControls.FindAction("Rotate", throwIfNotFound: true);
+        m_CharacterControls_Reload = m_CharacterControls.FindAction("Reload", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -295,6 +316,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_CharacterControls_EquipRifle;
     private readonly InputAction m_CharacterControls_Shoot;
     private readonly InputAction m_CharacterControls_Rotate;
+    private readonly InputAction m_CharacterControls_Reload;
     public struct CharacterControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -305,6 +327,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @EquipRifle => m_Wrapper.m_CharacterControls_EquipRifle;
         public InputAction @Shoot => m_Wrapper.m_CharacterControls_Shoot;
         public InputAction @Rotate => m_Wrapper.m_CharacterControls_Rotate;
+        public InputAction @Reload => m_Wrapper.m_CharacterControls_Reload;
         public InputActionMap Get() { return m_Wrapper.m_CharacterControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -332,6 +355,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Rotate.started += instance.OnRotate;
             @Rotate.performed += instance.OnRotate;
             @Rotate.canceled += instance.OnRotate;
+            @Reload.started += instance.OnReload;
+            @Reload.performed += instance.OnReload;
+            @Reload.canceled += instance.OnReload;
         }
 
         private void UnregisterCallbacks(ICharacterControlsActions instance)
@@ -354,6 +380,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Rotate.started -= instance.OnRotate;
             @Rotate.performed -= instance.OnRotate;
             @Rotate.canceled -= instance.OnRotate;
+            @Reload.started -= instance.OnReload;
+            @Reload.performed -= instance.OnReload;
+            @Reload.canceled -= instance.OnReload;
         }
 
         public void RemoveCallbacks(ICharacterControlsActions instance)
@@ -379,5 +408,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnEquipRifle(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnRotate(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
     }
 }

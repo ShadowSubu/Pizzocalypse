@@ -9,6 +9,7 @@ public class PlayerGunFireState : PlayerBaseState
     : base(currentContext, playerStateFactory) { }
 
     bool isShootingOver;
+
     public override void EnterState()
     {
         Ctx.IsShooting = false;
@@ -79,7 +80,7 @@ public class PlayerGunFireState : PlayerBaseState
 
     void ShootBullet()
     {
-        if (Ctx.ActiveGun != null && Ctx.ActiveGun.ShootingPoint != null)
+        if (Ctx.ActiveGun != null && Ctx.ActiveGun.ShootingPoint != null && Ctx.ActiveGun.AmmoAmount >= 0 && Ctx.ActiveGun.CurrentMagSize > 0)
         {
             switch (Ctx.ActiveGun.GunType)
             {

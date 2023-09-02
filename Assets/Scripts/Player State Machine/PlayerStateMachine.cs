@@ -42,6 +42,7 @@ public class PlayerStateMachine : MonoBehaviour
     bool _requireNewGunToggle;
     bool _isShooting;
     bool _isRotating;
+    bool _isReloading;
 
     //Prefabs
     [SerializeField] Bullet _bulletPrefab;
@@ -69,6 +70,7 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsGunToggled { get { return _isGunToggled; } set { _isGunToggled = value; } }
     public bool RequireNewGunToggle { get { return _requireNewGunToggle; } set { _requireNewGunToggle = value; } }
     public bool IsShooting { get { return _isShooting; } set { _isShooting = value; } }
+    public bool IsReloading { get { return _isReloading; } set { _isReloading = value; } }
     public bool IsRotating { get { return _isRotating; } set { _isRotating = value; } }
     public Bullet BulletPrefab { get { return _bulletPrefab; } }
 
@@ -99,6 +101,7 @@ public class PlayerStateMachine : MonoBehaviour
         _playerInput.CharacterControls.EquipRifle.started += OnEquipRifle;
         _playerInput.CharacterControls.EquipRifle.canceled += OnEquipRifle;
         _playerInput.CharacterControls.Shoot.performed += OnShoot;
+        _playerInput.CharacterControls.Reload.performed += OnReload;
     }
 
     #region Input Action Methods
@@ -157,6 +160,36 @@ public class PlayerStateMachine : MonoBehaviour
         _isRotating = true;
         await RotateToShootDirection();
         _isShooting = context.ReadValueAsButton();
+        ReduceAmmo(_activeGun.AmmoReduceAmount);
+    }
+
+    void OnReload(InputAction.CallbackContext context)
+    {
+        _isReloading = context.ReadValueAsButton();
+        int _bulletsFired = (_activeGun.MagSize - _activeGun.CurrentMagSize);
+        if (_activeGun.AmmoAmount > 0 && _activeGun.CurrentMagSize < _activeGun.MagSize)
+        {
+            if (_bulletsFired > _activeGun.AmmoAmount)
+            {
+                _activeGun.CurrentMagSize += _activeGun.AmmoAmount;
+                _activeGun.AmmoAmount = 0;               
+            }
+            else
+            {
+                _activeGun.AmmoAmount -= _bulletsFired;
+                _activeGun.CurrentMagSize += _bulletsFired;
+            }
+                        
+        }
+    }
+
+    void ReduceAmmo(int ammoToReduce)
+    {
+        if(_activeGun.CurrentMagSize > 0)
+        {
+            _activeGun.CurrentMagSize -= ammoToReduce;
+            Debug.Log("ammo reduced");                      
+        }
     }
 
     #endregion
