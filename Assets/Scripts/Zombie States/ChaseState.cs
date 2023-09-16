@@ -9,12 +9,16 @@ public class ChaseState : StateMachineBehaviour
     Transform Player;
     public float StopChaseDis;
     public float AttackRange;
+    public float ChaseSpeed;
+    float BeforeSpeed;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         ZombieAgent = animator.GetComponent<NavMeshAgent>();
         Player = GameObject.FindGameObjectWithTag("Player").transform;
-        ZombieAgent.speed = 4f;
+
+        BeforeSpeed = ZombieAgent.speed;
+        ZombieAgent.speed = ChaseSpeed;
     
     }
 
@@ -37,7 +41,7 @@ public class ChaseState : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         ZombieAgent.SetDestination(animator.transform.position);
-        ZombieAgent.speed = 1.5f;
+        ZombieAgent.speed = BeforeSpeed;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

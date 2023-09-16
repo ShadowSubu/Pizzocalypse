@@ -1,0 +1,174 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3002069395887065851
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: ebeeca89ff6a5b64b984dbed97cd7383,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ebeeca89ff6a5b64b984dbed97cd7383,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.35
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ebeeca89ff6a5b64b984dbed97cd7383,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.35
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ebeeca89ff6a5b64b984dbed97cd7383,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.35
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ebeeca89ff6a5b64b984dbed97cd7383,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.8573217
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ebeeca89ff6a5b64b984dbed97cd7383,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0001001358
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ebeeca89ff6a5b64b984dbed97cd7383,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.62
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ebeeca89ff6a5b64b984dbed97cd7383,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ebeeca89ff6a5b64b984dbed97cd7383,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ebeeca89ff6a5b64b984dbed97cd7383,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ebeeca89ff6a5b64b984dbed97cd7383,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ebeeca89ff6a5b64b984dbed97cd7383,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ebeeca89ff6a5b64b984dbed97cd7383,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ebeeca89ff6a5b64b984dbed97cd7383,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ebeeca89ff6a5b64b984dbed97cd7383,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ebeeca89ff6a5b64b984dbed97cd7383,
+        type: 3}
+      propertyPath: m_Name
+      value: Parasite L Starkie Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ebeeca89ff6a5b64b984dbed97cd7383,
+        type: 3}
+      propertyPath: m_TagString
+      value: RangedEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: ebeeca89ff6a5b64b984dbed97cd7383,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 9e3b8b1683c151c4e99eb5ffe03d8262, type: 2}
+    - target: {fileID: 5866666021909216657, guid: ebeeca89ff6a5b64b984dbed97cd7383,
+        type: 3}
+      propertyPath: m_WarningMessage
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ebeeca89ff6a5b64b984dbed97cd7383,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8176970237017462049}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ebeeca89ff6a5b64b984dbed97cd7383,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2310029279111495850}
+  m_SourcePrefab: {fileID: 100100000, guid: ebeeca89ff6a5b64b984dbed97cd7383, type: 3}
+--- !u!1 &2695430646492739498 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ebeeca89ff6a5b64b984dbed97cd7383,
+    type: 3}
+  m_PrefabInstance: {fileID: 3002069395887065851}
+  m_PrefabAsset: {fileID: 0}
+--- !u!195 &8176970237017462049
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2695430646492739498}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 1.5
+  m_Acceleration: 6
+  avoidancePriority: 50
+  m_AngularSpeed: 270
+  m_StoppingDistance: 1
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &2310029279111495850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2695430646492739498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee06e6cd5e27a0d4c9cc974ee2998645, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ViewRadius: 5
+  ViewAngle: 184
+  TargetMask:
+    serializedVersion: 2
+    m_Bits: 8
+  ObstacleMask:
+    serializedVersion: 2
+    m_Bits: 64
+  visibleTargets: []
+  animator: {fileID: 8702057961451370346}
+--- !u!95 &8702057961451370346 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: ebeeca89ff6a5b64b984dbed97cd7383,
+    type: 3}
+  m_PrefabInstance: {fileID: 3002069395887065851}
+  m_PrefabAsset: {fileID: 0}

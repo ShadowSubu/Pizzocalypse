@@ -1,14 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AttackState : StateMachineBehaviour
 {
     Transform Player;
+    public float AttackRange;
+    float AttackTime;
+
     //OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         Player = GameObject.FindGameObjectWithTag("Player").transform;
+       
+      
+       
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -16,18 +23,24 @@ public class AttackState : StateMachineBehaviour
     {
         animator.transform.LookAt(Player);
         float distance = Vector3.Distance(Player.position, animator.transform.position);
-        if (distance > 2f)
+        if (distance > AttackRange)
         {
             animator.SetBool("IsAttacking", false);
         }
-    }
 
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        
-    }
-
+        if (distance < 1.5)
+        {
+            animator.SetBool("NormalAttack", true);
+        }
   
-    
+       
+    }
+
+    /* // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
+     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+     {
+
+     }*/
+
+
 }
