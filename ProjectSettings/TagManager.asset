@@ -6,10 +6,15 @@ TagManager:
   tags:
   - WayPoints
   - Enemy
+<<<<<<< HEAD
   - Delivery Point
   - NoReload
   - Location1
   - Location2
+=======
+  - Obstacles
+  - RangedEnemy
+>>>>>>> origin/Chakri-LocalBranch
   layers:
   - Default
   - TransparentFX
