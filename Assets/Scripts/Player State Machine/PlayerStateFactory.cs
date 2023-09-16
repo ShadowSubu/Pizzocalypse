@@ -6,7 +6,9 @@ enum PlayerStates
     idle,
     run,
     gunEquip,
-    gunFire
+    gunFire,
+    reload,
+    useAbility   
 }
 
 public class PlayerStateFactory
@@ -22,6 +24,8 @@ public class PlayerStateFactory
         _states[PlayerStates.run] = new PlayerRunState(_context, this);
         _states[PlayerStates.gunEquip] = new PlayerGunEquipState(_context, this);
         _states[PlayerStates.gunFire] = new PlayerGunFireState(_context, this);
+        _states[PlayerStates.reload] = new PlayerReloadState(_context, this);
+        _states[PlayerStates.useAbility] = new PlayerUseAbilityState(_context, this);
     }
 
     public PlayerBaseState None()
@@ -46,4 +50,14 @@ public class PlayerStateFactory
     {
         return _states[PlayerStates.gunFire];
     }
+
+    public PlayerBaseState Reload()
+    {
+        return _states[PlayerStates.reload];
+    }
+
+    public PlayerBaseState UseAbility()
+    {
+        return _states[PlayerStates.useAbility];
+    }     
 }

@@ -31,6 +31,10 @@ public class PlayerNoneState : PlayerBaseState
             SwitchState(Factory.GunEquip());
             Ctx.EquipAnimation(0, 1);
         }
+        if(Ctx.IsAbilityTrigerred)
+        {
+            SwitchState(Factory.UseAbility());
+        }
     }
 
     public override void InitializeSubState()

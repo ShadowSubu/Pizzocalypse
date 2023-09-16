@@ -350,7 +350,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gunType: 2
-  _shootingDuration: 0
+  _shootingDuration: 0.5
   _shootingPoint: {fileID: 6099478728819054799}
   _ammoAmount: 36
   _ammoReduceAmount: 3

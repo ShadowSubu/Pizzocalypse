@@ -53,6 +53,10 @@ public class PlayerRunState : PlayerBaseState
         {
             SetSubState(Factory.GunEquip());
         }
+        else if (Ctx.IsAbilityTrigerred)
+        {
+            SetSubState(Factory.UseAbility());
+        }
     }
 
 }

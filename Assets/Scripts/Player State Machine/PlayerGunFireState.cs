@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerGunFireState : PlayerBaseState
@@ -38,6 +39,7 @@ public class PlayerGunFireState : PlayerBaseState
         {
             SwitchState(Factory.GunEquip());
         }
+        
     }
 
     public override void InitializeSubState()
@@ -80,23 +82,26 @@ public class PlayerGunFireState : PlayerBaseState
 
     void ShootBullet()
     {
-        if (Ctx.ActiveGun != null && Ctx.ActiveGun.ShootingPoint != null && Ctx.ActiveGun.AmmoAmount >= 0 && Ctx.ActiveGun.CurrentMagSize > 0)
+        if (Ctx.ActiveGun != null && Ctx.ActiveGun.ShootingPoint != null)
         {
-            switch (Ctx.ActiveGun.GunType)
+            if (Ctx.ActiveGun.AmmoAmount >= 0 && Ctx.ActiveGun.CurrentMagSize > 0 && !Ctx.IsReloading)
             {
-                case GunType.Pistol:
-                    PistolShoot();
-                    break;
-                case GunType.Shotgun:
-                    break;
-                case GunType.Rifle:
-                    RifleShooting();
-                    break;
-                default:
-                    break;
-            }
+                switch (Ctx.ActiveGun.GunType)
+                {
+                    case GunType.Pistol:
+                        PistolShoot();
+                        break;
+                    case GunType.Shotgun:
+                        break;
+                    case GunType.Rifle:
+                        RifleShooting();
+                        break;
+                    default:
+                        break;
+                }
 
-        }
+            }
+        }           
     }
 
     void PistolShoot()

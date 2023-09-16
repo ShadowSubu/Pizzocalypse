@@ -45,6 +45,10 @@ public class PlayerIdleState : PlayerBaseState
         {
             SetSubState(Factory.GunEquip());
         }
+        if(Ctx.IsAbilityTrigerred)
+        {
+            SetSubState(Factory.UseAbility());
+        }
     }
 
 }

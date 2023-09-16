@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks.Triggers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -44,6 +45,12 @@ public class PlayerStateMachine : MonoBehaviour
     bool _isRotating;
     bool _isReloading;
 
+    //Abilities Variables
+    [SerializeField] Abilities[] _abilities = new Abilities[] { };
+    Abilities _abilityTrigerred;
+    bool _isAbilityTrigerred;
+    Vent _currentVent;
+   
     //Prefabs
     [SerializeField] Bullet _bulletPrefab;
 
@@ -72,6 +79,10 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsShooting { get { return _isShooting; } set { _isShooting = value; } }
     public bool IsReloading { get { return _isReloading; } set { _isReloading = value; } }
     public bool IsRotating { get { return _isRotating; } set { _isRotating = value; } }
+    public Abilities AbilityTrigerred { get { return _abilityTrigerred; } }
+    public bool IsAbilityTrigerred {  get { return _isAbilityTrigerred; } set {  _isAbilityTrigerred = value; } }
+    public Vent CurrentVent { get { return _currentVent; } }
+    
     public Bullet BulletPrefab { get { return _bulletPrefab; } }
 
     private void Awake()
@@ -165,7 +176,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     void OnReload(InputAction.CallbackContext context)
     {
-        _isReloading = context.ReadValueAsButton();
+        _isReloading = true;
         int _bulletsFired = (_activeGun.MagSize - _activeGun.CurrentMagSize);
         if (_activeGun.AmmoAmount > 0 && _activeGun.CurrentMagSize < _activeGun.MagSize)
         {
@@ -178,9 +189,9 @@ public class PlayerStateMachine : MonoBehaviour
             {
                 _activeGun.AmmoAmount -= _bulletsFired;
                 _activeGun.CurrentMagSize += _bulletsFired;
-            }
-                        
+            }                     
         }
+        _isReloading = false;
     }
 
     void ReduceAmmo(int ammoToReduce)
@@ -280,6 +291,8 @@ public class PlayerStateMachine : MonoBehaviour
         }
     }
 
+
+
     public async void EquipAnimation(float startValue, float endValue)
     {
         float timeElapsed = 0;
@@ -304,11 +317,54 @@ public class PlayerStateMachine : MonoBehaviour
                 GameManager.instance.UpdateGameState(GameState.Deliver);
             }
         }
+
+        if (other.CompareTag("NoReload") && _activeGun != null)
+        {
+            _isAbilityTrigerred = true;
+            _abilityTrigerred = _abilities[0];
+            Debug.Log("Ability Trigerred");
+            Destroy(other.gameObject);
+        }
+
+        /*if (other.gameObject.TryGetComponent(out Vent vent) && other.gameObject.CompareTag("Location1"))
+        {
+            vent.SetPlayer(transform);
+            _currentVent = vent;
+            _isAbilityTrigerred = true;
+            _abilityTrigerred = _abilities[1];
+        }
+
+        else if (other.gameObject.TryGetComponent(out Vent ventTwo) && other.gameObject.CompareTag("Location2"))
+        {
+            ventTwo.SetPlayer(transform);
+            _currentVent = ventTwo;
+            _isAbilityTrigerred = true;
+            _abilityTrigerred = _abilities[2];
+        }*/
     }
 
-    private void OnEnable()
+    private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         
+        if (hit.gameObject.TryGetComponent(out Vent vent) && hit.gameObject.CompareTag("Location1") && !_isMovementPressed)
+        {
+            vent.SetPlayer(transform);
+            _currentVent = vent;
+            _isAbilityTrigerred = true;
+            _abilityTrigerred = _abilities[1];
+        }
+
+        else if (hit.gameObject.TryGetComponent(out Vent ventTwo) && hit.gameObject.CompareTag("Location2") && !_isMovementPressed)
+        {
+            ventTwo.SetPlayer(transform);
+            _currentVent = ventTwo;
+            _isAbilityTrigerred = true;
+            _abilityTrigerred = _abilities[2];
+        }
+    }
+    private void OnEnable()
+    {
+
     }
 
     private void OnDisable()
@@ -325,3 +381,10 @@ public enum GunType
     Shotgun,
     Rifle
 }
+
+public enum AbilityType
+{
+    NoReload,
+    Vent
+}
+
