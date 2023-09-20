@@ -3,26 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - WayPoints
-  - Enemy
-<<<<<<< HEAD
-  - Delivery Point
-  - NoReload
-  - Location1
-  - Location2
-=======
-  - Obstacles
-  - RangedEnemy
->>>>>>> origin/Chakri-LocalBranch
+  tags: []
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Player
+  - 
   - Water
   - UI
-  - Ground
+  - 
   - 
   - 
   - 
