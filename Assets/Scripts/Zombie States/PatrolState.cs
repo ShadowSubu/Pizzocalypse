@@ -10,7 +10,7 @@ public class PatrolState : StateMachineBehaviour
 
 
     Transform Player;
-    [SerializeField] float ChaseDistance;
+    [SerializeField] float TouchDistance;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -40,7 +40,7 @@ public class PatrolState : StateMachineBehaviour
         }
 
         float distance = Vector3.Distance(Player.position, animator.transform.position);
-        if (distance < ChaseDistance)
+        if (distance < TouchDistance)
         {
             animator.SetBool("IsChasing", true);
         }
