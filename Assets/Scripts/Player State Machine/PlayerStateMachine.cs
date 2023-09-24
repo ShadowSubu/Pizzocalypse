@@ -1,6 +1,8 @@
+using Cysharp.Threading.Tasks.Triggers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,10 +23,13 @@ public class PlayerStateMachine : MonoBehaviour
     Vector3 _currentMovement;
     Vector3 _appliedMovement;
     bool _isMovementPressed;
+    RaycastHit hit;
+    Ray ray;
+    float turnLerpDuration = 0.1f;
 
     //constants
-    float _runMultiplier = 5f;
-    float _rotationFactorPerFrame = 15.0f;
+    [SerializeField] float _runMultiplier = 5f;
+    [SerializeField] float _rotationFactorPerFrame = 15.0f;
     int _zero = 0;
 
     //State variables
@@ -37,7 +42,15 @@ public class PlayerStateMachine : MonoBehaviour
     bool _isGunToggled;
     bool _requireNewGunToggle;
     bool _isShooting;
+    bool _isRotating;
+    bool _isReloading;
 
+    //Abilities Variables
+    [SerializeField] Abilities[] _abilities = new Abilities[] { };
+    Abilities _abilityTrigerred;
+    bool _isAbilityTrigerred;
+    Vent _currentVent;
+   
     //Prefabs
     [SerializeField] Bullet _bulletPrefab;
 
@@ -64,6 +77,12 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsGunToggled { get { return _isGunToggled; } set { _isGunToggled = value; } }
     public bool RequireNewGunToggle { get { return _requireNewGunToggle; } set { _requireNewGunToggle = value; } }
     public bool IsShooting { get { return _isShooting; } set { _isShooting = value; } }
+    public bool IsReloading { get { return _isReloading; } set { _isReloading = value; } }
+    public bool IsRotating { get { return _isRotating; } set { _isRotating = value; } }
+    public Abilities AbilityTrigerred { get { return _abilityTrigerred; } }
+    public bool IsAbilityTrigerred {  get { return _isAbilityTrigerred; } set {  _isAbilityTrigerred = value; } }
+    public Vent CurrentVent { get { return _currentVent; } }
+    
     public Bullet BulletPrefab { get { return _bulletPrefab; } }
 
     private void Awake()
@@ -71,6 +90,7 @@ public class PlayerStateMachine : MonoBehaviour
         _playerInput = new PlayerInput();
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
+        GameManager.OnGameStateChanged += GameManager_OnGameStateChanged;
 
         // setup States
         _states = new PlayerStateFactory(this);
@@ -92,6 +112,7 @@ public class PlayerStateMachine : MonoBehaviour
         _playerInput.CharacterControls.EquipRifle.started += OnEquipRifle;
         _playerInput.CharacterControls.EquipRifle.canceled += OnEquipRifle;
         _playerInput.CharacterControls.Shoot.performed += OnShoot;
+        _playerInput.CharacterControls.Reload.performed += OnReload;
     }
 
     #region Input Action Methods
@@ -99,6 +120,7 @@ public class PlayerStateMachine : MonoBehaviour
     void OnMovementInput(InputAction.CallbackContext context)
     {
         _currentMovementInput = context.ReadValue<Vector2>();
+        Debug.Log("Current Movement: " + _currentMovementInput);
         _currentMovement.x = _currentMovementInput.x;
         _currentMovement.z = _currentMovementInput.y;
         _isMovementPressed = _currentMovementInput.x != 0 || _currentMovementInput.y != 0;
@@ -143,9 +165,42 @@ public class PlayerStateMachine : MonoBehaviour
         }
     }
 
-    void OnShoot(InputAction.CallbackContext context)
+    async void OnShoot(InputAction.CallbackContext context)
     {
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        _isRotating = true;
+        await RotateToShootDirection();
         _isShooting = context.ReadValueAsButton();
+        ReduceAmmo(_activeGun.AmmoReduceAmount);
+    }
+
+    void OnReload(InputAction.CallbackContext context)
+    {
+        _isReloading = true;
+        int _bulletsFired = (_activeGun.MagSize - _activeGun.CurrentMagSize);
+        if (_activeGun.AmmoAmount > 0 && _activeGun.CurrentMagSize < _activeGun.MagSize)
+        {
+            if (_bulletsFired > _activeGun.AmmoAmount)
+            {
+                _activeGun.CurrentMagSize += _activeGun.AmmoAmount;
+                _activeGun.AmmoAmount = 0;               
+            }
+            else
+            {
+                _activeGun.AmmoAmount -= _bulletsFired;
+                _activeGun.CurrentMagSize += _bulletsFired;
+            }                     
+        }
+        _isReloading = false;
+    }
+
+    void ReduceAmmo(int ammoToReduce)
+    {
+        if(_activeGun.CurrentMagSize > 0)
+        {
+            _activeGun.CurrentMagSize -= ammoToReduce;
+            Debug.Log("ammo reduced");                      
+        }
     }
 
     #endregion
@@ -154,6 +209,20 @@ public class PlayerStateMachine : MonoBehaviour
     void Start()
     {
         _characterController.Move(_appliedMovement * Time.deltaTime);
+        
+    }
+
+    private async void GameManager_OnGameStateChanged(GameState state)
+    {
+        if(state == GameState.Deliver)
+        {
+            _playerInput?.CharacterControls.Disable();
+        }
+        if (state == GameState.StartGame)
+        {
+            await Task.Delay(2000);
+            _playerInput?.CharacterControls.Enable();
+        }
     }
 
     // Update is called once per frame
@@ -166,21 +235,41 @@ public class PlayerStateMachine : MonoBehaviour
 
     void HandleRotation()
     {
-        Vector3 positionToLookAt;
-
-        positionToLookAt.x = _currentMovement.x;
-        positionToLookAt.y = 0.0f;
-        positionToLookAt.z = _currentMovement.z;
-
-        Quaternion currentRotation = transform.rotation;
-
-        if (_isMovementPressed)
+        if (!_isRotating)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
-            transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, _rotationFactorPerFrame * Time.deltaTime);
+            Vector3 positionToLookAt;
+
+            positionToLookAt.x = _currentMovement.x;
+            positionToLookAt.y = 0.0f;
+            positionToLookAt.z = _currentMovement.z;
+
+            Quaternion currentRotation = transform.rotation;
+
+            if (_isMovementPressed)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
+                transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, _rotationFactorPerFrame * Time.deltaTime);
+            }
         }
     }
 
+    async Task RotateToShootDirection()
+    {
+        if (Physics.Raycast(ray, out hit))
+        {
+            Vector3 mousePos = new Vector3(hit.point.x, 0, hit.point.z);
+            Vector3 lookDirection = mousePos - transform.position;
+            float angle = Mathf.Atan2(lookDirection.z, lookDirection.x) * Mathf.Rad2Deg - 90f;
+            //Debug.Log("Angle:" + angle);
+            float timeElapsed = 0;
+            while (timeElapsed < turnLerpDuration)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, -angle, 0), timeElapsed/ turnLerpDuration);
+                timeElapsed += Time.deltaTime;
+                await Task.Yield();
+            }
+        }
+    }
 
     #region Gun
 
@@ -202,6 +291,8 @@ public class PlayerStateMachine : MonoBehaviour
         }
     }
 
+
+
     public async void EquipAnimation(float startValue, float endValue)
     {
         float timeElapsed = 0;
@@ -217,15 +308,71 @@ public class PlayerStateMachine : MonoBehaviour
 
     #endregion
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Delivery Point"))
+        {
+            if (GameManager.instance)
+            {
+                GameManager.instance.UpdateGameState(GameState.Deliver);
+            }
+        }
+
+        if (other.CompareTag("NoReload") && _activeGun != null)
+        {
+            _isAbilityTrigerred = true;
+            _abilityTrigerred = _abilities[0];
+            Debug.Log("Ability Trigerred");
+            Destroy(other.gameObject);
+        }
+
+        /*if (other.gameObject.TryGetComponent(out Vent vent) && other.gameObject.CompareTag("Location1"))
+        {
+            vent.SetPlayer(transform);
+            _currentVent = vent;
+            _isAbilityTrigerred = true;
+            _abilityTrigerred = _abilities[1];
+        }
+
+        else if (other.gameObject.TryGetComponent(out Vent ventTwo) && other.gameObject.CompareTag("Location2"))
+        {
+            ventTwo.SetPlayer(transform);
+            _currentVent = ventTwo;
+            _isAbilityTrigerred = true;
+            _abilityTrigerred = _abilities[2];
+        }*/
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        
+        if (hit.gameObject.TryGetComponent(out Vent vent) && hit.gameObject.CompareTag("Location1") && !_isMovementPressed)
+        {
+            vent.SetPlayer(transform);
+            _currentVent = vent;
+            _isAbilityTrigerred = true;
+            _abilityTrigerred = _abilities[1];
+        }
+
+        else if (hit.gameObject.TryGetComponent(out Vent ventTwo) && hit.gameObject.CompareTag("Location2") && !_isMovementPressed)
+        {
+            ventTwo.SetPlayer(transform);
+            _currentVent = ventTwo;
+            _isAbilityTrigerred = true;
+            _abilityTrigerred = _abilities[2];
+        }
+    }
     private void OnEnable()
     {
-        _playerInput?.CharacterControls.Enable();
+
     }
 
     private void OnDisable()
     {
         _playerInput?.CharacterControls.Disable();
+        GameManager.OnGameStateChanged -= GameManager_OnGameStateChanged;
     }
+
 }
 
 public enum GunType
@@ -234,3 +381,10 @@ public enum GunType
     Shotgun,
     Rifle
 }
+
+public enum AbilityType
+{
+    NoReload,
+    Vent
+}
+

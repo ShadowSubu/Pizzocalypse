@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerGunFireState : PlayerBaseState
@@ -9,8 +10,10 @@ public class PlayerGunFireState : PlayerBaseState
     : base(currentContext, playerStateFactory) { }
 
     bool isShootingOver;
+
     public override void EnterState()
     {
+        Ctx.IsShooting = false;
         Debug.Log("Enter State from GunFire");
         StartShootingDuration();
         AnimateGun();
@@ -26,7 +29,7 @@ public class PlayerGunFireState : PlayerBaseState
     public override void ExitState()
     {
         Debug.Log("Exit State from GunFire");
-        Ctx.IsShooting = false;
+        Ctx.IsRotating = false;
         Ctx.RequireNewGunToggle = false;
     }
 
@@ -36,6 +39,7 @@ public class PlayerGunFireState : PlayerBaseState
         {
             SwitchState(Factory.GunEquip());
         }
+        
     }
 
     public override void InitializeSubState()
@@ -46,7 +50,7 @@ public class PlayerGunFireState : PlayerBaseState
     {
         isShootingOver = false;
         await Task.Delay((int)Ctx.ActiveGun.ShootingDuration);
-        Debug.Log("Duration: " + (int)Ctx.ActiveGun.ShootingDuration);
+        //Debug.Log("Duration: " + (int)Ctx.ActiveGun.ShootingDuration);
         SetAnimationFalse();
         isShootingOver = true;
     }
@@ -80,8 +84,44 @@ public class PlayerGunFireState : PlayerBaseState
     {
         if (Ctx.ActiveGun != null && Ctx.ActiveGun.ShootingPoint != null)
         {
+            if (Ctx.ActiveGun.AmmoAmount >= 0 && Ctx.ActiveGun.CurrentMagSize > 0 && !Ctx.IsReloading)
+            {
+                switch (Ctx.ActiveGun.GunType)
+                {
+                    case GunType.Pistol:
+                        PistolShoot();
+                        break;
+                    case GunType.Shotgun:
+                        break;
+                    case GunType.Rifle:
+                        RifleShooting();
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+        }           
+    }
+
+    void PistolShoot()
+    {
+        Bullet bullet = Object.Instantiate(Ctx.BulletPrefab, Ctx.ActiveGun.ShootingPoint.position, Ctx.transform.rotation);
+        AudioManager.Instance.Play("Pizzocalypse-Pistol");
+    }
+
+    void ShotgunShooting()
+    {
+
+    }
+
+    async void RifleShooting()
+    {
+        for (int i = 0; i < 3; i++)
+        {
             Bullet bullet = Object.Instantiate(Ctx.BulletPrefab, Ctx.ActiveGun.ShootingPoint.position, Ctx.transform.rotation);
-            
+            AudioManager.Instance.Play("Pizzocalypse-Rifle");
+            await Task.Delay(100);
         }
     }
 }

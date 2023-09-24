@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -16,5 +17,16 @@ public class Bullet : MonoBehaviour
         {
       //      other.GetComponent<ZombieClass>().TakeDamage(Damage);
         }
+    }
+
+    private void OnEnable()
+    {
+        DestroySelf();
+    }
+
+    async void DestroySelf()
+    {
+        await Task.Delay(2000);
+        Destroy(gameObject);
     }
 }

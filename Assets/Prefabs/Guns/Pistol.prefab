@@ -133,6 +133,10 @@ MonoBehaviour:
   _gunType: 0
   _shootingDuration: 0
   _shootingPoint: {fileID: 22893901999331422}
+  _ammoAmount: 24
+  _ammoReduceAmount: 1
+  _magSize: 6
+  _currentMagSize: 6
 --- !u!1 &1622839610485662265
 GameObject:
   m_ObjectHideFlags: 0

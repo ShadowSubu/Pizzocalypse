@@ -1,0 +1,139 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8643293508273087766
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 665038584763731658}
+  - component: {fileID: 1566587349221557788}
+  m_Layer: 0
+  m_Name: Audio Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &665038584763731658
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8643293508273087766}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.045107156, y: 0.96779895, z: -0.054917604}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1566587349221557788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8643293508273087766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f63ddc1ac5bcb614f88b862c35187d14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Player SFX
+    soundsCollection:
+    - name: Pizzocalypse-Equip
+      clip: {fileID: 8300000, guid: f4f3331e4f0048f4e88f6a6ab1bedc2b, type: 3}
+      volume: 1
+      pitch: 1
+      loop: 0
+      source: {fileID: 0}
+    - name: Pizzocalypse-Pistol
+      clip: {fileID: 8300000, guid: 18dc2db275b5144429a0e4ce15fc4af1, type: 3}
+      volume: 1
+      pitch: 1
+      loop: 0
+      source: {fileID: 0}
+    - name: Pizzocalypse-Rifle
+      clip: {fileID: 8300000, guid: 77ddf9a76c2970f45b010bc08a238584, type: 3}
+      volume: 1
+      pitch: 1
+      loop: 0
+      source: {fileID: 0}
+    - name: 
+      clip: {fileID: 8300000, guid: cb65afcec919ab64896acdbe1035ee27, type: 3}
+      volume: 1
+      pitch: 1
+      loop: 0
+      source: {fileID: 0}
+    - name: 
+      clip: {fileID: 8300000, guid: a1def14a10fd88f4994f293be7311eb9, type: 3}
+      volume: 1
+      pitch: 3
+      loop: 0
+      source: {fileID: 0}
+  - name: Player Walk
+    soundsCollection:
+    - name: Pizzocalypse-Walk 1
+      clip: {fileID: 8300000, guid: 03e971d7be3aa9047b499ad4266796ef, type: 3}
+      volume: 1
+      pitch: 1
+      loop: 0
+      source: {fileID: 0}
+    - name: Pizzocalypse-Walk 2
+      clip: {fileID: 8300000, guid: 6fcbc4db24e103b458868ca2efd54ce4, type: 3}
+      volume: 1
+      pitch: 1
+      loop: 0
+      source: {fileID: 0}
+    - name: Pizzocalypse-Walk 3
+      clip: {fileID: 8300000, guid: b57dae3338d278746896fce404729bd5, type: 3}
+      volume: 1
+      pitch: 1
+      loop: 0
+      source: {fileID: 0}
+    - name: Pizzocalypse-Walk 4
+      clip: {fileID: 8300000, guid: 137630e30a83da54cbea066ae72b8e03, type: 3}
+      volume: 1
+      pitch: 1
+      loop: 0
+      source: {fileID: 0}
+  - name: BGM
+    soundsCollection:
+    - name: Rock_The_Party
+      clip: {fileID: 8300000, guid: e9dc5e30a12037d4390fde8d1518f5ae, type: 3}
+      volume: 0.106
+      pitch: 1
+      loop: 0
+      source: {fileID: 0}
+    - name: 
+      clip: {fileID: 8300000, guid: 94d8f44a5bc67c34aa26a135681aa5df, type: 3}
+      volume: 0.098
+      pitch: 1
+      loop: 0
+      source: {fileID: 0}
+  - name: UI
+    soundsCollection:
+    - name: 
+      clip: {fileID: 8300000, guid: 47cbb5fb2e8b9be4da554c1624d298f4, type: 3}
+      volume: 1
+      pitch: 1
+      loop: 0
+      source: {fileID: 0}
+    - name: 
+      clip: {fileID: 8300000, guid: 59fac6b8dd152d748a95271e872190ba, type: 3}
+      volume: 1
+      pitch: 1
+      loop: 0
+      source: {fileID: 0}
+    - name: 
+      clip: {fileID: 8300000, guid: 5f7678f29b227104c8cbee6453c8af8e, type: 3}
+      volume: 1
+      pitch: 1
+      loop: 0
+      source: {fileID: 0}
