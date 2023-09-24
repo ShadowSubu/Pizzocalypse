@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class AttackState : StateMachineBehaviour
+public class AttackState : ZombieClass
 {
     Transform Player;
     public float AttackRange;
