@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour
     {
         if(other.tag == "Enemy")
         {
-            other.GetComponent<ZombieClass>().TakeDamage(Damage);
+      //      other.GetComponent<ZombieClass>().TakeDamage(Damage);
         }
     }
 }

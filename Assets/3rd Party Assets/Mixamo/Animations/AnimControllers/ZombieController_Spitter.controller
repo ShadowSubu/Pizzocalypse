@@ -515,10 +515,10 @@ AnimatorStateMachine:
     m_Position: {x: 230, y: 220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1135146505265288994}
-    m_Position: {x: 300, y: -80, z: 0}
+    m_Position: {x: 300, y: -70, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3747442735454696395}
-    m_Position: {x: 300, y: -10, z: 0}
+    m_Position: {x: 270, y: 20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6533150478073042764}
     m_Position: {x: 890, y: -90, z: 0}
@@ -660,6 +660,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bce2af90b6588c47b3e1e1d8b4cd2a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waypoints: Respawn
   TouchDistance: 1.5
 --- !u!1101 &8555190178775815460
 AnimatorStateTransition:

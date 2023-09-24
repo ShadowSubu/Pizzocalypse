@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f37144242a3c404480e54633c2aab2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waypoints: 
   AttackRange: 2
 --- !u!1101 &-8028935273955286513
 AnimatorStateTransition:
@@ -75,6 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 672fb9b891c7c28409c74fcdc1706f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waypoints: 
   StopChaseDis: 8
   AttackRange: 2
   ChaseSpeed: 7
@@ -375,6 +377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07409022179e94c44b54cc76129f91fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waypoints: 
   IdleTime: 2.5
   TouchDistance: 1.5
 --- !u!1102 &3747442735454696395
@@ -581,4 +584,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bce2af90b6588c47b3e1e1d8b4cd2a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waypoints: WayPoints
   TouchDistance: 1.5

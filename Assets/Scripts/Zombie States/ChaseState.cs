@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ChaseState : StateMachineBehaviour
+public class ChaseState : ZombieClass
 {
     NavMeshAgent ZombieAgent;
     Transform Player;

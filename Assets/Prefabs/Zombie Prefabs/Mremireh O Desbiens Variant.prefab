@@ -16,7 +16,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 6e620280142633045a2f8c3e80f13236,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6e620280142633045a2f8c3e80f13236,
         type: 3}
@@ -397,10 +397,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e620280142633045a2f8c3e80f13236,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2417615715618310810}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e620280142633045a2f8c3e80f13236,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 2870290624897629310}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e620280142633045a2f8c3e80f13236,
         type: 3}
@@ -456,20 +452,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2417615715618310810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1313365233459905101}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4cca08befc1ce341b3d7f80fd4bf960, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HP: 100
-  animator: {fileID: 139210224485284790}
 --- !u!136 &2870290624897629310
 CapsuleCollider:
   m_ObjectHideFlags: 0

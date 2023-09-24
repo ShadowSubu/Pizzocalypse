@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class idleState : StateMachineBehaviour
+public class idleState : ZombieClass
 {
     public float IdleTime;
     float RunTime;
