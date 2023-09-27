@@ -39,7 +39,7 @@ public class PlayerGunEquipState : PlayerBaseState
         {
             SwitchState(Factory.GunFire());
         }
-        if(Ctx.IsAbilityTrigerred)
+        if(Ctx.IsAbilityTrigerred && !Ctx.IsShooting)
         {
             SwitchState(Factory.UseAbility());
         }

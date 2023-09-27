@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Abilities : MonoBehaviour
+public abstract class Abilities : MonoBehaviour
 {
     [SerializeField] AbilityType _abilityType;
+    [SerializeField] PlayerStateMachine _context;
 
     public AbilityType AbilityType { get { return _abilityType; } }
+    public PlayerStateMachine Context { get { return _context; } }
 
-    public virtual void UseAbility()
-    { }
-    
+    public abstract void UseAbility();
 }
