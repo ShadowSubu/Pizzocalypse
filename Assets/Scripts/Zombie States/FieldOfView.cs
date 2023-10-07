@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FieldOfView : MonoBehaviour
 {
+    ZombieAI ZombieAI;
     public float ViewRadius;
     [Range(0,360)]
     public float ViewAngle;
@@ -19,6 +20,7 @@ public class FieldOfView : MonoBehaviour
     void Start()
     {
         StartCoroutine("FindTargetsWithDelay", .2f);
+        ZombieAI = GetComponent<ZombieAI>();
     }
 
 
@@ -45,8 +47,9 @@ public class FieldOfView : MonoBehaviour
                 if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, ObstacleMask))
                 {
                     visibleTargets.Add(target);
-                    animator.SetBool("IsChasing", true);
-                    animator.SetBool("IsPatrolling", false);
+                    if(ZombieAI.currentState != ZombieAI.ZombieState.Attack)
+                    ZombieAI.SetState(ZombieAI.ZombieState.Chase);
+                    
                 }
             }
         }

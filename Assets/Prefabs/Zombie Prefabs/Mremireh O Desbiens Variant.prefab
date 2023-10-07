@@ -402,6 +402,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2173726124807861715}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e620280142633045a2f8c3e80f13236,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2519007945872938201}
   m_SourcePrefab: {fileID: 100100000, guid: 6e620280142633045a2f8c3e80f13236, type: 3}
 --- !u!1 &1313365233459905101 stripped
 GameObject:
@@ -494,6 +498,28 @@ MonoBehaviour:
     m_Bits: 8
   ObstacleMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 65
   visibleTargets: []
   animator: {fileID: 139210224485284790}
+--- !u!114 &2519007945872938201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313365233459905101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69bc498550fd94340b3dacb3528a4d9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patrolPoints: []
+  patrolSpeed: 1.5
+  chaseSpeed: 4
+  IdleTime: 5
+  Patroltime: 8
+  attackRange: 1.5
+  attackCooldown: 2
+  TouchDistance: 1.5
+  stopChasingDis: 8
+  currentState: 0

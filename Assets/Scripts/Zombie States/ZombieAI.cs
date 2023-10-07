@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,28 +7,51 @@ using UnityEngine.AI;
 public class ZombieAI : MonoBehaviour
 {
     public Transform[] patrolPoints;
+
+    [Header("StateSpeeds")]
     public float patrolSpeed = 1.5f;
-    public float runSpeed = 4f;
+    public float chaseSpeed = 4f;
+
+    [Header("StateTimings")]
+    public float IdleTime = 5f;
+    public float Patroltime = 8f;
+
+    [Header("AttackConditions")]
     public float attackRange = 2f;
     public float attackCooldown = 2f;
+    public float TouchDistance = 1.5f;
 
-    private int currentPatrolPointIndex = 0;
+
+    [Space(5)]
+    public float stopChasingDis = 8f;
+
+    float distance;
+
+
+
+    private int currentPatrolPointIndex;
     private Transform player;
     private NavMeshAgent navMeshAgent;
     private Animator animator;
-    private float nextAttackTime = 0f;
+    private float nextAttackTime;
+    float BeforeSpeed;
 
-    private enum ZombieState
+
+    float patrolRunTime;
+    float RunTime;
+
+    [HideInInspector]
+    public enum ZombieState
     {
         Idle,
         Patrol,
         Chase,
         Attack
     }
+    [HideInInspector]
+    public ZombieState currentState = ZombieState.Idle;
 
-    private ZombieState currentState = ZombieState.Idle;
-
-    private void Start()
+    public void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
@@ -35,14 +59,19 @@ public class ZombieAI : MonoBehaviour
 
         // Start in the Idle state
         SetState(ZombieState.Idle);
+        if(currentState == ZombieState.Patrol)
+        {
+            navMeshAgent.SetDestination(patrolPoints[Random.Range(0, patrolPoints.Length)].position);
+        }
+  
     }
 
-    private void Update()
+    public void Update()
     {
         switch (currentState)
         {
             case ZombieState.Idle:
-                // Implement Idle behavior here
+                Idle();
                 break;
 
             case ZombieState.Patrol:
@@ -50,16 +79,18 @@ public class ZombieAI : MonoBehaviour
                 break;
 
             case ZombieState.Chase:
-                // Implement Run behavior here
+                Chase();
                 break;
 
             case ZombieState.Attack:
                 Attack();
                 break;
+
+
         }
     }
 
-    private void SetState(ZombieState newState)
+    public void SetState(ZombieState newState)
     {
         if (currentState == newState)
             return;
@@ -71,53 +102,99 @@ public class ZombieAI : MonoBehaviour
         switch (currentState)
         {
             case ZombieState.Idle:
-                animator.SetBool("IsWalking", false);
+                animator.SetBool("IsPatrolling", false);
+                RunTime = 0;
+                navMeshAgent.SetDestination(transform.position);
                 break;
 
             case ZombieState.Patrol:
-                animator.SetBool("IsWalking", true);
+                animator.SetBool("IsPatrolling", true);
+                animator.SetBool("IsChasing", false);
+                patrolRunTime = 0;
                 break;
 
             case ZombieState.Chase:
-                // Set run animations and behavior
+                animator.SetBool("IsChasing", true);
+                animator.SetBool("IsAttacking", false);
+                BeforeSpeed = navMeshAgent.speed;
+                navMeshAgent.speed = chaseSpeed;
                 break;
 
             case ZombieState.Attack:
-                animator.SetTrigger("Attack");
+                animator.SetBool("IsAttacking", true);
+                animator.SetBool("IsChasing", false);
                 break;
         }
     }
 
+    private void Idle()
+    {
+        RunTime += Time.deltaTime;
+        if (RunTime > IdleTime)
+        {
+            SetState(ZombieState.Patrol);
+        }
+         distance = Vector3.Distance(player.position, transform.position);
+        if (distance < TouchDistance)
+        {
+            SetState(ZombieState.Chase);
+        }
+    }
     private void Patrol()
     {
         if (patrolPoints.Length == 0)
             return;
-
-        // Calculate distance to the current patrol point
-        float distanceToPatrolPoint = Vector3.Distance(transform.position, patrolPoints[currentPatrolPointIndex].position);
-
-        // Check if we are close to the patrol point
-        if (distanceToPatrolPoint < 0.1f)
+    
+       // float distanceToPatrolPoint = Vector3.Distance(transform.position, patrolPoints[currentPatrolPointIndex].position);
+        if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
-            // Move to the next patrol point
-            currentPatrolPointIndex = (currentPatrolPointIndex + 1) % patrolPoints.Length;
-            navMeshAgent.SetDestination(patrolPoints[currentPatrolPointIndex].position);
+            navMeshAgent.SetDestination(patrolPoints[Random.Range(0, patrolPoints.Length)].position);
+        }
+        patrolRunTime += Time.deltaTime;
+        if (patrolRunTime > Patroltime)
+        {
+            SetState(ZombieState.Idle);   
         }
 
         // Check for the player and switch to Run state if close
-        if (Vector3.Distance(transform.position, player.position) < attackRange)
+         distance = Vector3.Distance(player.position, transform.position);
+       if (distance < TouchDistance)
         {
             SetState(ZombieState.Chase);
-            navMeshAgent.speed = runSpeed;
+            navMeshAgent.speed = chaseSpeed;
             navMeshAgent.SetDestination(player.position);
+        }
+    }
+
+    public void Chase()
+    {
+        navMeshAgent.SetDestination(player.position);
+        distance = Vector3.Distance(player.position, transform.position);
+        if (distance > stopChasingDis)
+        {
+            SetState(ZombieState.Patrol);
+            navMeshAgent.speed = BeforeSpeed;
+        }
+        if (distance < attackRange)
+        {
+            SetState(ZombieState.Attack);
+            navMeshAgent.SetDestination(transform.position);
+            navMeshAgent.speed = BeforeSpeed;
         }
     }
 
     private void Attack()
     {
+
+        animator.transform.LookAt(player);
+        distance = Vector3.Distance(player.position, transform.position);
         // Check if it's time to attack again
         if (Time.time >= nextAttackTime)
         {
+            /* if (distance < 1.5)
+            {
+                animator.SetBool("NormalAttack", true);
+            }*/
             // Implement attack logic here
             // You can use raycasting or other methods to detect if the player is within attack range
 
@@ -128,10 +205,10 @@ public class ZombieAI : MonoBehaviour
         }
 
         // If the player moves away, switch back to Patrol
-        if (Vector3.Distance(transform.position, player.position) > attackRange)
+        if (distance > attackRange)
         {
-            SetState(ZombieState.Patrol);
-            navMeshAgent.speed = patrolSpeed;
+            SetState(ZombieState.Chase);
+            navMeshAgent.speed = chaseSpeed;
         }
     }
 }
