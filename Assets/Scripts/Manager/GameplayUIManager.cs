@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using Cysharp.Threading.Tasks;
 using UnityEngine.UI;
 using UnityEditor;
 using System.Threading.Tasks;
