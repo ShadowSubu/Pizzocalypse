@@ -21,7 +21,7 @@ public class Bullet : MonoBehaviour
 
     private void OnEnable()
     {
-        DestroySelf();
+        //DestroySelf();
     }
 
     async void DestroySelf()
