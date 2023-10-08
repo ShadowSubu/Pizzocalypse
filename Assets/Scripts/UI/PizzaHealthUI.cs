@@ -11,7 +11,7 @@ public class PizzaHealthUI : MonoBehaviour
     [SerializeField] int pizzaHealthValue = 0;
 
     [SerializeField] VoidEventSO pizzaDamageEvent = default;
-    [SerializeField] VoidEventSO onPLayerDieEvent = default;
+    [SerializeField] VoidEventSO onPlayerDieEvent = default;
 
     private void OnEnable()
     {
@@ -20,17 +20,23 @@ public class PizzaHealthUI : MonoBehaviour
     private void Start()
     {
         pizzaHealthValue = healthSprites.Length;
-        pizzaImage.overrideSprite = healthSprites[pizzaHealthValue];
+        pizzaImage.overrideSprite = healthSprites[pizzaHealthValue - 1];
     }
 
     private void ReducePizzaHealth()
     {
         if (pizzaHealthValue < 0) 
         {
-            onPLayerDieEvent.RaiseEvent();
+            onPlayerDieEvent.RaiseEvent();
             return;
         }
+        Debug.Log("Pizza Damaged");
         pizzaHealthValue--;
-        pizzaImage.overrideSprite = healthSprites[pizzaHealthValue];
+        pizzaImage.overrideSprite = healthSprites[pizzaHealthValue - 1];
+    }
+
+    private void OnDisable()
+    {
+        pizzaDamageEvent.OnEventRaised -= ReducePizzaHealth;
     }
 }

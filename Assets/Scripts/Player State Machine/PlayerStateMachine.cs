@@ -60,6 +60,9 @@ public class PlayerStateMachine : MonoBehaviour
     float lerpDuration = 0.3f;
     float valueToLerp;
 
+    //Events
+    [SerializeField] private IntEventSO bulletCountEvent = default;
+
     //getters and setters
     public PlayerInput PlayerInput { get { return _playerInput; } }
     public CharacterController CharacterController { get { return _characterController; } }
@@ -138,6 +141,7 @@ public class PlayerStateMachine : MonoBehaviour
         await RotateToShootDirection();
         _isShooting = true;
         ReduceAmmo(_activeGun.AmmoReduceAmount);
+        bulletCountEvent.RaiseEvent(ActiveGun.CurrentMagSize, ActiveGun.MagSize, ActiveGun.AmmoAmount);
     }
 
     public void OnReload(InputAction.CallbackContext context)
@@ -157,6 +161,7 @@ public class PlayerStateMachine : MonoBehaviour
                 _activeGun.CurrentMagSize += _bulletsFired;
             }                     
         }
+        bulletCountEvent.RaiseEvent(ActiveGun.CurrentMagSize, ActiveGun.MagSize, ActiveGun.AmmoAmount);
         _isReloading = false;
     }
 
@@ -249,6 +254,7 @@ public class PlayerStateMachine : MonoBehaviour
             Animator.SetLayerWeight(1, valueToLerp);
             await Task.Yield();
         }
+        bulletCountEvent.RaiseEvent(ActiveGun.CurrentMagSize, ActiveGun.MagSize, ActiveGun.AmmoAmount);
     }
 
     #endregion

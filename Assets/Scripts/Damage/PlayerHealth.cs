@@ -12,8 +12,17 @@ public class PlayerHealth : Health
         onPlayerDieEvent.OnEventRaised += OnPLayerDie;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TakeDamage(1);
+        }
+    }
+
     public override void TakeDamage(int amount)
     {
+        Debug.Log("Pizza Damaged - 1");
         pizzaDamageEvent.RaiseEvent();
     }
 
