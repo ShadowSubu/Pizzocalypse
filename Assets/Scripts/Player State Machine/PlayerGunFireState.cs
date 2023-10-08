@@ -82,6 +82,7 @@ public class PlayerGunFireState : PlayerBaseState
 
     void ShootBullet()
     {
+        Debug.Log("ShootingBullet");
         if (Ctx.ActiveGun != null && Ctx.ActiveGun.ShootingPoint != null)
         {
             if (Ctx.ActiveGun.AmmoAmount >= 0 && Ctx.ActiveGun.CurrentMagSize > 0 && !Ctx.IsReloading)

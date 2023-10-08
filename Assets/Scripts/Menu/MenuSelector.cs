@@ -11,7 +11,7 @@ public class MenuSelector : MonoBehaviour
     [SerializeField] bool isGunSelectorMode;
     [SerializeField] Gun[] _guns = new Gun[] { };
     [SerializeField] LevelSlice[] levelSlices = new LevelSlice[] { };
-    [SerializeField] Gun selectedGun;
+    [SerializeField] public Gun selectedGun;
     [SerializeField] LevelSlice selectedLevel;
     [SerializeField] Button gunSelectionButton;
     [SerializeField] Button levelSelectionButton;

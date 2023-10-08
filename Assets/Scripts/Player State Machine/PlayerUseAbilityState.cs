@@ -11,12 +11,10 @@ public class PlayerUseAbilityState : PlayerBaseState
      : base(currentContext, playerStateFactory) { }
 
     bool isAbilityUsed;
-    bool isVenting = false;
 
     public override void EnterState()
     {
         Debug.Log("Enter UseAbilityState");
-        //Ctx.IsAbilityTrigerred = false;
         isAbilityUsed = false;
         ExecuteAbility();
     }
@@ -35,15 +33,15 @@ public class PlayerUseAbilityState : PlayerBaseState
 
     public override void CheckSwitchState()
     {
-        if(isAbilityUsed && Ctx.ActiveGun == null && !isVenting)
+        if(isAbilityUsed && Ctx.ActiveGun == null )
         {
             SwitchState(Factory.None());
         }
-        else if(Ctx.ActiveGun != null && !isVenting && !Ctx.IsShooting)
+        else if(Ctx.ActiveGun != null && Ctx.IsGunToggled &&!Ctx.IsShooting)
         {
             SwitchState(Factory.GunEquip());
         }
-        else if(Ctx.ActiveGun != null && !isVenting && Ctx.IsShooting)
+        else if(Ctx.ActiveGun != null && !Ctx.IsShooting)
         {
             SwitchState(Factory.GunFire());
         }
@@ -63,46 +61,31 @@ public class PlayerUseAbilityState : PlayerBaseState
                 ExecuteVent();
                 break;
 
+            case AbilityType.GunSwitch:
+                ExecuteGunSwitch();
+                
+                break;
+
             default:
                 break;
         }            
     }
 
-    
-    async private void ExecuteNoReload()
+    private void ExecuteNoReload()
     {
-        Debug.Log("Executing NoReload");
-        int temp = Ctx.ActiveGun.MagSize;
-
-        // Set the currentMagSize to infinity
-        Ctx.ActiveGun.CurrentMagSize = int.MaxValue;
-
-        await Task.Delay(10000);
-
+        Ctx.NoReload.UseAbility();
         isAbilityUsed = true;
-
-        // Reset the currentMagSize to its original value
-        Ctx.ActiveGun.CurrentMagSize = temp;
     }
 
-    void ExecuteVent()
-    {
-        //Delay(1500);
-        
-        if(!isVenting && !Ctx.IsShooting)
-        {
-            isVenting = true;
-            Debug.Log("Executing Vent Ability");
-            Ctx.CurrentVent.UseAbility();
-        }
-        
-        // Wait for 10 seconds
-        
-
-        // Mark the ability as used
+    private void ExecuteVent()
+    { 
+        Ctx.CurrentVent.UseAbility();
         isAbilityUsed = true;
-        isVenting = false;
     }
 
-   
+    private void ExecuteGunSwitch()
+    {
+        Ctx.GunSwitch.UseAbility();
+        isAbilityUsed = true;   
+    }
 }
