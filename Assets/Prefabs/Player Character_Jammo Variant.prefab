@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1010234977169733863}
-  m_LocalRotation: {x: 0.54491353, y: -0.00000002885484, z: 0.000000018751987, w: 0.8384923}
+  m_LocalRotation: {x: 0.54491353, y: 0.00000002885483, z: -0.00000001875198, w: 0.8384923}
   m_LocalPosition: {x: 0, y: 9, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -308,22 +308,22 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 82a2914d8f86c62488456950c8330e38,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 82a2914d8f86c62488456950c8330e38,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -39.74
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 82a2914d8f86c62488456950c8330e38,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.146
+      value: 0.000099897385
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 82a2914d8f86c62488456950c8330e38,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -42.08
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 82a2914d8f86c62488456950c8330e38,
         type: 3}
@@ -360,6 +360,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3487884533560223602, guid: 82a2914d8f86c62488456950c8330e38,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 60.9
+      objectReference: {fileID: 0}
     - target: {fileID: -2445193559103534071, guid: 82a2914d8f86c62488456950c8330e38,
         type: 3}
       propertyPath: m_IsActive
@@ -369,6 +374,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player Character_Jammo Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 82a2914d8f86c62488456950c8330e38,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -390,6 +400,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 6650172107549153141}
+    - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 82a2914d8f86c62488456950c8330e38,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3210521890532312167}
   m_SourcePrefab: {fileID: 100100000, guid: 82a2914d8f86c62488456950c8330e38, type: 3}
 --- !u!4 &5439129693361274799 stripped
 Transform:
@@ -447,12 +461,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 866e6999f651f854e90abb04d0556acd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _runMultiplier: 5
+  _rotationFactorPerFrame: 15
   _guns:
   - {fileID: 8682577872323993338}
   - {fileID: 8082886284437583851}
   - {fileID: 2031324799689394106}
+  _abilities: []
   _bulletPrefab: {fileID: 9096230388120223338, guid: 1f8c4cf4dc4d1ab4398510ad80a61f9b,
     type: 3}
+  bulletCountEvent: {fileID: 11400000, guid: 41d0524b8c01f0e4da4612f74ccfc55c, type: 2}
+--- !u!114 &3210521890532312167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9016473066297167292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3397fa248c7a29141b8e1bc08611e40c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0
+  maxHealth: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  pizzaDamageEvent: {fileID: 11400000, guid: affc1421198ff8b438433d230d51cf85, type: 2}
+  onPlayerDieEvent: {fileID: 11400000, guid: c47d08d9893d2184cabe0cd9d9c52b80, type: 2}
 --- !u!1001 &6125553105063107254
 PrefabInstance:
   m_ObjectHideFlags: 0
