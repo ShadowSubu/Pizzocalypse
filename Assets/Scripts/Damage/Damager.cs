@@ -14,6 +14,25 @@ public class Damager : MonoBehaviour
         {
             health.TakeDamage(damageAmount);
             if (hitParticlePrefab != null) hitParticlePrefab.Play();
+            DestroyObject();
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.TryGetComponent<Health>(out Health health))
+        {
+            health.TakeDamage(damageAmount);
+            if (hitParticlePrefab != null) hitParticlePrefab.Play();
+            DestroyObject();
+        }
+    }
+
+    public void DestroyObject()
+    {
+        if (TryGetComponent<Bullet>(out Bullet bullet))
+        {
+            Destroy(gameObject);
         }
     }
 }
