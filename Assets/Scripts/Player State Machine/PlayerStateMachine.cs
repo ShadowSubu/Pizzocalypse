@@ -10,6 +10,7 @@ public class PlayerStateMachine : MonoBehaviour
     PlayerInput _playerInput;
     CharacterController _characterController;
     Animator _animator;
+    MenuSelector _menuSelector;
 
     // variables to store optimized setter/getter IDs
     int _isRunningHash;
@@ -36,7 +37,7 @@ public class PlayerStateMachine : MonoBehaviour
     PlayerStateFactory _states;
 
     //Gun Variables
-    [SerializeField] Gun[] _guns = new Gun[] { };
+    [SerializeField] private Gun[] _guns = new Gun[] { };
     Gun _activeGun;
     bool _isGunToggled;
     bool _requireNewGunToggle;
@@ -49,6 +50,8 @@ public class PlayerStateMachine : MonoBehaviour
     Abilities _abilityTrigerred;
     bool _isAbilityTrigerred;
     Vent _currentVent;
+    NoReload _noReload;
+    GunSwitch _gunSwitch;
    
     //Prefabs
     [SerializeField] Bullet _bulletPrefab;
@@ -57,10 +60,15 @@ public class PlayerStateMachine : MonoBehaviour
     float lerpDuration = 0.3f;
     float valueToLerp;
 
+    //Events
+    [SerializeField] private IntEventSO bulletCountEvent = default;
+
     //getters and setters
+    public PlayerInput PlayerInput { get { return _playerInput; } }
     public CharacterController CharacterController { get { return _characterController; } }
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public Animator Animator { get { return _animator; } }
+    public MenuSelector MenuSelector { get { return _menuSelector; } }
     public int IsRunningHash { get { return _isRunningHash; } }
     public int IsPistolFireHash { get { return _isPistolFireHash; } }
     public int IsShotgunFireHash { get { return _isShotgunFireHash; } }
@@ -81,6 +89,10 @@ public class PlayerStateMachine : MonoBehaviour
     public Abilities AbilityTrigerred { get { return _abilityTrigerred; } }
     public bool IsAbilityTrigerred {  get { return _isAbilityTrigerred; } set {  _isAbilityTrigerred = value; } }
     public Vent CurrentVent { get { return _currentVent; } }
+    public NoReload NoReload {  get { return _noReload; } }
+    public GunSwitch GunSwitch { get { return _gunSwitch; } }
+    public Gun[] Guns { get { return _guns; } }
+    
     
     public Bullet BulletPrefab { get { return _bulletPrefab; } }
 
@@ -89,6 +101,7 @@ public class PlayerStateMachine : MonoBehaviour
         _playerInput = new PlayerInput();
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
+        _menuSelector = GetComponent<MenuSelector>();
         GameManager.OnGameStateChanged += GameManager_OnGameStateChanged;
 
         // setup States
@@ -104,14 +117,10 @@ public class PlayerStateMachine : MonoBehaviour
         _playerInput.CharacterControls.Move.started += OnMovementInput;
         _playerInput.CharacterControls.Move.canceled += OnMovementInput;
         _playerInput.CharacterControls.Move.performed += OnMovementInput;
-        _playerInput.CharacterControls.EquipPistol.started += OnEquipPistol;
-        _playerInput.CharacterControls.EquipPistol.canceled += OnEquipPistol;
-        _playerInput.CharacterControls.EquipShotgun.started += OnEquipShotgun;
-        _playerInput.CharacterControls.EquipShotgun.canceled += OnEquipShotgun;
-        _playerInput.CharacterControls.EquipRifle.started += OnEquipRifle;
-        _playerInput.CharacterControls.EquipRifle.canceled += OnEquipRifle;
         _playerInput.CharacterControls.Shoot.performed += OnShoot;
         _playerInput.CharacterControls.Reload.performed += OnReload;
+        
+        
     }
 
     #region Input Action Methods
@@ -125,60 +134,22 @@ public class PlayerStateMachine : MonoBehaviour
         _isMovementPressed = _currentMovementInput.x != 0 || _currentMovementInput.y != 0;
     }
 
-    void OnEquipPistol(InputAction.CallbackContext context)
-    {
-        _isGunToggled = context.ReadValueAsButton();
-        if (IsGunToggled)
-        {
-            ToggleGun(0);
-        }
-        else
-        {
-            RequireNewGunToggle = false;
-        }
-    }
-
-    void OnEquipShotgun(InputAction.CallbackContext context)
-    {
-        _isGunToggled = context.ReadValueAsButton();
-        if (IsGunToggled)
-        {
-            ToggleGun(1);
-        }
-        else
-        {
-            RequireNewGunToggle = false;
-        }
-    }
-
-    void OnEquipRifle(InputAction.CallbackContext context)
-    {
-        _isGunToggled = context.ReadValueAsButton();
-        if (IsGunToggled)
-        {
-            ToggleGun(2);
-        }
-        else
-        {
-            RequireNewGunToggle = false;
-        }
-    }
-
-    async void OnShoot(InputAction.CallbackContext context)
+    async public void OnShoot(InputAction.CallbackContext context)
     {
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         _isRotating = true;
         await RotateToShootDirection();
-        _isShooting = context.ReadValueAsButton();
+        _isShooting = true;
         ReduceAmmo(_activeGun.AmmoReduceAmount);
+        bulletCountEvent.RaiseEvent(ActiveGun.CurrentMagSize, ActiveGun.MagSize, ActiveGun.AmmoAmount);
     }
 
-    void OnReload(InputAction.CallbackContext context)
+    public void OnReload(InputAction.CallbackContext context)
     {
         _isReloading = true;
         int _bulletsFired = (_activeGun.MagSize - _activeGun.CurrentMagSize);
         if (_activeGun.AmmoAmount > 0 && _activeGun.CurrentMagSize < _activeGun.MagSize)
-        {
+        { 
             if (_bulletsFired > _activeGun.AmmoAmount)
             {
                 _activeGun.CurrentMagSize += _activeGun.AmmoAmount;
@@ -190,10 +161,11 @@ public class PlayerStateMachine : MonoBehaviour
                 _activeGun.CurrentMagSize += _bulletsFired;
             }                     
         }
+        bulletCountEvent.RaiseEvent(ActiveGun.CurrentMagSize, ActiveGun.MagSize, ActiveGun.AmmoAmount);
         _isReloading = false;
     }
 
-    void ReduceAmmo(int ammoToReduce)
+    public void ReduceAmmo(int ammoToReduce)
     {
         if(_activeGun.CurrentMagSize > 0)
         {
@@ -204,11 +176,11 @@ public class PlayerStateMachine : MonoBehaviour
 
     #endregion
 
-    // Start is called before the first frame update
     void Start()
     {
         _characterController.Move(_appliedMovement * Time.deltaTime);
-        
+        _activeGun = _menuSelector.selectedGun;
+        _activeGun.gameObject.SetActive(true);
     }
 
     private async void GameManager_OnGameStateChanged(GameState state)
@@ -224,7 +196,6 @@ public class PlayerStateMachine : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         HandleRotation();
@@ -272,26 +243,6 @@ public class PlayerStateMachine : MonoBehaviour
 
     #region Gun
 
-    private void ToggleGun(int num)
-    {
-        if (ActiveGun == null || ActiveGun != _guns[num])
-        {
-            if (ActiveGun != null)
-            {
-                ActiveGun.gameObject.SetActive(false);
-            }
-            ActiveGun = _guns[num];
-            ActiveGun.gameObject.SetActive(true);
-        }
-        else if (ActiveGun != null)
-        {
-            ActiveGun.gameObject.SetActive(false);
-            ActiveGun = null;
-        }
-    }
-
-
-
     public async void EquipAnimation(float startValue, float endValue)
     {
         float timeElapsed = 0;
@@ -303,6 +254,7 @@ public class PlayerStateMachine : MonoBehaviour
             Animator.SetLayerWeight(1, valueToLerp);
             await Task.Yield();
         }
+        bulletCountEvent.RaiseEvent(ActiveGun.CurrentMagSize, ActiveGun.MagSize, ActiveGun.AmmoAmount);
     }
 
     #endregion
@@ -317,29 +269,22 @@ public class PlayerStateMachine : MonoBehaviour
             }
         }
 
-        if (other.CompareTag("NoReload") && _activeGun != null)
+        if (other.TryGetComponent(out NoReload noReload) && _activeGun != null)
         {
+            _noReload = noReload;
             _isAbilityTrigerred = true;
             _abilityTrigerred = _abilities[0];
             Debug.Log("Ability Trigerred");
             Destroy(other.gameObject);
         }
-
-        /*if (other.gameObject.TryGetComponent(out Vent vent) && other.gameObject.CompareTag("Location1"))
+        if (other.TryGetComponent(out GunSwitch gunSwitch))
         {
-            vent.SetPlayer(transform);
-            _currentVent = vent;
+            _gunSwitch = gunSwitch;
             _isAbilityTrigerred = true;
-            _abilityTrigerred = _abilities[1];
+            _abilityTrigerred = _abilities[3];
+            Debug.Log("Ability Trigerred");
+            Destroy(other.gameObject);
         }
-
-        else if (other.gameObject.TryGetComponent(out Vent ventTwo) && other.gameObject.CompareTag("Location2"))
-        {
-            ventTwo.SetPlayer(transform);
-            _currentVent = ventTwo;
-            _isAbilityTrigerred = true;
-            _abilityTrigerred = _abilities[2];
-        }*/
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -384,6 +329,7 @@ public enum GunType
 public enum AbilityType
 {
     NoReload,
-    Vent
+    Vent,
+    GunSwitch
 }
 

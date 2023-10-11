@@ -8,24 +8,46 @@ public class Vent : Abilities
 {
     [SerializeField] Transform _startLocation;
     [SerializeField] Transform _destinationLocation;
-    Transform player;
+    [SerializeField] Vector3 _playerSizeOnVent;
+    [SerializeField] float _ventingDuration;
+    [SerializeField] int _ventingCooldown;
+    [SerializeField] float _playerScalingDuration;
     [SerializeField] GameObject playerGameObject;
+    Transform player;
+    Vector3 _playerOriginalScale;
+    
     async public override void UseAbility()
     {
-        Debug.Log("UseAbility being used");
+        //Start venting
         playerGameObject.GetComponent<CharacterController>().enabled = false;
-        await player.DOMove(_destinationLocation.position, .75f).AsyncWaitForCompletion();
+        await player.DOScale(_playerSizeOnVent, _playerScalingDuration).AsyncWaitForCompletion();
+        await player.DOMove(_destinationLocation.position, _ventingDuration).AsyncWaitForCompletion();
         
-        Debug.Log("Venting Completed");
+        //Venting Completed
+        await player.DOScale(_playerOriginalScale, _playerScalingDuration).AsyncWaitForCompletion();
         playerGameObject.GetComponent<CharacterController>().enabled = true;
        
-        await Task.Delay(10000);
-        //_startLocation.gameObject.GetComponent<MeshCollider>().enabled = false;
-        //_destinationLocation.gameObject.GetComponent<MeshCollider>().enabled = false;
+        //Set Vent Cooldown
+        DisableColliders();
+        await Task.Delay(_ventingCooldown * 1000);
+        EnableColliders();
+        
     }
     public void SetPlayer(Transform player)
     {
         this.player = player;
-        //Debug.Log($"Player transform {this.player.transform.position}");
+        _playerOriginalScale = player.localScale;
+    }
+    
+    private void DisableColliders()
+    {
+        _startLocation.gameObject.GetComponent<Collider>().enabled = false;
+        _destinationLocation.gameObject.GetComponent<Collider>().enabled = false;
+    }
+
+    private void EnableColliders()
+    {
+        _startLocation.gameObject.GetComponent<Collider>().enabled = true;
+        _destinationLocation.gameObject.GetComponent<Collider>().enabled = true;
     }
 }

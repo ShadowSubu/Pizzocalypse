@@ -6,18 +6,27 @@ using UnityEngine.UI;
 
 public class MenuSelector : MonoBehaviour
 {
-    [SerializeField] CinemachineVirtualCamera gunSelectorCamera;
-    [SerializeField] CinemachineVirtualCamera levelSelectorCamera;
-    [SerializeField] bool isGunSelectorMode;
-    [SerializeField] Gun[] _guns = new Gun[] { };
-    [SerializeField] LevelSlice[] levelSlices = new LevelSlice[] { };
-    [SerializeField] Gun selectedGun;
-    [SerializeField] LevelSlice selectedLevel;
-    [SerializeField] Button gunSelectionButton;
-    [SerializeField] Button levelSelectionButton;
     [SerializeField] Button playButton;
+    [SerializeField] Button nextButton;
+    [SerializeField] Button prevButton;
+    private SelectionState selectionState;
 
-    public bool IsGunSelectorMode { get { return isGunSelectorMode; } }
+    // Gun Selection
+    [SerializeField] Gun[] _guns = new Gun[] { };
+    [SerializeField] public Gun selectedGun;
+    [SerializeField] Button gunSelectionButton;
+    [SerializeField] CinemachineVirtualCamera gunSelectorCamera;
+
+    // Level Selection
+    [SerializeField] LevelSlice[] levelSlices = new LevelSlice[] { };
+    [SerializeField] LevelSlice selectedLevel;
+    [SerializeField] Button levelSelectionButton;
+    [SerializeField] CinemachineVirtualCamera levelSelectorCamera;
+
+    // Ability Selection
+
+
+    public SelectionState SelectionState { get { return selectionState; } }
 
     private void Awake()
     {
@@ -25,11 +34,13 @@ public class MenuSelector : MonoBehaviour
     }
     private void Start()
     {
-        isGunSelectorMode = true;
+        selectionState = SelectionState.gun;
         SelectWeapon(0);
         gunSelectionButton.onClick.AddListener(EnableGunSelection);
         levelSelectionButton.onClick.AddListener(EnabelLevelSelection);
         playButton.onClick.AddListener(Play);
+        nextButton.onClick.AddListener(OnNextButton);
+        prevButton.onClick.AddListener(OnPrevButton);
         AssignThisToSlices();
 
         playButton.interactable = false;
@@ -38,7 +49,7 @@ public class MenuSelector : MonoBehaviour
     }
     private void Update()
     {
-        if (isGunSelectorMode)
+        if (selectionState == SelectionState.gun)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
@@ -67,7 +78,7 @@ public class MenuSelector : MonoBehaviour
     {
         levelSelectorCamera.gameObject.SetActive(false); 
         gunSelectorCamera.gameObject.SetActive(true);
-        isGunSelectorMode = true;
+        selectionState = SelectionState.gun;
         if (AudioManager.Instance) AudioManager.Instance.Play("Pizzocalypse-Button Click 1"); //PLAY AUDIO
     }
 
@@ -75,7 +86,7 @@ public class MenuSelector : MonoBehaviour
     {
         gunSelectorCamera.gameObject.SetActive(false);
         levelSelectorCamera.gameObject.SetActive(true);
-        isGunSelectorMode = false;
+        selectionState = SelectionState.level;
         if (AudioManager.Instance) AudioManager.Instance.Play("Pizzocalypse-Button Click 1"); //PLAY AUDIO
     }
 
@@ -122,6 +133,16 @@ public class MenuSelector : MonoBehaviour
         if (AudioManager.Instance) AudioManager.Instance.Play("Pizzocalypse-Button Click 1"); //PLAY AUDIO
     }
 
+    public void OnNextButton()
+    {
+
+    }
+
+    public void OnPrevButton()
+    {
+
+    }
+
     public void LoadLevel()
     {
         if (selectedLevel != null)
@@ -129,4 +150,20 @@ public class MenuSelector : MonoBehaviour
             //LOAD LEVEL HERE
         }
     }
+
+    private void OnDestroy()
+    {
+        gunSelectionButton.onClick.RemoveAllListeners();
+        levelSelectionButton.onClick.RemoveAllListeners();
+        playButton.onClick.RemoveAllListeners();
+        nextButton.onClick.RemoveAllListeners();
+        prevButton.onClick.RemoveAllListeners();
+    }
+}
+
+public enum SelectionState
+{
+    level,
+    gun,
+    ability
 }

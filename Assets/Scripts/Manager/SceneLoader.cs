@@ -25,12 +25,12 @@ public class SceneLoader : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
     }
-    private void Start()
+    private async void Start()
     {
         loaderCanvas.alpha = 1.0f;
         loaderCanvas.gameObject.SetActive(true);
         progressBar.fillAmount = 0f;
-        FadeOut();
+        await FadeOut();
     }
 
     public async void LoadScene(string sceneName)
