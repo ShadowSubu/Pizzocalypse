@@ -2,12 +2,11 @@ using UnityEngine.AI;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PatrolState : StateMachineBehaviour
+public class PatrolState : ZombieClass
 {
     float Patroltime;
     List<Transform> WayPoints = new List<Transform>(); 
     NavMeshAgent ZombieAgent;
-
 
     Transform Player;
     [SerializeField] float TouchDistance;
@@ -17,7 +16,7 @@ public class PatrolState : StateMachineBehaviour
         Player = GameObject.FindGameObjectWithTag("Player").transform ;
         ZombieAgent = animator.GetComponent<NavMeshAgent>();
         Patroltime = 0;
-        GameObject Points = GameObject.FindGameObjectWithTag("WayPoints");
+        GameObject Points = GameObject.FindGameObjectWithTag(waypoints);
         foreach(Transform T in Points.transform)
         {
             WayPoints.Add(T);
