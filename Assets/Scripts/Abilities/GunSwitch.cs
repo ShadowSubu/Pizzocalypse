@@ -17,7 +17,6 @@ public class GunSwitch : Abilities
             return;
         }
 
-        
         Context.PlayerInput.CharacterControls.EquipPistol.started += OnEquipPistol;
         Context.PlayerInput.CharacterControls.EquipPistol.canceled += OnEquipPistol;
         Context.PlayerInput.CharacterControls.EquipShotgun.started += OnEquipShotgun;

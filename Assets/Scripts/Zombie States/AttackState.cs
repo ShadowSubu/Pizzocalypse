@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class AttackState : ZombieClass
+public class AttackState : StateMachineBehaviour
 {
     Transform Player;
     public float AttackRange;
@@ -36,11 +36,7 @@ public class AttackState : ZombieClass
        
     }
 
-    /* // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-     {
-
-     }*/
+  
 
 
 }

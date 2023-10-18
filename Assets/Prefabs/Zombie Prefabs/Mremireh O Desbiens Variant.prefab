@@ -1,5 +1,67 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2205035838198722934
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4914277111550457055}
+  m_Layer: 6
+  m_Name: Patrol point 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4914277111550457055
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2205035838198722934}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.54, y: 0, z: -1.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1833477507497171191}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4285625215520702208
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5823180296046431792}
+  m_Layer: 6
+  m_Name: 'patrol point '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5823180296046431792
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4285625215520702208}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.48, y: 0, z: 3.17}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1833477507497171191}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2232496140294881052
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16,22 +78,22 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 6e620280142633045a2f8c3e80f13236,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6e620280142633045a2f8c3e80f13236,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.37
+      value: -41.95062
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6e620280142633045a2f8c3e80f13236,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.08
+      value: 0.0000019073486
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6e620280142633045a2f8c3e80f13236,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.99
+      value: -17.601803
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6e620280142633045a2f8c3e80f13236,
         type: 3}
@@ -384,7 +446,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6e620280142633045a2f8c3e80f13236,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5823180296046431792}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6e620280142633045a2f8c3e80f13236,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4914277111550457055}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e620280142633045a2f8c3e80f13236,
         type: 3}
@@ -402,6 +472,18 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2173726124807861715}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e620280142633045a2f8c3e80f13236,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2519007945872938201}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e620280142633045a2f8c3e80f13236,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3909324881442418143}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e620280142633045a2f8c3e80f13236,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7127868849463268061}
   m_SourcePrefab: {fileID: 100100000, guid: 6e620280142633045a2f8c3e80f13236, type: 3}
 --- !u!1 &1313365233459905101 stripped
 GameObject:
@@ -494,6 +576,69 @@ MonoBehaviour:
     m_Bits: 8
   ObstacleMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 65
   visibleTargets: []
   animator: {fileID: 139210224485284790}
+--- !u!114 &2519007945872938201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313365233459905101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69bc498550fd94340b3dacb3528a4d9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patrolPoints:
+  - {fileID: 4914277111550457055}
+  patrolSpeed: 1.5
+  chaseSpeed: 4
+  IdleTime: 5
+  Patroltime: 8
+  attackRange: 1.5
+  attackCooldown: 2
+  TouchDistance: 1.5
+  stopChasingDis: 8
+  currentState: 0
+--- !u!114 &3909324881442418143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313365233459905101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ca5cc29eed0e1545ba075cdafc63f99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0
+  maxHealth: 100
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &7127868849463268061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313365233459905101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ca5cc29eed0e1545ba075cdafc63f99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0
+  maxHealth: 100
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!4 &1833477507497171191 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6e620280142633045a2f8c3e80f13236,
+    type: 3}
+  m_PrefabInstance: {fileID: 2232496140294881052}
+  m_PrefabAsset: {fileID: 0}

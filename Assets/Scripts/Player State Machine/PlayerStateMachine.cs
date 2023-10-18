@@ -1,4 +1,3 @@
-using Cysharp.Threading.Tasks.Triggers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -60,6 +59,9 @@ public class PlayerStateMachine : MonoBehaviour
     //Animation Lerp
     float lerpDuration = 0.3f;
     float valueToLerp;
+
+    //Events
+    [SerializeField] private IntEventSO bulletCountEvent = default;
 
     //getters and setters
     public PlayerInput PlayerInput { get { return _playerInput; } }
@@ -139,6 +141,7 @@ public class PlayerStateMachine : MonoBehaviour
         await RotateToShootDirection();
         _isShooting = true;
         ReduceAmmo(_activeGun.AmmoReduceAmount);
+        bulletCountEvent.RaiseEvent(ActiveGun.CurrentMagSize, ActiveGun.MagSize, ActiveGun.AmmoAmount);
     }
 
     public void OnReload(InputAction.CallbackContext context)
@@ -158,6 +161,7 @@ public class PlayerStateMachine : MonoBehaviour
                 _activeGun.CurrentMagSize += _bulletsFired;
             }                     
         }
+        bulletCountEvent.RaiseEvent(ActiveGun.CurrentMagSize, ActiveGun.MagSize, ActiveGun.AmmoAmount);
         _isReloading = false;
     }
 
@@ -250,6 +254,7 @@ public class PlayerStateMachine : MonoBehaviour
             Animator.SetLayerWeight(1, valueToLerp);
             await Task.Yield();
         }
+        bulletCountEvent.RaiseEvent(ActiveGun.CurrentMagSize, ActiveGun.MagSize, ActiveGun.AmmoAmount);
     }
 
     #endregion

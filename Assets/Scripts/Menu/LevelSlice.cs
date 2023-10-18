@@ -11,7 +11,7 @@ public class LevelSlice : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!menuSelector.IsGunSelectorMode)
+        if (menuSelector.SelectionState == SelectionState.level)
         {
             Debug.Log(gameObject.name);
             if (menuSelector != null)
