@@ -480,10 +480,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 3909324881442418143}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e620280142633045a2f8c3e80f13236,
+    - targetCorrespondingSourceObject: {fileID: -5415430821220795485, guid: 6e620280142633045a2f8c3e80f13236,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7127868849463268061}
+      addedObject: {fileID: 3059715159984253692}
+    - targetCorrespondingSourceObject: {fileID: -5415430821220795485, guid: 6e620280142633045a2f8c3e80f13236,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3008506035501096311}
   m_SourcePrefab: {fileID: 100100000, guid: 6e620280142633045a2f8c3e80f13236, type: 3}
 --- !u!1 &1313365233459905101 stripped
 GameObject:
@@ -618,27 +622,78 @@ MonoBehaviour:
   maxHealth: 100
   OnDeath:
     m_PersistentCalls:
-      m_Calls: []
---- !u!114 &7127868849463268061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1313365233459905101}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ca5cc29eed0e1545ba075cdafc63f99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentHealth: 0
-  maxHealth: 100
-  OnDeath:
+      m_Calls:
+      - m_Target: {fileID: 2519007945872938201}
+        m_TargetAssemblyTypeName: ZombieAI, Assembly-CSharp
+        m_MethodName: Death
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnHit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2519007945872938201}
+        m_TargetAssemblyTypeName: ZombieAI, Assembly-CSharp
+        m_MethodName: GotHit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1833477507497171191 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6e620280142633045a2f8c3e80f13236,
     type: 3}
   m_PrefabInstance: {fileID: 2232496140294881052}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3036531387677689023 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -5415430821220795485, guid: 6e620280142633045a2f8c3e80f13236,
+    type: 3}
+  m_PrefabInstance: {fileID: 2232496140294881052}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &3059715159984253692
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3036531387677689023}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0520134, y: 1.2412416, z: 0.5611038}
+  m_Center: {x: 0.031995773, y: 0.99718434, z: 0.8572273}
+--- !u!114 &3008506035501096311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3036531387677689023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca70cb432afbf194a8e48a8aea39ad98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 20
+  hitParticlePrefab: {fileID: 0}

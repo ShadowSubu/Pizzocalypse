@@ -11,6 +11,7 @@ public class Health : MonoBehaviour
 
     // Subscribe to this event to get notified when this unit dies
     public UnityEvent OnDeath;
+    public UnityEvent OnHit;
 
     private void Start()
     {
@@ -20,10 +21,15 @@ public class Health : MonoBehaviour
     public virtual void TakeDamage(int amount)
     {
         currentHealth -= amount;
+        if (currentHealth > 0)
+        {
+            OnHit?.Invoke();
+        }
         if (currentHealth <= 0)
         {
             currentHealth = 0;
             OnDeath?.Invoke();
+            
         }
     }
 }
