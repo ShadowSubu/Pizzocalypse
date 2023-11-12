@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1031586690574257131}
   - component: {fileID: 8228802689802283270}
   - component: {fileID: 6915992832203840033}
-  - component: {fileID: 9096230388120223338}
   - component: {fileID: 1232209669154448150}
   - component: {fileID: 4198733356431652794}
   - component: {fileID: -713475974675930121}
@@ -109,19 +108,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &9096230388120223338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1966970920567811766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb53dca774f81b54699a1ff419e1c2ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Damage: 50
 --- !u!114 &1232209669154448150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca70cb432afbf194a8e48a8aea39ad98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 10
+  damageAmount: 50
   hitParticlePrefab: {fileID: 0}
 --- !u!54 &4198733356431652794
 Rigidbody:

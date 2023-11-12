@@ -46,7 +46,9 @@ public class ZombieAI : MonoBehaviour
         Idle,
         Patrol,
         Chase,
-        Attack
+        Attack,
+        Dead,
+        GotHit
     }
     [HideInInspector]
     public ZombieState currentState = ZombieState.Idle;
@@ -85,6 +87,14 @@ public class ZombieAI : MonoBehaviour
             case ZombieState.Attack:
                 Attack();
                 break;
+            
+            case ZombieState.Dead:
+                Death();
+                break;
+            case ZombieState.GotHit:
+                GotHit();
+                break;
+
 
 
         }
@@ -123,6 +133,17 @@ public class ZombieAI : MonoBehaviour
             case ZombieState.Attack:
                 animator.SetBool("IsAttacking", true);
                 animator.SetBool("IsChasing", false);
+                break;
+
+            case ZombieState.Dead:
+                animator.SetTrigger("IsDead");
+                animator.SetBool("IsPatrolling", false);
+                animator.SetBool("IsChasing", false);
+                animator.SetBool("IsAttacking", false);
+                break;
+
+            case ZombieState.GotHit:
+               
                 break;
         }
     }
@@ -183,7 +204,7 @@ public class ZombieAI : MonoBehaviour
         }
     }
 
-    private void Attack()
+    public void Attack()
     {
 
         animator.transform.LookAt(player);
@@ -210,6 +231,15 @@ public class ZombieAI : MonoBehaviour
             SetState(ZombieState.Chase);
             navMeshAgent.speed = chaseSpeed;
         }
+    }
+
+    public void Death()
+    {
+        SetState(ZombieState.Dead);
+    }
+    public void GotHit()
+    {
+        animator.SetTrigger("Damage");
     }
 }
         
