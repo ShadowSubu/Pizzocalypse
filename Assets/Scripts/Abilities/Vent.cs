@@ -10,7 +10,7 @@ public class Vent : Abilities
     [SerializeField] Transform _destinationLocation;
     [SerializeField] Vector3 _playerSizeOnVent;
     [SerializeField] float _ventingDuration;
-    [SerializeField] int _ventingCooldown;
+    [SerializeField] public int _ventingCooldown;
     [SerializeField] float _playerScalingDuration;
     [SerializeField] GameObject playerGameObject;
     Transform player;
@@ -39,13 +39,13 @@ public class Vent : Abilities
         _playerOriginalScale = player.localScale;
     }
     
-    private void DisableColliders()
+    public void DisableColliders()
     {
         _startLocation.gameObject.GetComponent<Collider>().enabled = false;
         _destinationLocation.gameObject.GetComponent<Collider>().enabled = false;
     }
 
-    private void EnableColliders()
+    public void EnableColliders()
     {
         _startLocation.gameObject.GetComponent<Collider>().enabled = true;
         _destinationLocation.gameObject.GetComponent<Collider>().enabled = true;

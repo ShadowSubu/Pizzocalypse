@@ -37,11 +37,12 @@ public class PlayerUseAbilityState : PlayerBaseState
         {
             SwitchState(Factory.None());
         }
-        else if(Ctx.ActiveGun != null && Ctx.IsGunToggled &&!Ctx.IsShooting)
+        else if(Ctx.ActiveGun != null && !Ctx.IsShooting)
         {
             SwitchState(Factory.GunEquip());
         }
-        else if(Ctx.ActiveGun != null && !Ctx.IsShooting)
+
+        else if (Ctx.ActiveGun != null && !Ctx.IsGunToggled && Ctx.IsShooting)
         {
             SwitchState(Factory.GunFire());
         }
@@ -63,7 +64,6 @@ public class PlayerUseAbilityState : PlayerBaseState
 
             case AbilityType.GunSwitch:
                 ExecuteGunSwitch();
-                
                 break;
 
             default:
@@ -80,7 +80,7 @@ public class PlayerUseAbilityState : PlayerBaseState
     private void ExecuteVent()
     { 
         Ctx.CurrentVent.UseAbility();
-        isAbilityUsed = true;
+        isAbilityUsed = true;   
     }
 
     private void ExecuteGunSwitch()

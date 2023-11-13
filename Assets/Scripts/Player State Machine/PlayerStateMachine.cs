@@ -199,7 +199,10 @@ public class PlayerStateMachine : MonoBehaviour
     void Update()
     {
         HandleRotation();
-        _characterController.Move(_appliedMovement * Time.deltaTime);
+        if(_characterController.enabled)
+        {
+            _characterController.Move(_appliedMovement * Time.deltaTime);
+        }
         _currentState.UpdateStates();
     }
 
@@ -274,7 +277,6 @@ public class PlayerStateMachine : MonoBehaviour
             _noReload = noReload;
             _isAbilityTrigerred = true;
             _abilityTrigerred = _abilities[0];
-            Debug.Log("Ability Trigerred");
             Destroy(other.gameObject);
         }
         if (other.TryGetComponent(out GunSwitch gunSwitch))
@@ -282,7 +284,6 @@ public class PlayerStateMachine : MonoBehaviour
             _gunSwitch = gunSwitch;
             _isAbilityTrigerred = true;
             _abilityTrigerred = _abilities[3];
-            Debug.Log("Ability Trigerred");
             Destroy(other.gameObject);
         }
     }
