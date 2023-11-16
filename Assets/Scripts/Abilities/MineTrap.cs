@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
 public class MineTrap : MonoBehaviour
 {
     [SerializeField] public float explosionRange = 5f;
     [SerializeField] private int maxDamage;
 
     public float ExplosionRange { get { return explosionRange; } }
+
     private void OnDrawGizmosSelected()
     {
         // Draw a wire sphere representing the explosion range
@@ -18,23 +21,31 @@ public class MineTrap : MonoBehaviour
     public void ExplodeMine()
     {
         Destroy(gameObject);
-        //play explosion VFX
+        // play explosion VFX
     }
-    private void OnCollisionEnter(Collision collision)
+
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.TryGetComponent(out Health _))
+        Debug.Log("collision detected with:" + other);
+        // Check if the triggering object has the Health script or is tagged as "Enemy"
+        if (other.gameObject.TryGetComponent(out Health healthComponent) && other.gameObject.CompareTag("Enemy"))
         {
+            Debug.Log("collision detected");
+            // Apply damage directly to the triggering object
+            healthComponent?.TakeDamage(maxDamage);
+
+            // Optionally, you can also apply damage to other nearby colliders using OverlapSphere
             Collider[] hits = Physics.OverlapSphere(transform.position, explosionRange);
 
             foreach (var hit in hits)
             {
-                if (hit.TryGetComponent(out Health healthColliders))
+                if (hit.gameObject != other.gameObject && hit.gameObject.TryGetComponent(out Health healthColliders))
                 {
                     healthColliders.TakeDamage(maxDamage);
                 }
             }
+
             ExplodeMine();
         }
     }
-
 }

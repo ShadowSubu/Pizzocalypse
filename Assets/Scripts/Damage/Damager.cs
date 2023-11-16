@@ -10,7 +10,7 @@ public class Damager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent<Health>( out Health health))
+        if (other.gameObject.TryGetComponent<Health>(out Health health))
         {
             health.TakeDamage(damageAmount);
             if (hitParticlePrefab != null) hitParticlePrefab.Play();
