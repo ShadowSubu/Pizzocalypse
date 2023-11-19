@@ -10,6 +10,7 @@ public class VoidEventSO : ScriptableObject
 
     public void RaiseEvent()
     {
-        OnEventRaised?.Invoke();
+        if (OnEventRaised != null)
+            OnEventRaised?.Invoke();
     }
 }

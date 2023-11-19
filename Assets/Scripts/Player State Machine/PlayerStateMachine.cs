@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -52,6 +53,10 @@ public class PlayerStateMachine : MonoBehaviour
     Vent _currentVent;
     NoReload _noReload;
     GunSwitch _gunSwitch;
+
+    private AbilityType _currentAbility;
+    [SerializeField] VoidEventSO abilityUseEvent;
+    public AbilityType CurrentAbility { get { return _currentAbility; } }
    
     //Prefabs
     [SerializeField] Bullet _bulletPrefab;
@@ -201,6 +206,16 @@ public class PlayerStateMachine : MonoBehaviour
         HandleRotation();
         _characterController.Move(_appliedMovement * Time.deltaTime);
         _currentState.UpdateStates();
+
+        DummyControl();
+    }
+
+    private void DummyControl()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            UseAbility();
+        }
     }
 
     void HandleRotation()
@@ -290,21 +305,21 @@ public class PlayerStateMachine : MonoBehaviour
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         
-        if (hit.gameObject.TryGetComponent(out Vent vent) && hit.gameObject.CompareTag("Location1") && !_isMovementPressed)
-        {
-            vent.SetPlayer(transform);
-            _currentVent = vent;
-            _isAbilityTrigerred = true;
-            _abilityTrigerred = _abilities[1];
-        }
+        //if (hit.gameObject.TryGetComponent(out Vent vent) && hit.gameObject.CompareTag("Location1") && !_isMovementPressed)
+        //{
+        //    vent.SetPlayer(transform);
+        //    _currentVent = vent;
+        //    _isAbilityTrigerred = true;
+        //    _abilityTrigerred = _abilities[1];
+        //}
 
-        else if (hit.gameObject.TryGetComponent(out Vent ventTwo) && hit.gameObject.CompareTag("Location2") && !_isMovementPressed)
-        {
-            ventTwo.SetPlayer(transform);
-            _currentVent = ventTwo;
-            _isAbilityTrigerred = true;
-            _abilityTrigerred = _abilities[2];
-        }
+        //else if (hit.gameObject.TryGetComponent(out Vent ventTwo) && hit.gameObject.CompareTag("Location2") && !_isMovementPressed)
+        //{
+        //    ventTwo.SetPlayer(transform);
+        //    _currentVent = ventTwo;
+        //    _isAbilityTrigerred = true;
+        //    _abilityTrigerred = _abilities[2];
+        //}
     }
     private void OnEnable()
     {
@@ -317,6 +332,31 @@ public class PlayerStateMachine : MonoBehaviour
         GameManager.OnGameStateChanged -= GameManager_OnGameStateChanged;
     }
 
+    #region Ability
+
+    public void EquipAbility(AbilityType ability)
+    {
+        if (CurrentAbility == AbilityType.None)
+        {
+            _currentAbility = ability;
+
+            // UPDATE UI
+        }
+    }
+
+    public void UseAbility()
+    {
+        if (CurrentAbility != AbilityType.None)
+        {
+            abilityUseEvent.RaiseEvent();
+            _currentAbility = AbilityType.None;
+
+            // UPDATE UI
+        }
+    }
+
+    #endregion
+
 }
 
 public enum GunType
@@ -328,8 +368,9 @@ public enum GunType
 
 public enum AbilityType
 {
+    None,
     NoReload,
     Vent,
-    GunSwitch
+    GunSwitch,
 }
 
