@@ -79,7 +79,7 @@ public class PlayerUseAbilityState : PlayerBaseState
 
     private void ExecuteVent()
     { 
-        Ctx.CurrentVent.UseAbility();
+        Ctx.CurrentVent.UseAbility(Ctx);
         isAbilityUsed = true;   
     }
 

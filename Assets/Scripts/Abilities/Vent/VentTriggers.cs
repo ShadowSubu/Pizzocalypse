@@ -5,8 +5,15 @@ using UnityEngine.Events;
 
 public class VentTriggers : MonoBehaviour
 {
+    private Vent vent;
+    public Vent Vent => vent;
     public bool isInTrigger;
     //public UnityEvent<bool> 
+
+    public void Initialize(Vent vent)
+    {
+        this.vent = vent;
+    }
 
     private void OnTriggerEnter(Collider other)
     {

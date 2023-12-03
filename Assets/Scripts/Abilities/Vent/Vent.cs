@@ -28,6 +28,8 @@ public class Vent : Ability, IInteractable
     public void Start()
     {
         readyToUse = true;
+        location1.Initialize(this);
+
     }
 
     async public override void UseAbility(PlayerStateMachine player)
@@ -56,12 +58,14 @@ public class Vent : Ability, IInteractable
             await Teleport(player, location2.transform.position);
             // Set Cooldown
             SetCooldown();
+            location1.isInTrigger = false;
         }
         else if (location2.isInTrigger)
         {
             await Teleport(player, location1.transform.position);
             // Set Cooldown
             SetCooldown();
+            location2.isInTrigger = false;
         }
 
     }
@@ -71,7 +75,7 @@ public class Vent : Ability, IInteractable
         // Start Venting
         player.GetComponent<CharacterController>().enabled = false;
         await player.transform.DOScale(playerShrinkValue, shrinkDUration).AsyncWaitForCompletion();
-        await player.transform.DOMove(location2.transform.position, _ventingDuration).AsyncWaitForCompletion();
+        await player.transform.DOMove(position, _ventingDuration).AsyncWaitForCompletion();
 
         // Scaling the Player Up
         await player.transform.DOScale(1, shrinkDUration).AsyncWaitForCompletion();

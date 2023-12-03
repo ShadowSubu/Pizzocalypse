@@ -8,8 +8,8 @@ public class VentPickup : AbilityPickup
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.TryGetComponent(out PlayerStateMachine player);
-            player.EquipAbility(AbilityType.Vent);
+            if(other.TryGetComponent(out PlayerStateMachine player))
+                player.EquipAbility(AbilityType.Vent);
         }
     }
 }

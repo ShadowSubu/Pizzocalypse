@@ -301,6 +301,31 @@ public class PlayerStateMachine : MonoBehaviour
             _abilityTrigerred = _abilities[3];
             Destroy(other.gameObject);
         }
+        if (other.TryGetComponent(out VentTriggers vent))
+        {
+            SetVent(vent.Vent);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent(out VentTriggers vent))
+        {
+            SetVent(null);
+        }
+    }
+
+    public bool SetAbility(AbilityType type)
+    {
+        if (CurrentAbility == AbilityType.None)
+        {
+            _currentAbility = type;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -347,17 +372,36 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void UseAbility()
     {
-        if (CurrentAbility != AbilityType.None)
+        switch (CurrentAbility)
         {
-            abilityUseEvent.RaiseEvent();
-            _currentAbility = AbilityType.None;
-
-            // UPDATE UI
+            case AbilityType.None:
+                Debug.LogWarning("No Ability Available");
+                break;
+            case AbilityType.NoReload:
+                break;
+            case AbilityType.Vent:
+                if (CurrentVent != null)
+                {
+                    CurrentVent.UseAbility(this);
+                }
+                _currentAbility = AbilityType.None;
+                break;
+            case AbilityType.GunSwitch:
+                break;
+            default:
+                break;
         }
     }
 
     #endregion
 
+    public void SetVent(Vent vent)
+    {
+        if (CurrentVent == null)
+        {
+            _currentVent = vent;
+        }
+    }
 }
 
 public enum GunType
