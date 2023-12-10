@@ -21,4 +21,12 @@ public class Gun : MonoBehaviour
     public int MagSize { get { return _magSize; }  }
     public int CurrentMagSize {  get { return _currentMagSize; } set { _currentMagSize = value; } }
 
+    public async void InitiateNoReload(float duration)
+    {
+        // TODO: CACHE ALL THE VALUES RELATED TO AMMO 
+        //       DONT REDUCE THE AMMO WHEN SHOOTING
+        //       START A DELAY FUNCTION FOOR THE ABILITY DURATION
+        //       AFTER THE DELAY RESET ALL THE VALUES RELATED TO AMMO
+    }
+
 }

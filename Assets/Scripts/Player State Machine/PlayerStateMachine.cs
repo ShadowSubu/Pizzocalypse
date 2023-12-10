@@ -378,6 +378,11 @@ public class PlayerStateMachine : MonoBehaviour
                 Debug.LogWarning("No Ability Available");
                 break;
             case AbilityType.NoReload:
+                if (ActiveGun != null)
+                {
+                    // TODO: CHANGE THE STATIC VALUE OF DURATION
+                    ActiveGun.InitiateNoReload(5);
+                }
                 break;
             case AbilityType.Vent:
                 if (CurrentVent != null)
@@ -387,6 +392,7 @@ public class PlayerStateMachine : MonoBehaviour
                 _currentAbility = AbilityType.None;
                 break;
             case AbilityType.GunSwitch:
+                // TODO: SWITCH GUNS
                 break;
             default:
                 break;
