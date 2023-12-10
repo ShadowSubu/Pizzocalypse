@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class PlayerStateMachine : MonoBehaviour
 {
@@ -53,6 +54,9 @@ public class PlayerStateMachine : MonoBehaviour
     Vent _currentVent;
     NoReload _noReload;
     GunSwitch _gunSwitch;
+    [SerializeField] private MineTrap mineTrapPrefab;
+    [SerializeField] private StunGrenade stunGrenadePrefab;
+    [SerializeField] private Transform spawnLocation;
 
     private AbilityType _currentAbility;
     [SerializeField] VoidEventSO abilityUseEvent;
@@ -394,6 +398,20 @@ public class PlayerStateMachine : MonoBehaviour
             case AbilityType.GunSwitch:
                 // TODO: SWITCH GUNS
                 break;
+            case AbilityType.MineTrap:
+                if (mineTrapPrefab != null)
+                {
+                    MineTrap mineTrap = Instantiate(mineTrapPrefab, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Quaternion.identity);
+                }
+                break;
+            case AbilityType.StunGrenade:
+                if (stunGrenadePrefab != null)
+                {
+                    StunGrenade stunGrenade = Instantiate(stunGrenadePrefab, spawnLocation.position, Quaternion.identity);
+                    stunGrenade.Initialize(transform.forward);
+                }
+
+                break;
             default:
                 break;
         }
@@ -423,5 +441,7 @@ public enum AbilityType
     NoReload,
     Vent,
     GunSwitch,
+    MineTrap,
+    StunGrenade
 }
 

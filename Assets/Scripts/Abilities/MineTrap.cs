@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class MineTrap : MonoBehaviour
+public class MineTrap : Ability
 {
     [SerializeField] public float explosionRange = 5f;
     [SerializeField] private int maxDamage;
@@ -32,7 +32,7 @@ public class MineTrap : MonoBehaviour
         {
             Debug.Log("collision detected");
             // Apply damage directly to the triggering object
-            healthComponent?.TakeDamage(maxDamage);
+            if (healthComponent != null) healthComponent.TakeDamage(maxDamage);
 
             // Optionally, you can also apply damage to other nearby colliders using OverlapSphere
             Collider[] hits = Physics.OverlapSphere(transform.position, explosionRange);

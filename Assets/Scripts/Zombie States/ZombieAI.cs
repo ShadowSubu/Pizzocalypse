@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -241,7 +242,18 @@ public class ZombieAI : MonoBehaviour
     {
         animator.SetTrigger("Damage");
     }
+
+    #region Stun
+
+    public async void Stun(float duration)
+    {
+        // TODO: IMPLLEMENT STUN FUCTIONALITY
+        await Task.Delay((int)(1000 * duration));
+        // TODO: RECCOVER
+    }
+
+    #endregion
 }
-        
-    
+
+
 
