@@ -4996,7 +4996,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh30240
+  m_Name: pb_Mesh36050
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -5817,6 +5817,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6534131945315756583, guid: 88632ed2b2e50684d9ded3955ec8bdf6,
+        type: 3}
+      propertyPath: ZombieTypes.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6534131945315756583, guid: 88632ed2b2e50684d9ded3955ec8bdf6,
+        type: 3}
+      propertyPath: ZombieTypes.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6534131945315756583, guid: 88632ed2b2e50684d9ded3955ec8bdf6,
         type: 3}

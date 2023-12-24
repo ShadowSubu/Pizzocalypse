@@ -9,6 +9,8 @@ public class ZombieAI : MonoBehaviour
 {
     public Transform[] patrolPoints;
 
+    public object[] zombieTypes = { "s", "t", "a"};
+
     [Header("StateSpeeds")]
     public float patrolSpeed = 1.5f;
     public float chaseSpeed = 4f;
@@ -92,6 +94,7 @@ public class ZombieAI : MonoBehaviour
             case ZombieState.Dead:
                 Death();
                 break;
+
             case ZombieState.GotHit:
                 GotHit();
                 break;
@@ -213,14 +216,7 @@ public class ZombieAI : MonoBehaviour
         // Check if it's time to attack again
         if (Time.time >= nextAttackTime)
         {
-            /* if (distance < 1.5)
-            {
-                animator.SetBool("NormalAttack", true);
-            }*/
-            // Implement attack logic here
-            // You can use raycasting or other methods to detect if the player is within attack range
-
-            // If the player is within range, deal damage or trigger attack animation
+            if (zombieTypes[0] == "s")
 
             // Set the next attack time based on attack cooldown
             nextAttackTime = Time.time + attackCooldown;
