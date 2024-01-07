@@ -1,7 +1,10 @@
 using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class MenuSelector : MonoBehaviour
@@ -24,9 +27,16 @@ public class MenuSelector : MonoBehaviour
     [SerializeField] CinemachineVirtualCamera levelSelectorCamera;
 
     // Ability Selection
+    [SerializeField] AbilityPickup[] _abilties = new AbilityPickup[] { };
+    [SerializeField] public AbilityPickup selectedAbility;
+    [SerializeField] Button abilitySelectionButton;
+    [SerializeField] CinemachineVirtualCamera abilitySelectorCamera;
 
+    [Space]
+    [SerializeField] private PlayerLoadoutSO loadout;
 
     public SelectionState SelectionState { get { return selectionState; } }
+
 
     private void Awake()
     {
@@ -36,17 +46,29 @@ public class MenuSelector : MonoBehaviour
     {
         selectionState = SelectionState.gun;
         SelectWeapon(0);
+        SelectAbility(0);
         gunSelectionButton.onClick.AddListener(EnableGunSelection);
         levelSelectionButton.onClick.AddListener(EnabelLevelSelection);
+        abilitySelectionButton.onClick.AddListener(EnableAbilitySelect);
         playButton.onClick.AddListener(Play);
         nextButton.onClick.AddListener(OnNextButton);
         prevButton.onClick.AddListener(OnPrevButton);
         AssignThisToSlices();
 
+
         playButton.interactable = false;
 
         if (AudioManager.Instance) AudioManager.Instance.Play("Rough_-_Tune"); //PLAY BGM FOR MENU
     }
+
+    private void EnableAbilitySelect()
+    {
+        gunSelectorCamera.gameObject.SetActive(false);
+        levelSelectorCamera.gameObject.SetActive(false);
+        abilitySelectorCamera.gameObject.SetActive(true);
+        selectionState = SelectionState.ability;
+    }
+
     private void Update()
     {
         if (selectionState == SelectionState.gun)
@@ -77,6 +99,7 @@ public class MenuSelector : MonoBehaviour
     private void EnableGunSelection()
     {
         levelSelectorCamera.gameObject.SetActive(false); 
+        abilitySelectorCamera.gameObject.SetActive(false);
         gunSelectorCamera.gameObject.SetActive(true);
         selectionState = SelectionState.gun;
         if (AudioManager.Instance) AudioManager.Instance.Play("Pizzocalypse-Button Click 1"); //PLAY AUDIO
@@ -85,6 +108,7 @@ public class MenuSelector : MonoBehaviour
     private void EnabelLevelSelection()
     {
         gunSelectorCamera.gameObject.SetActive(false);
+        abilitySelectorCamera.gameObject.SetActive(false);
         levelSelectorCamera.gameObject.SetActive(true);
         selectionState = SelectionState.level;
         if (AudioManager.Instance) AudioManager.Instance.Play("Pizzocalypse-Button Click 1"); //PLAY AUDIO
@@ -93,7 +117,7 @@ public class MenuSelector : MonoBehaviour
     private void Play()
     {
         if (AudioManager.Instance) AudioManager.Instance.Play("Pizzocalypse-Button Click 3"); //PLAY AUDIO
-        if (selectedLevel)
+        if (selectedLevel && loadout.AbilityType != AbilityType.None)
         {
             if (SceneLoader.Instance && selectedLevel.isUnlocked)
             {
@@ -131,16 +155,87 @@ public class MenuSelector : MonoBehaviour
         _guns[gunNumber].gameObject.SetActive(true);
         selectedGun = _guns[gunNumber];
         if (AudioManager.Instance) AudioManager.Instance.Play("Pizzocalypse-Button Click 1"); //PLAY AUDIO
+        loadout.GunType = selectedGun.GunType;
+    }
+
+    public void SelectAbility(int num)
+    {
+        DisableAbilities();
+        _abilties[num].gameObject.SetActive(true);
+        selectedAbility = _abilties[num];
+        loadout.AbilityType = selectedAbility.Type;
+    }
+
+    private void DisableAbilities()
+    {
+        for (int i = 0; i < _abilties.Count(); i++)
+        {
+            _abilties[i].gameObject.SetActive(false);
+        }
     }
 
     public void OnNextButton()
     {
-
+        if(selectionState == SelectionState.gun)
+        {
+            var index = Array.IndexOf(_guns, selectedGun);
+            index++;
+            if (index < _guns.Count())
+            {
+                SelectWeapon(index);
+            }
+            else
+            {
+                index = 0;
+                SelectWeapon(index);
+            }
+        }
+        else if (selectionState == SelectionState.ability)
+        {
+            var index = Array.IndexOf(_abilties, selectedAbility);
+            index++;
+            if (index < _abilties.Count())
+            {
+                SelectAbility(index);
+            }
+            else
+            {
+                index = 0;
+                SelectAbility(index);
+            }
+        }
     }
 
     public void OnPrevButton()
     {
-
+        if (selectionState == SelectionState.gun)
+        {
+            var index = Array.IndexOf(_guns, selectedGun);
+            index--;
+            if (index < 0)
+            {
+                index = _guns.Count() - 1;
+                SelectWeapon(index);
+            }
+            else
+            {
+                SelectWeapon(index);
+            }
+        }
+        else if (selectionState == SelectionState.ability)
+        {
+            var index = Array.IndexOf(_abilties, selectedAbility);
+            index--;
+            if (index < 0)
+            {
+                index = _abilties.Count() - 1;
+                SelectAbility(index);
+            }
+            else
+            {
+                SelectAbility(index);
+            }
+        }
     }
 
     public void LoadLevel()

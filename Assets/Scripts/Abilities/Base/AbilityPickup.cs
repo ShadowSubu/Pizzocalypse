@@ -6,6 +6,7 @@ using UnityEngine;
 public class AbilityPickup : MonoBehaviour
 {
     [SerializeField] AbilityType type;
+    public AbilityType Type => type;
 
     private void OnTriggerEnter(Collider other)
     {

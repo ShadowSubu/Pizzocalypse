@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -71,6 +72,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     //Events
     [SerializeField] private IntEventSO bulletCountEvent = default;
+    [SerializeField] private PlayerLoadoutSO playerLoadout;
 
     //getters and setters
     public PlayerInput PlayerInput { get { return _playerInput; } }
@@ -188,7 +190,13 @@ public class PlayerStateMachine : MonoBehaviour
     void Start()
     {
         _characterController.Move(_appliedMovement * Time.deltaTime);
-        _activeGun = _menuSelector.selectedGun;
+        for (int i = 0; i < _guns.Count(); i++)
+        {
+            if (_guns[i].GunType == playerLoadout.GunType)
+            {
+                _activeGun = _guns[i];
+            }
+        }
         _activeGun.gameObject.SetActive(true);
     }
 

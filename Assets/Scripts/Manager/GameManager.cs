@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour
             
             AudioManager.Instance.Play("Pizzocalypse-Spawn"); //PLAY AUDIO
         }
+
         // SPAWN PLAYER
         if (playerCharacter)
         {
