@@ -130,9 +130,10 @@ public class PlayerStateMachine : MonoBehaviour
         _playerInput.CharacterControls.Move.performed += OnMovementInput;
         _playerInput.CharacterControls.Shoot.performed += OnShoot;
         _playerInput.CharacterControls.Reload.performed += OnReload;
-        
-        
+        _playerInput.CharacterControls.UseAbility.performed += OnUseAbility; // TODO: GO TO THIS METHOD TO IMPLEMENT USE ABILITY
     }
+
+    
 
     #region Input Action Methods
 
@@ -174,6 +175,11 @@ public class PlayerStateMachine : MonoBehaviour
         }
         bulletCountEvent.RaiseEvent(ActiveGun.CurrentMagSize, ActiveGun.MagSize, ActiveGun.AmmoAmount);
         _isReloading = false;
+    }
+
+    private void OnUseAbility(InputAction.CallbackContext obj)
+    {
+        // This executes when ability button is pressed
     }
 
     public void ReduceAmmo(int ammoToReduce)
