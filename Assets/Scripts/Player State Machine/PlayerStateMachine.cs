@@ -146,14 +146,22 @@ public class PlayerStateMachine : MonoBehaviour
         _isMovementPressed = _currentMovementInput.x != 0 || _currentMovementInput.y != 0;
     }
 
-    async public void OnShoot(InputAction.CallbackContext context)
+    public void OnShoot(InputAction.CallbackContext context)
     {
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        _isRotating = true;
-        await RotateToShootDirection();
-        _isShooting = true;
-        ReduceAmmo(_activeGun.AmmoReduceAmount);
-        bulletCountEvent.RaiseEvent(ActiveGun.CurrentMagSize, ActiveGun.MagSize, ActiveGun.AmmoAmount);
+        if (ActiveGun.CurrentMagSize > 0)
+        {
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            _isRotating = true;
+            //await RotateToShootDirection();
+            _isShooting = true;
+            ReduceAmmo(_activeGun.AmmoReduceAmount);
+            bulletCountEvent.RaiseEvent(ActiveGun.CurrentMagSize, ActiveGun.MagSize, ActiveGun.AmmoAmount);
+
+        }
+        else
+        {
+            // TODO : PLAY SOUND TO INDICATE - NO BULLET
+        }
     }
 
     public void OnReload(InputAction.CallbackContext context)
@@ -196,7 +204,7 @@ public class PlayerStateMachine : MonoBehaviour
     void Start()
     {
         _characterController.Move(_appliedMovement * Time.deltaTime);
-        for (int i = 0; i < _guns.Count(); i++)
+        for (int i = 0; i < _guns.Length; i++)
         {
             if (_guns[i].GunType == playerLoadout.GunType)
             {

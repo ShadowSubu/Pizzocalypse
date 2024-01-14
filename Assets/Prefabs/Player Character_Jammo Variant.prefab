@@ -468,9 +468,16 @@ MonoBehaviour:
   - {fileID: 8082886284437583851}
   - {fileID: 2031324799689394106}
   _abilities: []
+  mineTrapPrefab: {fileID: 7808342643536374582, guid: 8d584b153c21c30419b9df5e5630eec2,
+    type: 3}
+  stunGrenadePrefab: {fileID: 2113625815821532164, guid: 9fafab5aa08987a4897b26bb67476ce7,
+    type: 3}
+  spawnLocation: {fileID: 0}
+  abilityUseEvent: {fileID: 0}
   _bulletPrefab: {fileID: 9096230388120223338, guid: 1f8c4cf4dc4d1ab4398510ad80a61f9b,
     type: 3}
   bulletCountEvent: {fileID: 11400000, guid: 41d0524b8c01f0e4da4612f74ccfc55c, type: 2}
+  playerLoadout: {fileID: 11400000, guid: 5e9b507a725075c44991cbf7f43f25aa, type: 2}
 --- !u!114 &3210521890532312167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -486,6 +493,9 @@ MonoBehaviour:
   currentHealth: 0
   maxHealth: 0
   OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHit:
     m_PersistentCalls:
       m_Calls: []
   pizzaDamageEvent: {fileID: 11400000, guid: affc1421198ff8b438433d230d51cf85, type: 2}

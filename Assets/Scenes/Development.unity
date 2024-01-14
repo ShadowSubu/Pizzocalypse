@@ -284,7 +284,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh34990
+  m_Name: pb_Mesh36566
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -2208,6 +2208,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 9192861273607032080, guid: b26790df3abbb7d4ea774a7dc66d5f0e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2285,25 +2290,13 @@ PrefabInstance:
         type: 3}
       propertyPath: _bulletPrefab
       value: 
-      objectReference: {fileID: 9096230388120223338, guid: 1f8c4cf4dc4d1ab4398510ad80a61f9b,
+      objectReference: {fileID: -713475974675930121, guid: 1f8c4cf4dc4d1ab4398510ad80a61f9b,
         type: 3}
     - target: {fileID: 6650172107549153141, guid: 2b20a8e16dcef6249b49706028bad89c,
         type: 3}
       propertyPath: spawnLocation
       value: 
       objectReference: {fileID: 1256662391}
-    - target: {fileID: 6650172107549153141, guid: 2b20a8e16dcef6249b49706028bad89c,
-        type: 3}
-      propertyPath: mineTrapPrefab
-      value: 
-      objectReference: {fileID: 7808342643536374582, guid: 8d584b153c21c30419b9df5e5630eec2,
-        type: 3}
-    - target: {fileID: 6650172107549153141, guid: 2b20a8e16dcef6249b49706028bad89c,
-        type: 3}
-      propertyPath: stunGrenadePrefab
-      value: 
-      objectReference: {fileID: 2113625815821532164, guid: 9fafab5aa08987a4897b26bb67476ce7,
-        type: 3}
     - target: {fileID: 8082886284437583851, guid: 2b20a8e16dcef6249b49706028bad89c,
         type: 3}
       propertyPath: _shootingDuration
@@ -2415,6 +2408,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Game Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8737689184669327916, guid: d58f3609aeb45104b89e22264d24434b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
