@@ -282,7 +282,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 230814052}
-  m_LocalRotation: {x: 0.54491353, y: -0.00000002885483, z: 0.00000001875198, w: 0.8384923}
+  m_LocalRotation: {x: 0.54491353, y: 0.00000002885484, z: -0.000000018751987, w: 0.8384923}
   m_LocalPosition: {x: 0.53, y: 9.146, z: -15.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -405,7 +405,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh30294
+  m_Name: pb_Mesh36798
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -570,7 +570,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh30358
+  m_Name: pb_Mesh36862
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -1876,7 +1876,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh30332
+  m_Name: pb_Mesh36836
   serializedVersion: 11
   m_SubMeshes: []
   m_Shapes:
@@ -2266,7 +2266,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh30202
+  m_Name: pb_Mesh36716
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -2687,7 +2687,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh30184
+  m_Name: pb_Mesh36702
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -2883,7 +2883,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh30216
+  m_Name: pb_Mesh36730
   serializedVersion: 11
   m_SubMeshes: []
   m_Shapes:
@@ -4158,7 +4158,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh30318
+  m_Name: pb_Mesh36822
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -4938,12 +4938,12 @@ PrefabInstance:
     - target: {fileID: 8678990321838772864, guid: 2b20a8e16dcef6249b49706028bad89c,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.00000002885483
+      value: 0.00000002885484
       objectReference: {fileID: 0}
     - target: {fileID: 8678990321838772864, guid: 2b20a8e16dcef6249b49706028bad89c,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.00000001875198
+      value: -0.000000018751987
       objectReference: {fileID: 0}
     - target: {fileID: 8821782719109891559, guid: 2b20a8e16dcef6249b49706028bad89c,
         type: 3}
@@ -4996,7 +4996,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh36050
+  m_Name: pb_Mesh36744
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -5161,7 +5161,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh30166
+  m_Name: pb_Mesh36684
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -5763,6 +5763,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Parasite L Starkie
       objectReference: {fileID: 0}
+    - target: {fileID: 3323119940621946973, guid: 88632ed2b2e50684d9ded3955ec8bdf6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 45
+      objectReference: {fileID: 0}
     - target: {fileID: 3324720065241607440, guid: 88632ed2b2e50684d9ded3955ec8bdf6,
         type: 3}
       propertyPath: m_RootOrder
@@ -5843,6 +5848,11 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[2]
       value: 
       objectReference: {fileID: 429138635}
+    - target: {fileID: 7829505243680796197, guid: 88632ed2b2e50684d9ded3955ec8bdf6,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

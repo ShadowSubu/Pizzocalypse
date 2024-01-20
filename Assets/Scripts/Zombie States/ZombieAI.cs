@@ -7,8 +7,12 @@ using UnityEngine.AI;
 
 public class ZombieAI : MonoBehaviour
 {
-    public Transform[] patrolPoints;
+    public bool isSpitter;
+    public GameObject projectile;
+    public Transform spitpoint;
+    public float projecVelocity = 4f;
 
+    public Transform[] patrolPoints;
     public object[] zombieTypes = { "s", "t", "a"};
 
     [Header("StateSpeeds")]
@@ -220,6 +224,12 @@ public class ZombieAI : MonoBehaviour
 
             // Set the next attack time based on attack cooldown
             nextAttackTime = Time.time + attackCooldown;
+            if (isSpitter)
+            {
+                spitpoint.transform.LookAt(player.position);
+               var _projectile = Instantiate(projectile, spitpoint.position, spitpoint.rotation);
+                _projectile.GetComponent<Rigidbody>().velocity = spitpoint.up * projecVelocity;
+            }
         }
 
         // If the player moves away, switch back to Patrol
@@ -228,6 +238,8 @@ public class ZombieAI : MonoBehaviour
             SetState(ZombieState.Chase);
             navMeshAgent.speed = chaseSpeed;
         }
+
+        
     }
 
     public void Death()
