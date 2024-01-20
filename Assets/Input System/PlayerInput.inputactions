@@ -15,7 +15,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "EquipPistol",
+                    "name": "EquipGun",
                     "type": "Button",
                     "id": "6be62226-c9bf-4620-ac34-7361b8d03687",
                     "expectedControlType": "Button",
@@ -152,7 +152,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "EquipPistol",
+                    "action": "EquipGun",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
