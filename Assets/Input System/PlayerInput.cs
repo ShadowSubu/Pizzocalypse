@@ -37,7 +37,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""EquipPistol"",
+                    ""name"": ""EquipGun"",
                     ""type"": ""Button"",
                     ""id"": ""6be62226-c9bf-4620-ac34-7361b8d03687"",
                     ""expectedControlType"": ""Button"",
@@ -174,7 +174,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""EquipPistol"",
+                    ""action"": ""EquipGun"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -263,7 +263,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         // CharacterControls
         m_CharacterControls = asset.FindActionMap("CharacterControls", throwIfNotFound: true);
         m_CharacterControls_Move = m_CharacterControls.FindAction("Move", throwIfNotFound: true);
-        m_CharacterControls_EquipPistol = m_CharacterControls.FindAction("EquipPistol", throwIfNotFound: true);
+        m_CharacterControls_EquipGun = m_CharacterControls.FindAction("EquipGun", throwIfNotFound: true);
         m_CharacterControls_EquipShotgun = m_CharacterControls.FindAction("EquipShotgun", throwIfNotFound: true);
         m_CharacterControls_EquipRifle = m_CharacterControls.FindAction("EquipRifle", throwIfNotFound: true);
         m_CharacterControls_Shoot = m_CharacterControls.FindAction("Shoot", throwIfNotFound: true);
@@ -332,7 +332,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_CharacterControls;
     private List<ICharacterControlsActions> m_CharacterControlsActionsCallbackInterfaces = new List<ICharacterControlsActions>();
     private readonly InputAction m_CharacterControls_Move;
-    private readonly InputAction m_CharacterControls_EquipPistol;
+    private readonly InputAction m_CharacterControls_EquipGun;
     private readonly InputAction m_CharacterControls_EquipShotgun;
     private readonly InputAction m_CharacterControls_EquipRifle;
     private readonly InputAction m_CharacterControls_Shoot;
@@ -344,7 +344,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         private @PlayerInput m_Wrapper;
         public CharacterControlsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_CharacterControls_Move;
-        public InputAction @EquipPistol => m_Wrapper.m_CharacterControls_EquipPistol;
+        public InputAction @EquipGun => m_Wrapper.m_CharacterControls_EquipGun;
         public InputAction @EquipShotgun => m_Wrapper.m_CharacterControls_EquipShotgun;
         public InputAction @EquipRifle => m_Wrapper.m_CharacterControls_EquipRifle;
         public InputAction @Shoot => m_Wrapper.m_CharacterControls_Shoot;
@@ -363,9 +363,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
-            @EquipPistol.started += instance.OnEquipPistol;
-            @EquipPistol.performed += instance.OnEquipPistol;
-            @EquipPistol.canceled += instance.OnEquipPistol;
+            @EquipGun.started += instance.OnEquipGun;
+            @EquipGun.performed += instance.OnEquipGun;
+            @EquipGun.canceled += instance.OnEquipGun;
             @EquipShotgun.started += instance.OnEquipShotgun;
             @EquipShotgun.performed += instance.OnEquipShotgun;
             @EquipShotgun.canceled += instance.OnEquipShotgun;
@@ -391,9 +391,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
-            @EquipPistol.started -= instance.OnEquipPistol;
-            @EquipPistol.performed -= instance.OnEquipPistol;
-            @EquipPistol.canceled -= instance.OnEquipPistol;
+            @EquipGun.started -= instance.OnEquipGun;
+            @EquipGun.performed -= instance.OnEquipGun;
+            @EquipGun.canceled -= instance.OnEquipGun;
             @EquipShotgun.started -= instance.OnEquipShotgun;
             @EquipShotgun.performed -= instance.OnEquipShotgun;
             @EquipShotgun.canceled -= instance.OnEquipShotgun;
@@ -432,7 +432,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     public interface ICharacterControlsActions
     {
         void OnMove(InputAction.CallbackContext context);
-        void OnEquipPistol(InputAction.CallbackContext context);
+        void OnEquipGun(InputAction.CallbackContext context);
         void OnEquipShotgun(InputAction.CallbackContext context);
         void OnEquipRifle(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
