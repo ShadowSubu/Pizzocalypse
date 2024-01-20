@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MenuSelector : MonoBehaviour
@@ -56,7 +57,7 @@ public class MenuSelector : MonoBehaviour
         AssignThisToSlices();
 
 
-        playButton.interactable = false;
+        //playButton.interactable = false;
 
         if (AudioManager.Instance) AudioManager.Instance.Play("Rough_-_Tune"); //PLAY BGM FOR MENU
     }
@@ -117,12 +118,9 @@ public class MenuSelector : MonoBehaviour
     private void Play()
     {
         if (AudioManager.Instance) AudioManager.Instance.Play("Pizzocalypse-Button Click 3"); //PLAY AUDIO
-        if (selectedLevel && loadout.AbilityType != AbilityType.None)
+        if (loadout.AbilityType != AbilityType.None)
         {
-            if (SceneLoader.Instance && selectedLevel.isUnlocked)
-            {
-                SceneLoader.Instance.LoadScene(selectedLevel.levelName);
-            }
+            SceneManager.LoadScene(1);
         }
     }
 

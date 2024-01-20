@@ -223,6 +223,7 @@ public class GameplayUIManager : MonoBehaviour
     async void GoToMenu()
     {
         await CloseScorePanel();
+        SceneManager.LoadScene(0);
     }
 
     async void PlayNextLevel()

@@ -8,12 +8,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Members Folder/Subhajit/MainMenuPrototype.unity
     guid: b71d63076c698794fab854fee20552ef
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Development.unity
     guid: d6253e3daa4aec84794168e717b60023
-  - enabled: 1
+  - enabled: 0
     path: Assets/Members Folder/Aryan/AryanTestScene.unity
     guid: 71595c0a107c3834e8381615851f50f0
+  - enabled: 1
+    path: Assets/Members Folder/Chakradhar/Chakri_Scenes/Level-1.unity
+    guid: 51e7c6e4f3b280548a1de5c4888d1d68
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 767c45f8b0e03e0489292399a508b842,
       type: 2}

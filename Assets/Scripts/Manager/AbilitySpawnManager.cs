@@ -37,7 +37,7 @@ public class AbilitySpawnManager : MonoBehaviour
         int random = Random.Range(0, availableSpawnPoints.Count);
         Instantiate(pickupToSpawn, availableSpawnPoints[random]);
 
-        availableSpawnPoints.RemoveAt(random);
         usedSpawnPoints.Add(availableSpawnPoints[random]);
+        availableSpawnPoints.RemoveAt(random);
     }
 }
