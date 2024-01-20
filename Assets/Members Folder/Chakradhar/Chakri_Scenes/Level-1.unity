@@ -7900,6 +7900,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6934711916658499698, guid: 2b20a8e16dcef6249b49706028bad89c,
+        type: 3}
+      propertyPath: m_SlopeLimit
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6934711916658499698, guid: 2b20a8e16dcef6249b49706028bad89c,
+        type: 3}
+      propertyPath: m_StepOffset
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 8678990321838772864, guid: 2b20a8e16dcef6249b49706028bad89c,
         type: 3}
       propertyPath: m_LocalRotation.y
@@ -9931,6 +9941,69 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 609701909}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &609781836
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 609781838}
+  - component: {fileID: 609781837}
+  m_Layer: 0
+  m_Name: Navmesh
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &609781837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609781836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.1
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: db83b09311dbf5c47ba7eb0c2a697f61, type: 2}
+  m_BuildHeightMesh: 0
+--- !u!4 &609781838
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609781836}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 58.648354, y: 3.2953062, z: 10.277857}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 31
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &611045266
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16689,7 +16762,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1057368183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21395,7 +21468,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1385128159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26467,7 +26540,6 @@ GameObject:
   - component: {fileID: 1664821427}
   - component: {fileID: 1664821429}
   - component: {fileID: 1664821428}
-  - component: {fileID: 1664821430}
   m_Layer: 0
   m_Name: Terrain
   m_TagString: Untagged
@@ -26519,7 +26591,7 @@ Terrain:
   m_GameObject: {fileID: 1664821426}
   m_Enabled: 1
   serializedVersion: 6
-  m_TerrainData: {fileID: 15600000, guid: 4155da9c129e07e448259b0fe5a87423, type: 2}
+  m_TerrainData: {fileID: 0}
   m_TreeDistance: 5000
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
@@ -26548,37 +26620,6 @@ Terrain:
   m_AllowAutoConnect: 1
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
---- !u!114 &1664821430
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1664821426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AgentTypeID: 0
-  m_CollectObjects: 0
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 0
-  m_DefaultArea: 0
-  m_GenerateLinks: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
-  m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: bac4eea4c9c164840b5596d4e89e73d4, type: 2}
-  m_BuildHeightMesh: 0
 --- !u!1 &1669466664
 GameObject:
   m_ObjectHideFlags: 0
@@ -28664,21 +28705,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3324720065241607440, guid: 88632ed2b2e50684d9ded3955ec8bdf6,
         type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3324720065241607440, guid: 88632ed2b2e50684d9ded3955ec8bdf6,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3324720065241607440, guid: 88632ed2b2e50684d9ded3955ec8bdf6,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3324720065241607440, guid: 88632ed2b2e50684d9ded3955ec8bdf6,
-        type: 3}
       propertyPath: m_LocalPosition.x
       value: 53.2
       objectReference: {fileID: 0}
@@ -28726,16 +28752,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3324720065241607440, guid: 88632ed2b2e50684d9ded3955ec8bdf6,
-        type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6534131945315756583, guid: 88632ed2b2e50684d9ded3955ec8bdf6,
-        type: 3}
-      propertyPath: patrolPoints.Array.size
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6534131945315756583, guid: 88632ed2b2e50684d9ded3955ec8bdf6,
         type: 3}

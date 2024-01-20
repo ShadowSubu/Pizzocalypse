@@ -1122,7 +1122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fillBar: {fileID: 1405519900774136333}
   currentHotness: 0
-  maxHotness: 100
+  maxHotness: 500
   coolRate: 0.05
 --- !u!1 &2485988562665532106
 GameObject:
@@ -4104,7 +4104,7 @@ Transform:
   m_Children:
   - {fileID: 7915882835732776493}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4514601179850216025
 MonoBehaviour:

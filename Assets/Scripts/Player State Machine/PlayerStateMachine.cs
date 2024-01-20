@@ -227,13 +227,34 @@ public class PlayerStateMachine : MonoBehaviour
         }
     }
 
+    public float gravity = 9.8f; // Adjust the gravity force as needed
+    public float fallSpeed = 0f; // Initial falling speed
+    public float maxFallSpeed = 10f;
+
     void Update()
     {
         HandleRotation();
         if(_characterController.enabled)
         {
             _characterController.Move(_appliedMovement * Time.deltaTime);
+
+            // Check if the character controller is grounded
+            if (_characterController.isGrounded)
+            {
+                // Reset the falling speed when grounded
+                fallSpeed = -0.5f;
+            }
+            else
+            {
+                // Apply gravity-like effect when not grounded
+                fallSpeed -= gravity * Time.deltaTime;
+                fallSpeed = Mathf.Max(fallSpeed, -maxFallSpeed);
+
+                // Move the character controller down
+                _characterController.Move(Vector3.up * fallSpeed * Time.deltaTime);
+            }
         }
+        
         _currentState.UpdateStates();
 
         DummyControl();
@@ -406,8 +427,7 @@ public class PlayerStateMachine : MonoBehaviour
             case AbilityType.NoReload:
                 if (ActiveGun != null)
                 {
-                    // TODO: CHANGE THE STATIC VALUE OF DURATION
-                    ActiveGun.InitiateNoReload(5);
+                    ActiveGun.InitiateNoReload(10);
                 }
                 break;
             case AbilityType.Vent:
@@ -418,7 +438,7 @@ public class PlayerStateMachine : MonoBehaviour
                 _currentAbility = AbilityType.None;
                 break;
             case AbilityType.GunSwitch:
-                // TODO: SWITCH GUNS
+                SwitchGun();
                 break;
             case AbilityType.MineTrap:
                 if (mineTrapPrefab != null)
@@ -437,6 +457,17 @@ public class PlayerStateMachine : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    private void SwitchGun()
+    {
+        var activeGun = ActiveGun;
+        int randomIndex = UnityEngine.Random.Range(0, _guns.Length);
+
+        // Get the random GameObject from the list
+        Gun randomGun = _guns[randomIndex];
+        _activeGun = randomGun;
+        _activeGun.ResetGun();
     }
 
     #endregion

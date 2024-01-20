@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Enemy")
+        if(other.tag == "Enemy" || other.tag == "RangedEnemy")
         {
             other.GetComponent<Health>().TakeDamage(Damage);
         }

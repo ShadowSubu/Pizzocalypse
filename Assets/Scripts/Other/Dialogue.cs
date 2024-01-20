@@ -10,12 +10,12 @@ public class Dialogue : MonoBehaviour
     public void OpenDialogue()
     {
         dialogueText.gameObject.SetActive(true);
-        speakerImage.gameObject.SetActive(true);
+        //speakerImage.gameObject.SetActive(true);
     }
 
     public void CloseDialogue()
     {
         dialogueText.gameObject.SetActive(false);
-        speakerImage.gameObject.SetActive(false);
+        //speakerImage.gameObject.SetActive(false);
     }
 }
