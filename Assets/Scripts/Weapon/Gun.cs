@@ -54,10 +54,12 @@ public class Gun : MonoBehaviour
 
         await Task.Delay((int)(duration * 1000));
 
-        _ammoAmount = ammoAmount;
+        ResetGun();
+
+        /*_ammoAmount = ammoAmount;
         _ammoReduceAmount = ammoReduceAmount;
         _magSize = magSize;
-        _currentMagSize = currentMagSize;
+        _currentMagSize = currentMagSize;*/
     }
 
     public void ResetGun()

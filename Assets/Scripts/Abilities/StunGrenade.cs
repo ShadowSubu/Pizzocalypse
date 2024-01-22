@@ -40,7 +40,7 @@ public class StunGrenade : Ability
 
         foreach (var hit in hits)
         {
-            if (hit.gameObject.CompareTag("Enemy") && hit.gameObject.TryGetComponent(out ZombieAI zombie))
+            if ((hit.gameObject.CompareTag("Enemy") || hit.gameObject.CompareTag("RangedEnemy")) && hit.gameObject.TryGetComponent(out ZombieAI zombie))
             {
                 zombie.Stun(stunDuration);
                 Debug.LogWarning("Stunned Zombies: " + zombie.ToString());

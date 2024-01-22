@@ -148,10 +148,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityIcon: {fileID: 0}
-  explosionDelay: 2
-  thowingForce: 5
-  explosionRadius: 2
-  stunDuration: 3
+  explosionDelay: 1
+  thowingForce: 3
+  explosionRadius: 4
+  stunDuration: 5
 --- !u!1001 &5212226986584750017
 PrefabInstance:
   m_ObjectHideFlags: 0

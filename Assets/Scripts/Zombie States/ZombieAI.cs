@@ -11,6 +11,7 @@ public class ZombieAI : MonoBehaviour
     public GameObject projectile;
     public Transform spitpoint;
     public float projecVelocity = 4f;
+    bool canChase = true;
 
     public Transform[] patrolPoints;
     public object[] zombieTypes = { "s", "t", "a"};
@@ -132,10 +133,10 @@ public class ZombieAI : MonoBehaviour
                 break;
 
             case ZombieState.Chase:
-                animator.SetBool("IsChasing", true);
-                animator.SetBool("IsAttacking", false);
-                BeforeSpeed = navMeshAgent.speed;
-                navMeshAgent.speed = chaseSpeed;
+                    animator.SetBool("IsChasing", true);
+                    animator.SetBool("IsAttacking", false);
+                    BeforeSpeed = navMeshAgent.speed;
+                    navMeshAgent.speed = chaseSpeed;
                 break;
 
             case ZombieState.Attack:
@@ -197,19 +198,27 @@ public class ZombieAI : MonoBehaviour
 
     public void Chase()
     {
-        navMeshAgent.SetDestination(player.position);
-        distance = Vector3.Distance(player.position, transform.position);
-        if (distance > stopChasingDis)
+        if(canChase)
         {
-            SetState(ZombieState.Patrol);
-            navMeshAgent.speed = BeforeSpeed;
+            navMeshAgent.SetDestination(player.position);
+            distance = Vector3.Distance(player.position, transform.position);
+            if (distance > stopChasingDis)
+            {
+                SetState(ZombieState.Patrol);
+                navMeshAgent.speed = BeforeSpeed;
+            }
+            if (distance < attackRange)
+            {
+                SetState(ZombieState.Attack);
+                navMeshAgent.SetDestination(transform.position);
+                navMeshAgent.speed = BeforeSpeed;
+            }
         }
-        if (distance < attackRange)
+        else
         {
-            SetState(ZombieState.Attack);
-            navMeshAgent.SetDestination(transform.position);
-            navMeshAgent.speed = BeforeSpeed;
+            return;
         }
+       
     }
 
     public void Attack()
@@ -256,8 +265,10 @@ public class ZombieAI : MonoBehaviour
     public async void Stun(float duration)
     {
         // TODO: IMPLLEMENT STUN FUCTIONALITY
+        canChase = false;
         await Task.Delay((int)(1000 * duration));
         // TODO: RECCOVER
+        canChase = true;
     }
 
     #endregion

@@ -188,6 +188,7 @@ public class PlayerStateMachine : MonoBehaviour
     private void OnUseAbility(InputAction.CallbackContext obj)
     {
         // This executes when ability button is pressed
+        UseAbility();
     }
 
     public void ReduceAmmo(int ammoToReduce)
@@ -419,6 +420,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void UseAbility()
     {
+        int num = UnityEngine.Random.Range(0, _guns.Length);
         switch (CurrentAbility)
         {
             case AbilityType.None:
@@ -438,12 +440,13 @@ public class PlayerStateMachine : MonoBehaviour
                 _currentAbility = AbilityType.None;
                 break;
             case AbilityType.GunSwitch:
-                SwitchGun();
+                //SwitchGun();
+                //ToggleGun(num);
                 break;
             case AbilityType.MineTrap:
                 if (mineTrapPrefab != null)
                 {
-                    MineTrap mineTrap = Instantiate(mineTrapPrefab, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Quaternion.identity);
+                    MineTrap mineTrap = Instantiate(mineTrapPrefab, new Vector3(transform.position.x, transform.position.y , transform.position.z), Quaternion.identity);
                 }
                 break;
             case AbilityType.StunGrenade:
@@ -467,9 +470,28 @@ public class PlayerStateMachine : MonoBehaviour
         // Get the random GameObject from the list
         Gun randomGun = _guns[randomIndex];
         _activeGun = randomGun;
-        _activeGun.ResetGun();
+        _activeGun.gameObject.SetActive(true);
+        //_activeGun.ResetGun();
     }
 
+    private void ToggleGun(int num)
+    {
+        Debug.Log("Changing Gun");
+        if (ActiveGun == null || ActiveGun != Guns[num])
+        {
+            if (ActiveGun != null)
+            {
+                ActiveGun.gameObject.SetActive(false);
+            }
+            ActiveGun = Guns[num];
+            ActiveGun.gameObject.SetActive(true);
+        }
+        else if (ActiveGun != null)
+        {
+            ActiveGun.gameObject.SetActive(false);
+            ActiveGun = null;
+        }
+    }
     #endregion
 
     public void SetVent(Vent vent)

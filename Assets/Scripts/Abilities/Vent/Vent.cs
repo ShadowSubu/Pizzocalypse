@@ -19,7 +19,7 @@ public class Vent : Ability, IInteractable
     [SerializeField] VentTriggers location2;
     [Range(0.1f,1f)]
     [SerializeField] float playerShrinkValue;
-    [SerializeField] float shrinkDUration;
+    [SerializeField] float shrinkDuration;
     [SerializeField] float _ventingDuration;
     [SerializeField] float _ventingCooldown;
     bool readyToUse;
@@ -74,11 +74,11 @@ public class Vent : Ability, IInteractable
     {
         // Start Venting
         player.GetComponent<CharacterController>().enabled = false;
-        await player.transform.DOScale(playerShrinkValue, shrinkDUration).AsyncWaitForCompletion();
+        await player.transform.DOScale(playerShrinkValue, shrinkDuration).AsyncWaitForCompletion();
         await player.transform.DOMove(position, _ventingDuration).AsyncWaitForCompletion();
 
         // Scaling the Player Up
-        await player.transform.DOScale(1, shrinkDUration).AsyncWaitForCompletion();
+        await player.transform.DOScale(1, shrinkDuration).AsyncWaitForCompletion();
         player.GetComponent<CharacterController>().enabled = true;
     }
 
