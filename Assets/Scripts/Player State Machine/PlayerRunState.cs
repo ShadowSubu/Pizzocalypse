@@ -12,13 +12,13 @@ public class PlayerRunState : PlayerBaseState
 
     public override void EnterState()
     {
-        Debug.Log("Enter State from Run");
+        //Debug.Log("Enter State from Run");
         InitializeSubState();
         Ctx.Animator.SetBool(Ctx.IsRunningHash, true);
     }
     public override void UpdateState()
     {
-        Debug.Log("Update State from Run");
+        //Debug.Log("Update State from Run");
         Run();
         CheckSwitchState();
     }
@@ -32,7 +32,7 @@ public class PlayerRunState : PlayerBaseState
 
     public override void ExitState()
     {
-        Debug.Log("Exit State from Run");
+        //Debug.Log("Exit State from Run");
         Ctx.Animator.SetBool(Ctx.IsRunningHash, false);
     }
     public override void CheckSwitchState()

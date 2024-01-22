@@ -9,18 +9,18 @@ public class PlayerNoneState : PlayerBaseState
 
     public override void EnterState()
     {
-        Debug.Log("Enter State from NoneState");
+       // Debug.Log("Enter State from NoneState");
     }
 
     public override void UpdateState()
     {
-        Debug.Log("Update State from NoneState");
+        //Debug.Log("Update State from NoneState");
         CheckSwitchState();
     }
 
     public override void ExitState()
     {
-        Debug.Log("Exit State from NoneState");
+        //Debug.Log("Exit State from NoneState");
         Ctx.RequireNewGunToggle = true;
     }
 

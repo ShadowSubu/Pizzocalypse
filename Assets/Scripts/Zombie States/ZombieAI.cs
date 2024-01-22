@@ -220,7 +220,7 @@ public class ZombieAI : MonoBehaviour
         // Check if it's time to attack again
         if (Time.time >= nextAttackTime)
         {
-            if (zombieTypes[0] == "s")
+            if ((string)zombieTypes[0] == "s")
 
             // Set the next attack time based on attack cooldown
             nextAttackTime = Time.time + attackCooldown;

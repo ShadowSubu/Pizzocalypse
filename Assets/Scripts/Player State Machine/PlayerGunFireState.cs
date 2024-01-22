@@ -14,7 +14,7 @@ public class PlayerGunFireState : PlayerBaseState
     public override void EnterState()
     {
         Ctx.IsShooting = false;
-        Debug.Log("Enter State from GunFire");
+        //Debug.Log("Enter State from GunFire");
         StartShootingDuration();
         AnimateGun();
         ShootBullet();
@@ -22,13 +22,13 @@ public class PlayerGunFireState : PlayerBaseState
 
     public override void UpdateState()
     {
-        Debug.Log("Update State from GunFire");
+        //Debug.Log("Update State from GunFire");
         CheckSwitchState();
     }
 
     public override void ExitState()
     {
-        Debug.Log("Exit State from GunFire");
+        //Debug.Log("Exit State from GunFire");
         Ctx.IsRotating = false;
         Ctx.RequireNewGunToggle = false;
     }
@@ -82,7 +82,7 @@ public class PlayerGunFireState : PlayerBaseState
 
     void ShootBullet()
     {
-        Debug.Log("ShootingBullet");
+        //Debug.Log("ShootingBullet");
         if (Ctx.ActiveGun != null && Ctx.ActiveGun.ShootingPoint != null)
         {
             if (Ctx.ActiveGun.AmmoAmount >= 0 && Ctx.ActiveGun.CurrentMagSize > 0 && !Ctx.IsReloading)

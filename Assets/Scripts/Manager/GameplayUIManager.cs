@@ -202,7 +202,7 @@ public class GameplayUIManager : MonoBehaviour
         AnimateScoreElements();
     }
 
-    async void AnimateScoreElements()
+    void AnimateScoreElements()
     {
         
     }

@@ -14,21 +14,21 @@ public class PlayerUseAbilityState : PlayerBaseState
 
     public override void EnterState()
     {
-        Debug.Log("Enter UseAbilityState");
+        //Debug.Log("Enter UseAbilityState");
         isAbilityUsed = false;
         ExecuteAbility();
     }
 
     public override void UpdateState()
     {
-        Debug.Log("Update from UseAbilityState");
+        //Debug.Log("Update from UseAbilityState");
         CheckSwitchState();
     }
 
     public override void ExitState()
     {
         Ctx.IsAbilityTrigerred = false;
-        Debug.Log("Exit UseAbilityState");
+        //Debug.Log("Exit UseAbilityState");
     }
 
     public override void CheckSwitchState()

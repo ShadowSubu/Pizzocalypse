@@ -33,7 +33,7 @@ public class SceneLoader : MonoBehaviour
         await FadeOut();
     }
 
-    public async void LoadScene(string sceneName)
+    public void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
         // IMPLEMENT LOADING SCENE

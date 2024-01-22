@@ -33,7 +33,7 @@ public class PlayerStateMachine : MonoBehaviour
     //constants
     [SerializeField] float _runMultiplier = 5f;
     [SerializeField] float _rotationFactorPerFrame = 15.0f;
-    int _zero = 0;
+    //int _zero = 0;
 
     //State variables
     PlayerBaseState _currentState;
@@ -140,7 +140,7 @@ public class PlayerStateMachine : MonoBehaviour
     void OnMovementInput(InputAction.CallbackContext context)
     {
         _currentMovementInput = context.ReadValue<Vector2>();
-        Debug.Log("Current Movement: " + _currentMovementInput);
+        //Debug.Log("Current Movement: " + _currentMovementInput);
         _currentMovement.x = _currentMovementInput.x;
         _currentMovement.z = _currentMovementInput.y;
         _isMovementPressed = _currentMovementInput.x != 0 || _currentMovementInput.y != 0;
@@ -195,7 +195,7 @@ public class PlayerStateMachine : MonoBehaviour
         if(_activeGun.CurrentMagSize > 0)
         {
             _activeGun.CurrentMagSize -= ammoToReduce;
-            Debug.Log("ammo reduced");                      
+            //Debug.Log("ammo reduced");                      
         }
     }
 
@@ -270,21 +270,21 @@ public class PlayerStateMachine : MonoBehaviour
 
     void HandleRotation()
     {
+        Vector3 positionToLookAt;
+
+        positionToLookAt.x = _currentMovement.x;
+        positionToLookAt.y = 0.0f;
+        positionToLookAt.z = _currentMovement.z;
+
+        Quaternion currentRotation = transform.rotation;
+
+        if (_isMovementPressed)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
+            transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, _rotationFactorPerFrame * Time.deltaTime);
+        }
         if (!_isRotating)
         {
-            Vector3 positionToLookAt;
-
-            positionToLookAt.x = _currentMovement.x;
-            positionToLookAt.y = 0.0f;
-            positionToLookAt.z = _currentMovement.z;
-
-            Quaternion currentRotation = transform.rotation;
-
-            if (_isMovementPressed)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
-                transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, _rotationFactorPerFrame * Time.deltaTime);
-            }
         }
     }
 
@@ -422,7 +422,7 @@ public class PlayerStateMachine : MonoBehaviour
         switch (CurrentAbility)
         {
             case AbilityType.None:
-                Debug.LogWarning("No Ability Available");
+                //Debug.LogWarning("No Ability Available");
                 break;
             case AbilityType.NoReload:
                 if (ActiveGun != null)

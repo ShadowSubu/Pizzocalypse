@@ -12,20 +12,20 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void EnterState()
     {
-        Debug.Log("Enter State from Idle");
+        //Debug.Log("Enter State from Idle");
         InitializeSubState();
         Ctx.AppliedMovementX = 0f;
         Ctx.AppliedMovementZ = 0f;
     }
     public override void UpdateState()
     {
-        Debug.Log("Update State from Idle");
+        //Debug.Log("Update State from Idle");
         CheckSwitchState();
     }
 
     public override void ExitState()
     {
-        Debug.Log("Exit State from Idle");
+        //Debug.Log("Exit State from Idle");
     }
     public override void CheckSwitchState()
     {

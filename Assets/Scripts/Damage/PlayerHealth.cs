@@ -22,7 +22,7 @@ public class PlayerHealth : Health
 
     public override void TakeDamage(int amount)
     {
-        Debug.Log("Pizza Damaged - 1");
+        //Debug.Log("Pizza Damaged - 1");
         pizzaDamageEvent.RaiseEvent();
     }
 

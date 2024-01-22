@@ -11,19 +11,19 @@ public class PlayerGunEquipState : PlayerBaseState
 
     public override void EnterState()
     {
-        Debug.Log("Enter State from GunEquip");
+        //Debug.Log("Enter State from GunEquip");
         AudioManager.Instance.Play("Pizzocalypse-Equip");
     }
 
     public override void UpdateState()
     {
-        Debug.Log("Update State from GunEquip");
+        //Debug.Log("Update State from GunEquip");
         CheckSwitchState();
     }
 
     public override void ExitState()
     {
-        Debug.Log("Exit State from GunEquip");
+        //Debug.Log("Exit State from GunEquip");
         Ctx.RequireNewGunToggle = true;
     }
 

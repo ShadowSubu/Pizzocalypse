@@ -30,7 +30,7 @@ public class PizzaHealthUI : MonoBehaviour
             onPlayerDieEvent.RaiseEvent();
             return;
         }
-        Debug.Log("Pizza Damaged");
+        //Debug.Log("Pizza Damaged");
         pizzaHealthValue--;
         pizzaImage.overrideSprite = healthSprites[pizzaHealthValue - 1];
     }
