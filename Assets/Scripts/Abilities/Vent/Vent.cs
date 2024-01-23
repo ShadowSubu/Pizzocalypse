@@ -34,19 +34,20 @@ public class Vent : Ability, IInteractable
 
     async public override void UseAbility(PlayerStateMachine player)
     {
-        ////Start venting
-        //playerGameObject.GetComponent<CharacterController>().enabled = false;
-        //await player.DOScale(_playerSizeOnVent, _playerScalingDuration).AsyncWaitForCompletion();
-        //await player.DOMove(_destinationLocation.position, _ventingDuration).AsyncWaitForCompletion();
+        /*
+        //Start venting
+        playerGameObject.GetComponent<CharacterController>().enabled = false;
+        await player.DOScale(_playerSizeOnVent, _playerScalingDuration).AsyncWaitForCompletion();
+        await player.DOMove(_destinationLocation.position, _ventingDuration).AsyncWaitForCompletion();
         
-        ////Venting Completed
-        //await player.DOScale(_playerOriginalScale, _playerScalingDuration).AsyncWaitForCompletion();
-        //playerGameObject.GetComponent<CharacterController>().enabled = true;
+        //Venting Completed
+        await player.DOScale(_playerOriginalScale, _playerScalingDuration).AsyncWaitForCompletion();
+        playerGameObject.GetComponent<CharacterController>().enabled = true;
        
-        ////Set Vent Cooldown
-        //DisableColliders();
-        //await Task.Delay(_ventingCooldown * 1000);
-        //EnableColliders();
+        //Set Vent Cooldown
+        DisableColliders();
+        await Task.Delay(_ventingCooldown * 1000);
+        EnableColliders(); */
 
         if (!readyToUse)
         {
@@ -55,6 +56,7 @@ public class Vent : Ability, IInteractable
 
         if (location1.isInTrigger)
         {
+            //Debug.Log("Ready to vent from loc1");
             await Teleport(player, location2.transform.position);
             // Set Cooldown
             SetCooldown();
@@ -62,6 +64,7 @@ public class Vent : Ability, IInteractable
         }
         else if (location2.isInTrigger)
         {
+            //Debug.Log("Ready to vent from loc2");
             await Teleport(player, location1.transform.position);
             // Set Cooldown
             SetCooldown();
@@ -98,24 +101,25 @@ public class Vent : Ability, IInteractable
     {
         
     }
+    
 
-    //public void SetPlayer(Transform player)
-    //{
-    //    this.player = player;
-    //    _playerOriginalScale = player.localScale;
-    //}
+    /*public void SetPlayer(Transform player)
+    {
+        this.player = player;
+        _playerOriginalScale = player.localScale;
+    }
 
-    //private void DisableColliders()
-    //{
-    //    _startLocation.gameObject.GetComponent<Collider>().enabled = false;
-    //    _destinationLocation.gameObject.GetComponent<Collider>().enabled = false;
-    //}
+    private void DisableColliders()
+    {
+        _startLocation.gameObject.GetComponent<Collider>().enabled = false;
+        _destinationLocation.gameObject.GetComponent<Collider>().enabled = false;
+    }
 
-    //private void EnableColliders()
-    //{
-    //    _startLocation.gameObject.GetComponent<Collider>().enabled = true;
-    //    _destinationLocation.gameObject.GetComponent<Collider>().enabled = true;
-    //}
+    private void EnableColliders()
+    {
+        _startLocation.gameObject.GetComponent<Collider>().enabled = true;
+        _destinationLocation.gameObject.GetComponent<Collider>().enabled = true;
+    }*/
 
     #region
 

@@ -7883,12 +7883,12 @@ PrefabInstance:
     - target: {fileID: 8678990321838772864, guid: 2b20a8e16dcef6249b49706028bad89c,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.00000002885484
+      value: 0.00000002885483
       objectReference: {fileID: 0}
     - target: {fileID: 8678990321838772864, guid: 2b20a8e16dcef6249b49706028bad89c,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000018751987
+      value: -0.00000001875198
       objectReference: {fileID: 0}
     - target: {fileID: 9016473066297167292, guid: 2b20a8e16dcef6249b49706028bad89c,
         type: 3}
@@ -8859,7 +8859,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 572303952}
-  m_LocalRotation: {x: 0.54491353, y: -0.00000002885484, z: 0.000000018751987, w: 0.8384923}
+  m_LocalRotation: {x: 0.54491353, y: 0.00000002885483, z: -0.00000001875198, w: 0.8384923}
   m_LocalPosition: {x: 62.31, y: 7.1058393, z: -0.8800001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -11088,11 +11088,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 70.07324
-      objectReference: {fileID: 0}
-    - target: {fileID: 5689279241849225761, guid: b26790df3abbb7d4ea774a7dc66d5f0e,
-        type: 3}
-      propertyPath: m_ControlPath
-      value: <Keyboard>/#(Q)
       objectReference: {fileID: 0}
     - target: {fileID: 6460423599848146028, guid: b26790df3abbb7d4ea774a7dc66d5f0e,
         type: 3}

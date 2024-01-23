@@ -50,6 +50,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     //Abilities Variables
     [SerializeField] Abilities[] _abilities = new Abilities[] { };
+    private static Dictionary<AbilityType, int> _abilityCountDict = new Dictionary<AbilityType, int>();
     Abilities _abilityTrigerred;
     bool _isAbilityTrigerred;
     Vent _currentVent;
@@ -98,6 +99,7 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsReloading { get { return _isReloading; } set { _isReloading = value; } }
     public bool IsRotating { get { return _isRotating; } set { _isRotating = value; } }
     public Abilities AbilityTrigerred { get { return _abilityTrigerred; } }
+    public Dictionary<AbilityType, int> AbilityCount { get { return _abilityCountDict; } set { _abilityCountDict = value; } }
     public bool IsAbilityTrigerred {  get { return _isAbilityTrigerred; } set {  _isAbilityTrigerred = value; } }
     public Vent CurrentVent { get { return _currentVent; } }
     public NoReload NoReload {  get { return _noReload; } }
@@ -355,25 +357,30 @@ public class PlayerStateMachine : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    /*private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent(out VentTriggers vent))
+        if (other.TryGetComponent(out VentTriggers _))
         {
             SetVent(null);
         }
-    }
+    }*/
 
     public bool SetAbility(AbilityType type)
     {
-        if (CurrentAbility == AbilityType.None)
+        if (CurrentAbility == AbilityType.None || _abilityCountDict[type] >= 0)
         {
             _currentAbility = type;
             return true;
         }
-        else
+        else if(CurrentAbility == AbilityType.None && _abilityCountDict[type] < 0)
         {
             return false;
         }
+        else
+        {
+            return false;
+        } 
+        
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -427,39 +434,58 @@ public class PlayerStateMachine : MonoBehaviour
                 //Debug.LogWarning("No Ability Available");
                 break;
             case AbilityType.NoReload:
-                if (ActiveGun != null)
+                if (ActiveGun != null && AbilityAvailable(AbilityType.NoReload))
                 {
                     ActiveGun.InitiateNoReload(10);
+                    _abilityCountDict[AbilityType.NoReload]--;
                 }
                 break;
             case AbilityType.Vent:
-                if (CurrentVent != null)
+                if (CurrentVent != null && AbilityAvailable(AbilityType.Vent))
                 {
+                    Debug.Log("CurrentVent not null");
                     CurrentVent.UseAbility(this);
+                    _abilityCountDict[AbilityType.Vent]--;
                 }
                 _currentAbility = AbilityType.None;
                 break;
             case AbilityType.GunSwitch:
                 //SwitchGun();
                 //ToggleGun(num);
+                _abilityCountDict[AbilityType.GunSwitch]--;
                 break;
             case AbilityType.MineTrap:
-                if (mineTrapPrefab != null)
+                if (mineTrapPrefab != null && AbilityAvailable(AbilityType.MineTrap))
                 {
                     MineTrap mineTrap = Instantiate(mineTrapPrefab, new Vector3(transform.position.x, transform.position.y , transform.position.z), Quaternion.identity);
+                    _abilityCountDict[AbilityType.MineTrap]--;
                 }
                 break;
             case AbilityType.StunGrenade:
-                if (stunGrenadePrefab != null)
+                if (stunGrenadePrefab != null && AbilityAvailable(AbilityType.StunGrenade))
                 {
                     StunGrenade stunGrenade = Instantiate(stunGrenadePrefab, spawnLocation.position, Quaternion.identity);
                     stunGrenade.Initialize(transform.forward);
+                    _abilityCountDict[AbilityType.StunGrenade]--;
                 }
 
                 break;
             default:
                 break;
         }
+    }
+
+    private bool AbilityAvailable(AbilityType type)
+    {
+        if(_abilityCountDict[type] > 0)
+        {
+            return true;
+        }
+        else if(_abilityCountDict[type] <= 0)
+        {
+            return false;
+        }
+        return false;
     }
 
     private void SwitchGun()
@@ -476,7 +502,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void ToggleGun(int num)
     {
-        Debug.Log("Changing Gun");
+        //Debug.Log("Changing Gun");
         if (ActiveGun == null || ActiveGun != Guns[num])
         {
             if (ActiveGun != null)

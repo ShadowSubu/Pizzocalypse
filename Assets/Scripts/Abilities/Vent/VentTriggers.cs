@@ -17,8 +17,9 @@ public class VentTriggers : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.TryGetComponent(out PlayerStateMachine _))
         {
+            //Debug.Log("Ready to vent");
             isInTrigger = true;
         }
         // SHOW PLAYER THAT VENT IS ENABLED
@@ -26,7 +27,7 @@ public class VentTriggers : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.TryGetComponent(out PlayerStateMachine _))
         {
             isInTrigger = false;
         }

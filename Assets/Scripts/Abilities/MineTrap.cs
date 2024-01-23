@@ -26,11 +26,10 @@ public class MineTrap : Ability
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("collision detected with:" + other);
-        // Check if the triggering object has the Health script or is tagged as "Enemy"
-        if (other.gameObject.TryGetComponent(out Health healthComponent) && other.gameObject.CompareTag("Enemy"))
+        //Debug.Log("collision detected with:" + other);
+        if (other.gameObject.TryGetComponent(out Health healthComponent) && other.gameObject.TryGetComponent(out ZombieAI _))
         {
-            Debug.Log("collision detected");
+            //Debug.Log("collision detected");
             // Apply damage directly to the triggering object
             if (healthComponent != null) healthComponent.TakeDamage(maxDamage);
 

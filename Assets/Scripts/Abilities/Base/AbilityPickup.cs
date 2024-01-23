@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.ProBuilder.MeshOperations;
 
 [RequireComponent(typeof(Collider))]
 public class AbilityPickup : MonoBehaviour
 {
     [SerializeField] AbilityType type;
+    //PlayerStateMachine playerStateMachine;
     public AbilityType Type => type;
 
     public float rotationDuration = 2f;
@@ -15,6 +17,7 @@ public class AbilityPickup : MonoBehaviour
     void Start()
     {
         RotateUpDown();
+        //playerStateMachine = GetComponent<PlayerStateMachine>();
     }
 
     void RotateUpDown()
@@ -32,16 +35,27 @@ public class AbilityPickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.TryGetComponent(out PlayerStateMachine player) && player.SetAbility(type))
         {
-            if (other.GetComponent<PlayerStateMachine>().SetAbility(type))
+            if (player.AbilityCount.ContainsKey(type))
+            {
+                player.AbilityCount[type]++;
+                //Debug.Log("Incremented to dict:" + player.AbilityCount[type]);
+            }
+            else
+            {
+                player.AbilityCount[type] = 1;
+                //Debug.Log("Added Ability to dict:" + player.AbilityCount[type]);
+            }
+            Destroy(gameObject);
+            /*if (player.SetAbility(type))
             {
                 Destroy(gameObject);
             }
             else
             {
                 Debug.LogWarning("Has Ability");
-            }
+            }*/
         }
     }
 }
