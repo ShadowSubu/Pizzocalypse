@@ -100,7 +100,7 @@ public class PlayerGunFireState : PlayerBaseState
                     default:
                         break;
                 }
-
+                Ctx.IsShooting = false;
             }
         }           
     }

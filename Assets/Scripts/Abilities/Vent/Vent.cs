@@ -25,11 +25,13 @@ public class Vent : Ability, IInteractable
     bool readyToUse;
     [SerializeField] VoidEventSO abilityUseEvent;
 
+    public bool ReadyToUse { get { return readyToUse; } set { readyToUse = value; } }
+
     public void Start()
     {
         readyToUse = true;
         location1.Initialize(this);
-
+        location2.Initialize(this);
     }
 
     async public override void UseAbility(PlayerStateMachine player)

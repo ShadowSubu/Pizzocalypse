@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: PlayerLoadout
   m_EditorClassIdentifier: 
   GunType: 2
-  AbilityType: 4
+  AbilityType: 3

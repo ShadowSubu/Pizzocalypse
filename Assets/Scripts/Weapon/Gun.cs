@@ -27,7 +27,7 @@ public class Gun : MonoBehaviour
     int _magSizeCache;
     int _currentMagSizeCache;
 
-    private void Start()
+    private void OnEnable()
     {
         _ammoAmountCache = _ammoAmount;
         _ammoReduceAmountCache = _ammoReduceAmount;

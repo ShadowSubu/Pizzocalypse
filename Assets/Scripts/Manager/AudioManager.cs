@@ -84,7 +84,7 @@ public class AudioManager : MonoBehaviour
         Sound s = new Sound();
         for (int i = 0; i < sounds.Length; i++)
         {
-            Debug.Log("Collection: " + sounds[i].name);
+            //Debug.Log("Collection: " + sounds[i].name);
             s = Array.Find(sounds[i].soundsCollection, sound => sound.name == name);
             if (s != null)
             {
@@ -125,7 +125,7 @@ public class AudioManager : MonoBehaviour
         {
             walkTimer = 0f;
             AudioSource source =  GetRandomWalkSfx();
-            Debug.Log("Walk Audio: " + source.clip.name);
+            //Debug.Log("Walk Audio: " + source.clip.name);   
             source.Play();
         }
     }

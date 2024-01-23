@@ -150,7 +150,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void OnShoot(InputAction.CallbackContext context)
     {
-        if (ActiveGun.CurrentMagSize > 0)
+        if (ActiveGun.CurrentMagSize > 0 && !_isShooting)
         {
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             _isRotating = true;
@@ -428,6 +428,7 @@ public class PlayerStateMachine : MonoBehaviour
     public void UseAbility()
     {
         int num = UnityEngine.Random.Range(0, _guns.Length);
+        Debug.Log("Current Ability: " + CurrentAbility);
         switch (CurrentAbility)
         {
             case AbilityType.None:
@@ -441,18 +442,20 @@ public class PlayerStateMachine : MonoBehaviour
                 }
                 break;
             case AbilityType.Vent:
-                if (CurrentVent != null && AbilityAvailable(AbilityType.Vent))
+                if (CurrentVent != null && AbilityAvailable(AbilityType.Vent) && CurrentVent.ReadyToUse)
                 {
                     Debug.Log("CurrentVent not null");
                     CurrentVent.UseAbility(this);
                     _abilityCountDict[AbilityType.Vent]--;
+                    _currentAbility = AbilityType.None;
+                    SetVent(null);
                 }
-                _currentAbility = AbilityType.None;
                 break;
             case AbilityType.GunSwitch:
-                //SwitchGun();
+                SwitchGun();
                 //ToggleGun(num);
                 _abilityCountDict[AbilityType.GunSwitch]--;
+                _currentAbility = AbilityType.None;
                 break;
             case AbilityType.MineTrap:
                 if (mineTrapPrefab != null && AbilityAvailable(AbilityType.MineTrap))
@@ -494,10 +497,12 @@ public class PlayerStateMachine : MonoBehaviour
         int randomIndex = UnityEngine.Random.Range(0, _guns.Length);
 
         // Get the random GameObject from the list
+        _activeGun.gameObject.SetActive(false);
         Gun randomGun = _guns[randomIndex];
         _activeGun = randomGun;
+        Debug.Log("Gun Switched: " + _activeGun);
         _activeGun.gameObject.SetActive(true);
-        //_activeGun.ResetGun();
+        _activeGun.ResetGun();
     }
 
     private void ToggleGun(int num)
@@ -522,10 +527,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void SetVent(Vent vent)
     {
-        if (CurrentVent == null)
-        {
-            _currentVent = vent;
-        }
+        _currentVent = vent;
     }
 }
 

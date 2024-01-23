@@ -58,7 +58,7 @@ public class GameplayUIManager : MonoBehaviour
 
     void OnGameStateChanged(GameState state)
     {
-        Debug.Log("Changed state");
+        //Debug.Log("Changed state");
         switch (state)
         {
             case GameState.EnterGame:

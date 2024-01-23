@@ -702,7 +702,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh82934
+  m_Name: pb_Mesh58910
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -3513,7 +3513,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh84334
+  m_Name: pb_Mesh60318
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -5543,19 +5543,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1977138437}
     m_Modifications:
-    - target: {fileID: 1821674323708958455, guid: 1867d34de6789df429b2236e3e10eec6,
+    - target: {fileID: 1840689289689668812, guid: 1867d34de6789df429b2236e3e10eec6,
         type: 3}
-      propertyPath: m_Constraints
-      value: 126
-      objectReference: {fileID: 0}
-    - target: {fileID: 1821674323708958455, guid: 1867d34de6789df429b2236e3e10eec6,
-        type: 3}
-      propertyPath: m_ImplicitCom
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1821674323708958455, guid: 1867d34de6789df429b2236e3e10eec6,
-        type: 3}
-      propertyPath: m_ImplicitTensor
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1922538043286097129, guid: 1867d34de6789df429b2236e3e10eec6,
@@ -5567,31 +5557,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 1977559367737067169, guid: 1867d34de6789df429b2236e3e10eec6,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2098691639374085516, guid: 1867d34de6789df429b2236e3e10eec6,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3698948038280482263, guid: 1867d34de6789df429b2236e3e10eec6,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 126
-      objectReference: {fileID: 0}
-    - target: {fileID: 3698948038280482263, guid: 1867d34de6789df429b2236e3e10eec6,
-        type: 3}
-      propertyPath: m_ImplicitCom
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3698948038280482263, guid: 1867d34de6789df429b2236e3e10eec6,
-        type: 3}
-      propertyPath: m_ImplicitTensor
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4012352293215189350, guid: 1867d34de6789df429b2236e3e10eec6,
         type: 3}
@@ -5673,7 +5638,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3698948038280482263, guid: 1867d34de6789df429b2236e3e10eec6, type: 3}
+    - {fileID: 1821674323708958455, guid: 1867d34de6789df429b2236e3e10eec6, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -20154,7 +20121,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh83476
+  m_Name: pb_Mesh59452
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -24013,7 +23980,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh83520
+  m_Name: pb_Mesh59496
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -26166,7 +26133,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh83940
+  m_Name: pb_Mesh59920
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -26553,7 +26520,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1637551901
 Transform:
   m_ObjectHideFlags: 0
@@ -29215,6 +29182,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1637551901}
     m_Modifications:
+    - target: {fileID: 2310029279111495850, guid: 88632ed2b2e50684d9ded3955ec8bdf6,
+        type: 3}
+      propertyPath: ObstacleMask.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2695430646492739498, guid: 88632ed2b2e50684d9ded3955ec8bdf6,
         type: 3}
       propertyPath: m_Name
@@ -34613,7 +34585,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh84620
+  m_Name: pb_Mesh60604
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
