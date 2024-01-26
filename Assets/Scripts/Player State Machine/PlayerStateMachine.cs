@@ -158,7 +158,7 @@ public class PlayerStateMachine : MonoBehaviour
             _isShooting = true;
             ReduceAmmo(_activeGun.AmmoReduceAmount);
             bulletCountEvent.RaiseEvent(ActiveGun.CurrentMagSize, ActiveGun.MagSize, ActiveGun.AmmoAmount);
-
+            //_isShooting = false;
         }
         else
         {
@@ -440,28 +440,45 @@ public class PlayerStateMachine : MonoBehaviour
                     ActiveGun.InitiateNoReload(10);
                     _abilityCountDict[AbilityType.NoReload]--;
                 }
+                else
+                {
+                    _currentAbility = AbilityType.None;
+                }
                 break;
             case AbilityType.Vent:
                 if (CurrentVent != null && AbilityAvailable(AbilityType.Vent) && CurrentVent.ReadyToUse)
                 {
-                    Debug.Log("CurrentVent not null");
+                    //Debug.Log("CurrentVent not null");
                     CurrentVent.UseAbility(this);
                     _abilityCountDict[AbilityType.Vent]--;
+                }
+                else
+                {
                     _currentAbility = AbilityType.None;
                     SetVent(null);
                 }
                 break;
             case AbilityType.GunSwitch:
-                SwitchGun();
-                //ToggleGun(num);
-                _abilityCountDict[AbilityType.GunSwitch]--;
-                _currentAbility = AbilityType.None;
+                if(AbilityAvailable(AbilityType.GunSwitch))
+                {
+                    SwitchGun();
+                    //ToggleGun(num);
+                    _abilityCountDict[AbilityType.GunSwitch]--;
+                }
+                else
+                {
+                    _currentAbility = AbilityType.None;
+                }
                 break;
             case AbilityType.MineTrap:
                 if (mineTrapPrefab != null && AbilityAvailable(AbilityType.MineTrap))
                 {
-                    MineTrap mineTrap = Instantiate(mineTrapPrefab, new Vector3(transform.position.x, transform.position.y , transform.position.z), Quaternion.identity);
+                    _ = Instantiate(mineTrapPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
                     _abilityCountDict[AbilityType.MineTrap]--;
+                }
+                else
+                {
+                    _currentAbility = AbilityType.None;
                 }
                 break;
             case AbilityType.StunGrenade:
@@ -471,7 +488,10 @@ public class PlayerStateMachine : MonoBehaviour
                     stunGrenade.Initialize(transform.forward);
                     _abilityCountDict[AbilityType.StunGrenade]--;
                 }
-
+                else
+                {
+                    _currentAbility = AbilityType.None;
+                }
                 break;
             default:
                 break;

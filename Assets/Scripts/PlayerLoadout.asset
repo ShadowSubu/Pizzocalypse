@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28865cfb95ec02d46870f2cc9e58fe90, type: 3}
   m_Name: PlayerLoadout
   m_EditorClassIdentifier: 
-  GunType: 2
-  AbilityType: 3
+  GunType: 1
+  AbilityType: 1

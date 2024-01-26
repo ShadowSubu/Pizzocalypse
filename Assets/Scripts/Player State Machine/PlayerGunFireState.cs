@@ -93,6 +93,7 @@ public class PlayerGunFireState : PlayerBaseState
                         PistolShoot();
                         break;
                     case GunType.Shotgun:
+                        ShotgunShooting();
                         break;
                     case GunType.Rifle:
                         RifleShooting();
@@ -111,9 +112,14 @@ public class PlayerGunFireState : PlayerBaseState
         AudioManager.Instance.Play("Pizzocalypse-Pistol");
     }
 
-    void ShotgunShooting()
+    async void ShotgunShooting()
     {
-
+        for (int i = 0; i < 2; i++)
+        {
+            Bullet bullet = Object.Instantiate(Ctx.BulletPrefab, Ctx.ActiveGun.ShootingPoint.position, Ctx.transform.rotation);
+            AudioManager.Instance.Play("Pizzocalypse-Shotgun 1");
+            await Task.Delay(300);
+        }
     }
 
     async void RifleShooting()
