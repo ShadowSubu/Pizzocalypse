@@ -6,6 +6,8 @@ using UnityEngine.UI;
 using UnityEditor;
 using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
+using System;
+using Unity.VisualScripting;
 
 public class GameplayUIManager : MonoBehaviour
 {
@@ -28,6 +30,11 @@ public class GameplayUIManager : MonoBehaviour
     [SerializeField] Button menuButton;
     [SerializeField] Button nextLevelButton;
 
+    [Header("Ability")]
+    [SerializeField] PlayerLoadoutSO playerLoadout;
+    [SerializeField] Image abilityImage;
+    [SerializeField] BoolEventChannelSO abilityUseEvent;
+
     private void Awake()
     {
         GameManager.OnGameStateChanged += OnGameStateChanged;
@@ -38,6 +45,27 @@ public class GameplayUIManager : MonoBehaviour
     private void Start()
     {
         dialogueManager = GetComponent<DialogueManager>();
+        if (playerLoadout.selectedIcon != null)
+        {
+            abilityImage.overrideSprite = playerLoadout.selectedIcon;
+        }
+    }
+
+    private void OnEnable()
+    {
+        abilityUseEvent.OnEventRaised += ToggleAbility;
+    }
+
+    private void ToggleAbility(bool arg0)
+    {
+        if (!arg0)
+        {
+            abilityImage.DOFade(.5f, 0.5f);
+        }
+        else
+        {
+            abilityImage.DOFade(1f, 0.5f);
+        }
     }
 
     void AssignButtons()
@@ -234,6 +262,7 @@ public class GameplayUIManager : MonoBehaviour
     private void OnDisable()
     {
         GameManager.OnGameStateChanged -= OnGameStateChanged;
+        abilityUseEvent.OnEventRaised -= ToggleAbility;
     }
 }
 

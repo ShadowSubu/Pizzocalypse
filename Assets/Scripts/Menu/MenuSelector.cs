@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -32,6 +33,7 @@ public class MenuSelector : MonoBehaviour
     [SerializeField] public AbilityPickup selectedAbility;
     [SerializeField] Button abilitySelectionButton;
     [SerializeField] CinemachineVirtualCamera abilitySelectorCamera;
+    [SerializeField] TextMeshProUGUI loadoutText;
 
     [Space]
     [SerializeField] private PlayerLoadoutSO loadout;
@@ -46,8 +48,8 @@ public class MenuSelector : MonoBehaviour
     private void Start()
     {
         selectionState = SelectionState.gun;
-        SelectWeapon(0);
         SelectAbility(0);
+        SelectWeapon(0);
         gunSelectionButton.onClick.AddListener(EnableGunSelection);
         levelSelectionButton.onClick.AddListener(EnabelLevelSelection);
         abilitySelectionButton.onClick.AddListener(EnableAbilitySelect);
@@ -68,6 +70,7 @@ public class MenuSelector : MonoBehaviour
         levelSelectorCamera.gameObject.SetActive(false);
         abilitySelectorCamera.gameObject.SetActive(true);
         selectionState = SelectionState.ability;
+        loadoutText.text = loadout.AbilityType.ToString();
     }
 
     private void Update()
@@ -103,6 +106,7 @@ public class MenuSelector : MonoBehaviour
         abilitySelectorCamera.gameObject.SetActive(false);
         gunSelectorCamera.gameObject.SetActive(true);
         selectionState = SelectionState.gun;
+        loadoutText.text = loadout.GunType.ToString();
         if (AudioManager.Instance) AudioManager.Instance.Play("Pizzocalypse-Button Click 1"); //PLAY AUDIO
     }
 
@@ -154,6 +158,7 @@ public class MenuSelector : MonoBehaviour
         selectedGun = _guns[gunNumber];
         if (AudioManager.Instance) AudioManager.Instance.Play("Pizzocalypse-Button Click 1"); //PLAY AUDIO
         loadout.GunType = selectedGun.GunType;
+        loadoutText.text = selectedGun.GunType.ToString();
     }
 
     public void SelectAbility(int num)
@@ -162,6 +167,8 @@ public class MenuSelector : MonoBehaviour
         _abilties[num].gameObject.SetActive(true);
         selectedAbility = _abilties[num];
         loadout.AbilityType = selectedAbility.Type;
+        loadout.selectedIcon = selectedAbility.icon;
+        loadoutText.text = selectedAbility.Type.ToString();
     }
 
     private void DisableAbilities()

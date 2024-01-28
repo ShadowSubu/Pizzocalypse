@@ -120,6 +120,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
+  icon: {fileID: 21300000, guid: f28fae7516f999546b17dcfaeb28f2f0, type: 3}
+  rotate: 1
+  jump: 1
   rotationDuration: 2
   upDownAmplitude: 0.5
 --- !u!54 &8324591477127114922

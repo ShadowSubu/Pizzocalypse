@@ -1,0 +1,16 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
+
+[CreateAssetMenu(fileName = "Bool Event SO", menuName = "Bool Event")]
+public class BoolEventChannelSO : ScriptableObject
+{
+    public UnityAction<bool> OnEventRaised;
+
+    public void RaiseEvent(bool value)
+    {
+        if (OnEventRaised != null)
+            OnEventRaised?.Invoke(value);
+    }
+}

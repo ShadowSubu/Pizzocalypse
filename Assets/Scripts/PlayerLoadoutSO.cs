@@ -7,4 +7,6 @@ public class PlayerLoadoutSO : ScriptableObject
 {
     public GunType GunType;
     public AbilityType AbilityType;
+
+    public Sprite selectedIcon;
 }

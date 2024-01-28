@@ -61,7 +61,7 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] private Transform spawnLocation;
 
     private AbilityType _currentAbility;
-    [SerializeField] VoidEventSO abilityUseEvent;
+    [SerializeField] BoolEventChannelSO abilityUseEvent;
     public AbilityType CurrentAbility { get { return _currentAbility; } }
    
     //Prefabs
@@ -215,6 +215,7 @@ public class PlayerStateMachine : MonoBehaviour
             }
         }
         _activeGun.gameObject.SetActive(true);
+        abilityUseEvent.RaiseEvent(false);
     }
 
     private async void GameManager_OnGameStateChanged(GameState state)
@@ -370,6 +371,7 @@ public class PlayerStateMachine : MonoBehaviour
         if (CurrentAbility == AbilityType.None || _abilityCountDict[type] >= 0)
         {
             _currentAbility = type;
+            abilityUseEvent.RaiseEvent(true);
             return true;
         }
         else if(CurrentAbility == AbilityType.None && _abilityCountDict[type] < 0)
@@ -439,6 +441,7 @@ public class PlayerStateMachine : MonoBehaviour
                 {
                     ActiveGun.InitiateNoReload(10);
                     _abilityCountDict[AbilityType.NoReload]--;
+                    abilityUseEvent.RaiseEvent(false);
                 }
                 else
                 {
@@ -450,6 +453,7 @@ public class PlayerStateMachine : MonoBehaviour
                 {
                     //Debug.Log("CurrentVent not null");
                     CurrentVent.UseAbility(this);
+                    abilityUseEvent.RaiseEvent(false);
                     _abilityCountDict[AbilityType.Vent]--;
                 }
                 else
@@ -462,6 +466,7 @@ public class PlayerStateMachine : MonoBehaviour
                 if(AbilityAvailable(AbilityType.GunSwitch))
                 {
                     SwitchGun();
+                    abilityUseEvent.RaiseEvent(false);
                     //ToggleGun(num);
                     _abilityCountDict[AbilityType.GunSwitch]--;
                 }
@@ -475,6 +480,7 @@ public class PlayerStateMachine : MonoBehaviour
                 {
                     _ = Instantiate(mineTrapPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
                     _abilityCountDict[AbilityType.MineTrap]--;
+                    abilityUseEvent.RaiseEvent(false);
                 }
                 else
                 {
@@ -486,6 +492,7 @@ public class PlayerStateMachine : MonoBehaviour
                 {
                     StunGrenade stunGrenade = Instantiate(stunGrenadePrefab, spawnLocation.position, Quaternion.identity);
                     stunGrenade.Initialize(transform.forward);
+                    abilityUseEvent.RaiseEvent(false);
                     _abilityCountDict[AbilityType.StunGrenade]--;
                 }
                 else
